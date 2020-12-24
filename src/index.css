@@ -1,0 +1,18 @@
+@font-face {
+  font-family: 'YANGGIN';
+  src: url('양진체v0.9_ttf.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+body {
+  margin: 0;
+  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New', monospace;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background-color: '#F2F1ED';
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
