@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './App.css';
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import Commands from './commands';
+import Forky from './forky.jpg';
 
 const DEFAULT_VALUES = {
   isPullable: true,
@@ -54,20 +54,23 @@ const App: React.FC = () => {
           onFetchMore={getNewData}
           fetchMoreThreshold={fetchMoreThreshold}
           pullDownThreshold={pullDownThreshold}
-          maxPullDownDistance={maxPullDownDistance}>
+          maxPullDownDistance={maxPullDownDistance}
+          className={"Pull-To-Refresh"}>
           <div style={{padding:0, margin:0}} className="App-container">
-            
-            <div style={{border: '1px solid black', borderRadius:'5px', width:'80vw', height:'80vw', backgroundColor:'black', margin: '10px'}}>
-
+            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
+              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
             </div>
-            <div style={{border: '1px solid black', borderRadius:'5px', width:'80vw', height:'80vw', backgroundColor:'black', margin: '10px'}}>
-
+            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
+              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
             </div>
-            <div style={{border: '1px solid black', borderRadius:'5px', width:'80vw', height:'80vw', backgroundColor:'black', margin: '10px'}}>
-
+            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
+              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
             </div>
-            <div style={{border: '1px solid black', borderRadius:'5px', width:'80vw', height:'80vw', backgroundColor:'black', margin: '10px'}}>
-
+            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
+              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+            </div>
+            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
+              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
             </div>
           </div>
         </PullToRefresh>
