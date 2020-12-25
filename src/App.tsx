@@ -1,7 +1,10 @@
 import React, { useState } from 'react';
-import './App.css';
+import './static/css/App.css';
 import PullToRefresh from 'react-simple-pull-to-refresh';
-import Forky from './forky.jpg';
+import Forky from './static/image/forky.jpg';
+import BrownHands from './static/image/brownhands.jpg';
+import Pic from './static/image/pic.jpg';
+import Night from './static/image/night-1846734_1920.jpg';
 
 const DEFAULT_VALUES = {
   isPullable: true,
@@ -42,10 +45,14 @@ const App: React.FC = () => {
 
   return (
     <div className="App">
-      <div className="App-header">
-        CAKER
+      <div className="caker-header">
+        <div className="caker-side">1</div>
+        <div className="caker-center">1</div>
+        <div className="caker-side">2</div>
       </div>
-      <div style={{height:'84vh'}}>
+      <div className="caker-body">
+        <div className="caker-side"></div>
+        <div className="caker-center">
         <PullToRefresh
           pullingContent={pullingContent}
           onRefresh={getNewData}
@@ -55,28 +62,32 @@ const App: React.FC = () => {
           fetchMoreThreshold={fetchMoreThreshold}
           pullDownThreshold={pullDownThreshold}
           maxPullDownDistance={maxPullDownDistance}
-          className={"Pull-To-Refresh"}>
-          <div style={{padding:0, margin:0}} className="App-container">
-            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
-              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+          className={"pull-to-refresh"}>
+          <div className="caker-container">
+            <div style={{ width: '100%', margin: '10px' }}>
+              <img alt="" src={Forky} style={{ height: '100%', width: '100%', borderRadius: '5px' }}></img>
             </div>
-            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
-              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+            <div style={{ width: '100%', margin: '10px' }}>
+              <img alt="" src={BrownHands} style={{ height: '100%', width: '100%', borderRadius: '5px' }}></img>
             </div>
-            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
-              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+            <div style={{ width: '100%', margin: '10px' }}>
+              <img alt="" src={Pic} style={{ height: '100%', width: '100%', borderRadius: '5px' }}></img>
             </div>
-            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
-              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+            <div style={{ width: '100%', margin: '10px' }}>
+              <img alt="" src={Night} style={{ height: '100%', width: '100%', borderRadius: '5px' }}></img>
             </div>
-            <div style={{borderRadius:'5px', width:'80vw', height:'80vw', margin: '10px'}}>
-              <img src={Forky} style={{height:'100%', width:'100%', borderRadius:'5px'}}></img>
+            <div style={{ width: '100%', margin: '10px' }}>
+              <img alt="" src={BrownHands} style={{ height: '100%', width: '100%', borderRadius: '5px' }}></img>
             </div>
           </div>
         </PullToRefresh>
+        </div>
+        <div className="caker-side"></div>
       </div>
-      <div className="App-footer">
-        CAKER
+      <div className="caker-footer">
+        <div className="caker-side">1</div>
+        <div className="caker-center"></div>
+        <div className="caker-side">2</div>
       </div>
     </div>
   );

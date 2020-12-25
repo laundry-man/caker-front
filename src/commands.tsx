@@ -1,5 +1,5 @@
 import React from 'react';
-import './commands.css';
+import './static/css/commands.css';
 
 interface Props {
   canFetchMore: boolean;
