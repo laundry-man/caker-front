@@ -9,8 +9,10 @@
   display: none;
 }
 
-body {
+.App {
   background: #F2F1ED;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 .caker-header {
@@ -18,8 +20,7 @@ body {
 
   display: flex;
   flex-direction: row;
-  text-align: center;
-  align-items: center;
+  align-items:flex-end;
   justify-content: center;
 
   color: #333333;
@@ -27,7 +28,7 @@ body {
   font-size: calc(10px + 2vmin);
   font-weight: bold;
 
-  background: transparent;
+  background: inherit;
 }
 
 .caker-body {
@@ -37,7 +38,7 @@ body {
   flex-direction: row;
   justify-content: center;
 
-  background: transparent;
+  background: inherit;
 }
 
 .caker-container {
@@ -48,7 +49,7 @@ body {
   align-items: center;
   justify-content: center;
 
-  background: transparent;
+  background: inherit;
 }
 
 .caker-footer {
@@ -58,32 +59,31 @@ body {
   flex-direction: row;
 
   text-align: center;
-  align-items: center;
   justify-content: center;
 
-  color: #F2F1ED;
+  color: #333333;
   font-family: YANGGIN;
   font-size: calc(10px + 2vmin);
   font-weight: bold;
   
-  background: #333333;
+  background: #F2F1ED;
 }
 
 .caker-side {
   width: 10vw;
 
-  background: transparent;
+  background: inherit;
   content: ' ';
 }
 
 .caker-center {
   width: 80vw;
 
-  background: transparent;
+  background: inherit;
   content: ' ';
 }
 
 .pull-to-refresh {
   border-radius: 5px;
-  background: transparent;
+  background: inherit;
 }
