@@ -1,0 +1,61 @@
+.caker-header {
+    height: 10vh;
+  
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    justify-content: center;
+  
+    background: inherit;
+}
+
+.caker-header-side {
+    width: 10vw;
+  
+    background: inherit;
+    content: ' ';
+}
+  
+.caker-header-center {
+    width: 80vw;
+  
+    background: inherit;
+    content: ' ';
+}
+
+.caker-header-wrapper {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.caker-header-title {
+    width: 40vw;
+    
+    text-align: left;
+
+    color: #333333;
+    font-family: YANGGIN;
+    font-size: calc(10px + 1.5vmin);
+    font-weight: bold;
+}
+
+.caker-header-content {
+    width: 40vw;
+
+    text-align: right;
+
+    color: #333333;
+    font-family: YANGGIN;
+    font-size: calc(10px + 0.3vmin);
+    font-weight: bold;
+}
+
+.caker-header-bar {
+    border-radius: 5px;
+    background: #333333; 
+    
+    height: 0.3vh;
+    
+    margin: 1vh 1px 1vh 1px;
+}

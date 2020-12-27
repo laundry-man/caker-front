@@ -1,0 +1,39 @@
+.caker-body {
+    height: 80vh;
+  
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  
+    background: inherit;
+}
+
+.caker-container {
+    display: flex;
+    flex-direction: column;
+  
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+  
+    background: inherit;
+}
+
+.pull-to-refresh {
+    border-radius: 5px;
+    background: inherit;
+}
+
+.caker-body-side {
+    width: 10vw;
+  
+    background: inherit;
+    content: ' ';
+}
+  
+.caker-body-center {
+    width: 80vw;
+  
+    background: inherit;
+    content: ' ';
+}
