@@ -1,22 +1,4 @@
-@font-face {
-  font-family: 'YANGGIN';
-  src: url('../font/yanggin-0.9.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-@font-face {
-  font-family: 'Monoton';
-  src: url('../font/Monoton-Regular.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
-::-webkit-scrollbar {
-  display: none;
-}
-
-.App {
+.app {
   background: #F2F1ED;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -29,4 +11,18 @@
           hue-rotate(49deg) 
           brightness(89%) 
           contrast(94%);
+}
+
+.fade-in-app {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+}
+
+.fade-out-app {
+  animation: fadeout 2s;
+  -moz-animation: fadeout 2s;
+  -webkit-animation: fadeout 2s;
+  -o-animation: fadeout 2s;
 }

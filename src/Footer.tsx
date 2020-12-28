@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 import './static/css/footer.css';
 
@@ -15,16 +15,16 @@ function Footer() {
           <div className="caker-footer-bar">&nbsp;</div>
           <div className="caker-footer-wrapper">
             <div className="caker-footer-button-wrapper">
-              <img src={Maps} className="icon-color caker-footer-button"></img>
+              <img alt="" src={Maps} className="icon-color caker-footer-button"></img>
             </div>
             <div className="caker-footer-button-wrapper">
-              <img src={Notes} className="icon-color caker-footer-button"></img>
+              <img alt="" src={Notes} className="icon-color caker-footer-button"></img>
             </div>
             <div className="caker-footer-button-wrapper">
-              <img src={Books} className="icon-color caker-footer-button"></img>
+              <img alt="" src={Books} className="icon-color caker-footer-button"></img>
             </div>
             <div className="caker-footer-button-wrapper">
-              <img src={Settings} className="icon-color caker-footer-button"></img>
+              <img alt="" src={Settings} className="icon-color caker-footer-button"></img>
             </div>
           </div>
         </div>

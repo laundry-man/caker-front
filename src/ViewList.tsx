@@ -1,16 +1,12 @@
 import React, { useState } from 'react';
+import { ViewListProps } from './Types';
+
 import View from './View';
 
-type ViewListProps = {
-    paths: string[];
-};
-
 function ViewList({paths} : ViewListProps) {
-    const viewList = paths.map((path) => <View path={path}></View>);
-
     return (
         <div className="caker-container">
-            {viewList}
+            {paths.map((path) => <View  path={path}></View>)}
         </div>
     );
 }

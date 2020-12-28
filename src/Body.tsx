@@ -10,37 +10,29 @@ import BrownHands from './static/image/brownhands.jpg';
 import Pic from './static/image/pic.jpg';
 import Night from './static/image/night-1846734_1920.jpg';
 
-const DEFAULT_VALUES = {
-    isPullable: true,
-    canFetchMore: true,
-    fetchMoreThreshold: 0,
-    pullDownThreshold: 67,
-    maxPullDownDistance: 95,
-};
-
 function Body() {
-    const base: string[] = [Forky, BrownHands, Pic, Night];
+    const base: string[][] = [[Forky, BrownHands, Pic, Night], [Forky, BrownHands, Pic, Night]];
     const [path, setPath] = useState(base);
 
-    const [isPullable, setIsPullable] = useState<boolean>(DEFAULT_VALUES.isPullable);
-    const [canFetchMore, setCanFetchMore] = useState<boolean>(DEFAULT_VALUES.canFetchMore);
-    const [fetchMoreThreshold, setFetchMoreThreshold] = useState<number>(DEFAULT_VALUES.fetchMoreThreshold);
-    const [pullDownThreshold, setPullDownThreshold] = useState<number>(DEFAULT_VALUES.pullDownThreshold);
-    const [maxPullDownDistance, setMaxPullDownDistance] = useState<number>(DEFAULT_VALUES.maxPullDownDistance);
+    const [isPullable, setIsPullable] = useState<boolean>(true);
+    const [canFetchMore, setCanFetchMore] = useState<boolean>(true);
+    const [fetchMoreThreshold, setFetchMoreThreshold] = useState<number>(0);
+    const [pullDownThreshold, setPullDownThreshold] = useState<number>(67);
+    const [maxPullDownDistance, setMaxPullDownDistance] = useState<number>(95);
 
     const handleReset = (): void => {
-        setIsPullable(DEFAULT_VALUES.isPullable);
-        setCanFetchMore(DEFAULT_VALUES.canFetchMore);
-        setFetchMoreThreshold(DEFAULT_VALUES.fetchMoreThreshold);
-        setPullDownThreshold(DEFAULT_VALUES.pullDownThreshold);
-        setMaxPullDownDistance(DEFAULT_VALUES.maxPullDownDistance);
+        setIsPullable(true);
+        setCanFetchMore(true);
+        setFetchMoreThreshold(0);
+        setPullDownThreshold(67);
+        setMaxPullDownDistance(95);
     };
 
     const getNewData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(setPath([...path, ...path]));
-            }, 3000);
+            }, 1000);
         });
     };
 
@@ -48,7 +40,7 @@ function Body() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
                 resolve(setPath(base));
-            }, 3000);
+            }, 1000);
         });
     }
 
