@@ -11,7 +11,7 @@ import Pic from './static/image/pic.jpg';
 import Night from './static/image/night-1846734_1920.jpg';
 
 function Body() {
-    const base: string[][] = [[Forky, BrownHands, Pic, Night], [Forky, BrownHands, Pic, Night]];
+    const base: string[][] = [[Forky, BrownHands, Pic, Night], [BrownHands, Pic, Night, Forky]];
     const [path, setPath] = useState(base);
 
     const [isPullable, setIsPullable] = useState<boolean>(true);
