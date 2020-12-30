@@ -1,18 +1,28 @@
 import React from 'react';
+import { BrowserRouter, Switch, Route } from 'react-router-dom';
+
+import Search from './dynamic/Search';
+import Main from './dynamic/Main';
+import Upload from './dynamic/Upload';
+import List from './dynamic/List';
+import Settings from './dynamic/Settings';
 
 import './static/css/app.css';
-
-import Header from './Header';
-import Body from './Body';
-import Footer from './Footer';
+import './static/css/header.css';
+import './static/css/body.css';
+import './static/css/footer.css';
 
 function App() {
   return (
-    <div className="app fade-in-app">
-      <Header></Header>
-      <Body></Body>
-      <Footer></Footer>
-    </div>
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/search"><Search></Search></Route>
+        <Route exact path="/"><Main></Main></Route>
+        <Route exact path="/upload"><Upload></Upload></Route>
+        <Route exact path="/list"><List></List></Route>
+        <Route exact path="/settings"><Settings></Settings></Route>
+      </Switch>
+    </BrowserRouter>
   );
 };
 

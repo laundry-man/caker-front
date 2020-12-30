@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ViewListProps } from './Types';
 
 import View from './View';

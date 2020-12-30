@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import Zoomable from 'react-instagram-zoom';
 import { ViewProps } from './Types';
-import './static/css/view.css';
+import '../static/css/view.css';
 
 function View({ path }: ViewProps) {
     let [active, setActive] = useState(() => {

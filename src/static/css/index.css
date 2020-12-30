@@ -12,6 +12,10 @@
   font-style: normal;
 }
 
+body {
+  background-color: #F2F1ED;
+}
+
 @keyframes fadein {
   from {
       opacity: 0;
