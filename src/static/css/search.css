@@ -4,7 +4,7 @@
 }
 
 .search-input {
-    width: 68vw;
+    width: 66vw;
     height: 4vh;
 
     text-transform: lowercase;
@@ -35,15 +35,18 @@
 }
 
 .search-append {
-    width: 6vw;
+    width: 8vw;
     height: 4vh;
 
     text-align: center;
 
+    font-weight: bold;
     background: #333333;
     border-radius: 0px 5px 5px 0px;
     border: none;
     color: #F2F1ED;
+    outline: none;
+    box-shadow: none;
 
     padding: 0;
 }

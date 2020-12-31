@@ -20,10 +20,10 @@ import './static/css/footer.css';
 
 function App() {
   const [isSearch, setIsSearch] = useState(false);
-  const [tag, setTag] = useState('');
+  const [tag, setTag] = useState('🍰');
 
   const movePage = (isSearch: boolean) => {
-    setTag('');
+    setTag('🍰');
     setIsSearch(isSearch);
   }
 
