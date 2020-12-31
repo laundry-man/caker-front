@@ -20,6 +20,12 @@ import './static/css/footer.css';
 
 function App() {
   const [isSearch, setIsSearch] = useState(false);
+  const [tag, setTag] = useState('');
+
+  const movePage = (isSearch: boolean) => {
+    setTag('');
+    setIsSearch(isSearch);
+  }
 
   return (
     <BrowserRouter>
@@ -29,10 +35,10 @@ function App() {
           <div className="caker-header-center">
             <div className="caker-header-wrapper">
               <div className="caker-header-title">
-                <span>CAKER</span>
+                <div>CAKER</div>
               </div>
               <div className="caker-header-content">
-                <span>#브라운핸즈구로</span>
+                <div>{tag}</div>
               </div>
             </div>
             <div className="caker-header-bar">&nbsp;</div>
@@ -43,7 +49,7 @@ function App() {
           <div className="caker-body-side"></div>
           <div className="caker-body-center">
             <Switch>
-              <Route exact path="/search"><Search></Search></Route>
+              <Route exact path="/search"><Search tag={tag} setTag={setTag}></Search></Route>
               <Route exact path="/main"><Main></Main></Route>
               <Route exact path="/upload"><Upload></Upload></Route>
               <Route exact path="/list"><List></List></Route>
@@ -57,21 +63,21 @@ function App() {
           <div className="caker-footer-center">
             <div className="caker-footer-bar">&nbsp;</div>
             <div className="caker-footer-wrapper">
-              {isSearch ? 
-                <Link to="/main" className="caker-footer-button-wrapper" onClick={() => setIsSearch(false)}>
+              {isSearch ?
+                <Link to="/main" className="caker-footer-button-wrapper" onClick={() => movePage(false)}>
                   <img alt="" src={Maps} className="icon-color caker-footer-button"></img>
-                </Link> : 
-                <Link to="/search" className="caker-footer-button-wrapper" onClick={() => setIsSearch(true)}>
+                </Link> :
+                <Link to="/search" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                   <img alt="" src={Glass} className="icon-color caker-footer-button"></img>
                 </Link>
               }
-              <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => setIsSearch(true)}>
+              <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Notes} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/list" className="caker-footer-button-wrapper" onClick={() => setIsSearch(true)}>
+              <Link to="/list" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Books} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/settings" className="caker-footer-button-wrapper" onClick={() => setIsSearch(true)}>
+              <Link to="/settings" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Cogs} className="icon-color caker-footer-button"></img>
               </Link>
             </div>

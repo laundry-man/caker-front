@@ -26,12 +26,6 @@
   font-style: normal;
 }
 
-body {
-  background-color: #F2F1ED;
-  padding: 0;
-  margin: 0;
-}
-
 @keyframes fadein {
   from {
       opacity: 0;
@@ -70,4 +64,15 @@ body {
 
 ::-webkit-scrollbar {
   display: none;
+}
+
+input::placeholder {
+  color: #F2F1ED;
+}
+
+body {
+  background-color: #F2F1ED;
+  
+  padding: 0;
+  margin: 0;
 }

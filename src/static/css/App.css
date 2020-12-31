@@ -18,15 +18,15 @@
 }
 
 .fade-in-slow {
-    animation: fadein 2s;
-    -moz-animation: fadein 2s;
-    -webkit-animation: fadein 2s;
-    -o-animation: fadein 2s;
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
 }
 
 .fade-in-fast {
-    animation: fadein 1.2s;
-    -moz-animation: fadein 1.2s;
-    -webkit-animation: fadein 1.2s;
-    -o-animation: fadein 1.2s;
+  animation: fadein 1.2s;
+  -moz-animation: fadein 1.2s;
+  -webkit-animation: fadein 1.2s;
+  -o-animation: fadein 1.2s;
 }

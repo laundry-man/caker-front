@@ -12,3 +12,8 @@ export type ViewListProps = {
 export type ViewProps = {
     path: string[]
 };
+
+export type SearchProps = {
+    tag: string,
+    setTag: React.Dispatch<React.SetStateAction<string>>
+};
