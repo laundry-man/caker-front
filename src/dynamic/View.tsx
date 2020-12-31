@@ -1,7 +1,5 @@
 import React, { useState } from 'react';
-import Zoomable from 'react-instagram-zoom';
 import { ViewProps } from './Types';
-import '../static/css/view.css';
 
 function View({ path }: ViewProps) {
     const [active, setActive] = useState(() => {
@@ -22,7 +20,7 @@ function View({ path }: ViewProps) {
         <div className="view-wrapper" onClick={getNextView}>
             {active.map((active, index) => {
                 if (active)
-                    return (<img className="view fade-in-view" alt="" src={path[index]}></img>);
+                    return (<img className="view fade-in-fast" alt="" src={path[index]}></img>);
                 else
                     return (<img className="view invisible" alt="" src={path[index]}></img>);
             })}

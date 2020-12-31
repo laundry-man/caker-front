@@ -13,16 +13,20 @@
           contrast(94%);
 }
 
-.fade-in-app {
-  animation: fadein 2s;
-  -moz-animation: fadein 2s;
-  -webkit-animation: fadein 2s;
-  -o-animation: fadein 2s;
+.invisible {
+  display: none;
 }
 
-.fade-out-app {
-  animation: fadeout 2s;
-  -moz-animation: fadeout 2s;
-  -webkit-animation: fadeout 2s;
-  -o-animation: fadeout 2s;
+.fade-in-slow {
+    animation: fadein 2s;
+    -moz-animation: fadein 2s;
+    -webkit-animation: fadein 2s;
+    -o-animation: fadein 2s;
+}
+
+.fade-in-fast {
+    animation: fadein 1.2s;
+    -moz-animation: fadein 1.2s;
+    -webkit-animation: fadein 1.2s;
+    -o-animation: fadein 1.2s;
 }

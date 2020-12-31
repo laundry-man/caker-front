@@ -54,42 +54,6 @@ body {
   }
 }
 
-@keyframes fadeout {
-  from {
-      opacity: 1;
-  }
-  to {
-      opacity: 0;
-  }
-}
-
-@-moz-keyframes fadeout {
-  from {
-      opacity: 1;
-  }
-  to {
-      opacity: 0;
-  }
-}
-
-@-webkit-keyframes fadeout {
-  from {
-      opacity: 1;
-  }
-  to {
-      opacity: 0;
-  }
-}
-
-@-o-keyframes fadeout {
-  from {
-      opacity: 1;
-  }
-  to {
-      opacity: 0;
-  }
-}
-
 ::-webkit-scrollbar {
   display: none;
 }
