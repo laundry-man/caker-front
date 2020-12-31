@@ -32,7 +32,7 @@ function App() {
                 <span>CAKER</span>
               </div>
               <div className="caker-header-content">
-                <span></span>
+                <span>#브라운핸즈구로</span>
               </div>
             </div>
             <div className="caker-header-bar">&nbsp;</div>
