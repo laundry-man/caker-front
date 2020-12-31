@@ -1,5 +1,5 @@
 .caker-footer {
-    height: 10vh;
+    height: 7vh;
   
     display: flex;
     flex-direction: row;
@@ -35,7 +35,7 @@
 
     background: #333333;
     
-    margin: 1vh 1px 2vh 1px;
+    margin: 1vh 1px 1.5vh 1px;
 }
 
 .caker-footer-button-wrapper {

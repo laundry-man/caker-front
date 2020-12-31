@@ -18,7 +18,7 @@
     -moz-animation: fadein 1.5s;
     -webkit-animation: fadein 1.5s;
     -o-animation: fadein 1.5s;
-  }
+}
   
 .fade-out-view {
     animation: fadeout 1.5s;

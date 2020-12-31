@@ -1,5 +1,5 @@
 .caker-header {
-    height: 10vh;
+    height: 7vh;
   
     display: flex;
     flex-direction: row;
@@ -57,5 +57,5 @@
     
     height: 0.3vh;
     
-    margin: 1vh 1px 1vh 1px;
+    margin: 1.5vh 1px 1vh 1px;
 }
