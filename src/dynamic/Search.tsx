@@ -2,39 +2,57 @@ import React, { useEffect, useState } from 'react';
 import { SearchProps } from './Types';
 import '../static/css/search.css';
 
-function Search({ tag, setTag }: SearchProps) {
+function Search({ cancel, setTag, setCancel }: SearchProps) {
+  const [toggle, setToggle] = useState(false);
   const [close, setClose] = useState('');
-  const [string, setString] = useState('');
+  const [value, setValue] = useState('');
 
-  const setTagString = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const getInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === '') {
       setClose('');
       setTag('🍰');
-      setString('');
+      setValue('');
     }
     else {
       setClose('X');
       setTag('#' + e.target.value.toLowerCase());
-      setString(e.target.value);
+      setValue(e.target.value);
     }
   };
 
-  const clearTagString = (close: string) => {
-    if (close == 'X') {
+  const setInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && value !== '') {
+      setToggle(true);
       setClose('');
-      setTag('🍰');
-      setString('');
+      setValue('');
     }
   }
 
+  const clearInput = (close: string) => {
+    if (close == 'X') {
+      setClose('');
+      setTag('🍰');
+      setValue('');
+    }
+  }
+
+  useEffect(() => {
+    setCancel(false);
+    setToggle(false);
+  }, [cancel]);
+
   return (
-    <div className="fade-in-fast">
-      <div className="search-wrapper">
-        <input className="search-prepend" value="#" readOnly></input>
-        <input className="search-input" value={string} type="text" placeholder="검색" onChange={(e) => setTagString(e)}></input>
-        <input className="search-append" value={close} readOnly onClick={() => clearTagString(close)}></input>
-      </div>
-    </div>
+    <>
+      {!toggle ?
+        <div className="fade-in-fast">
+          <div className="search-wrapper">
+            <input className="search-prepend" value="#" readOnly></input>
+            <input className="search-input" value={value} type="text" placeholder="검색"
+              onChange={(e) => getInput(e)} onKeyUp={(e) => { setInput(e) }}></input>
+            <input className="search-append" value={close} onClick={() => clearInput(close)} readOnly></input>
+          </div>
+        </div> : <></>}
+    </>
   );
 }
 
