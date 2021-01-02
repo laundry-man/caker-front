@@ -1,58 +1,62 @@
 import React, { useEffect, useState } from 'react';
+
 import { SearchProps } from '../const/Types';
-import { EMPTY_STRING } from '../const/Constants';
+import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../const/Constants';
+
 import '../static/css/search.css';
 
-function Search({ cancel, setTag, setCancel }: SearchProps) {
+function Search({ cancel, setContent, setWriting }: SearchProps) {
+  const [reset, setReset] = useState(EMPTY_STRING);
+  const [input, setInput] = useState(EMPTY_STRING);
   const [toggle, setToggle] = useState(false);
-  const [close, setClose] = useState('');
-  const [value, setValue] = useState('');
 
-  const getInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const assign = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === EMPTY_STRING) {
-      setClose(EMPTY_STRING);
-      setTag('🍰');
-      setValue(EMPTY_STRING);
+      setReset(EMPTY_STRING);
+      setContent('🍰');
+      setInput(EMPTY_STRING);
+      setWriting(false);
     }
     else {
-      setClose('X');
-      setTag('#' + e.target.value.toLowerCase());
-      setValue(e.target.value);
+      setReset(RESET_ICON);
+      setContent('#' + e.target.value.toLowerCase());
+      setInput(e.target.value);
+      setWriting(true);
     }
   };
 
-  const setInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && value !== EMPTY_STRING) {
+  const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === ENTER_KEY && input !== EMPTY_STRING) {
       setToggle(true);
-      setClose(EMPTY_STRING);
-      setValue(EMPTY_STRING);
+      setReset(EMPTY_STRING);
+      setInput(EMPTY_STRING);
+      setWriting(false);
     }
   }
 
-  const clearInput = (close: string) => {
-    if (close === 'X') {
-      setClose(EMPTY_STRING);
-      setTag('🍰');
-      setValue(EMPTY_STRING);
+  const clear = () => {
+    if (reset === RESET_ICON) {
+      setReset(EMPTY_STRING);
+      setContent('🍰');
+      setInput(EMPTY_STRING);
+      setWriting(false);
     }
   }
 
   useEffect(() => {
-    setCancel(false);
     setToggle(false);
   }, [cancel]);
 
   return (
     <>
-      {!toggle ?
+      {toggle ? <></> :
         <div className="fade-in-fast">
           <div className="search-wrapper">
             <input className="search-prepend" value="#" readOnly></input>
-            <input className="search-input" value={value} type="text" placeholder="검색"
-              onChange={(e) => getInput(e)} onKeyUp={(e) => { setInput(e) }}></input>
-            <input className="search-append" value={close} onClick={() => clearInput(close)} readOnly></input>
+            <input className="search-input" value={input} placeholder="검색" onChange={(e) => assign(e)} onKeyUp={(e) => submit(e)}></input>
+            <input className="search-append" value={reset} onClick={() => clear()} readOnly></input>
           </div>
-        </div> : <></>}
+        </div>}
     </>
   );
 }

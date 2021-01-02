@@ -19,18 +19,23 @@ import './static/css/body.css';
 import './static/css/footer.css';
 
 function App() {
-  const [isSearch, setIsSearch] = useState(false);
+  const [search, setSearch] = useState(false);
   const [cancel, setCancel] = useState(false);
-  const [tag, setTag] = useState('🍰');
+  const [writing, setWriting] = useState(false);
+  const [content, setContent] = useState('🍰');
 
-  const clearTag = () => {
-    setTag('🍰');
-    setCancel(true);
+  const resetContent = () => {
+    if (!writing) {
+      setContent('🍰');
+      setCancel(!cancel);
+    }
   }
 
-  const movePage = (isSearch: boolean) => {
-    setTag('🍰');
-    setIsSearch(isSearch);
+  const movePage = (search: boolean) => {
+    if (content !== '🍰')
+      setContent('🍰');
+    setSearch(search);
+    setWriting(false);
   }
 
   return (
@@ -44,7 +49,7 @@ function App() {
                 <div>CAKER</div>
               </div>
               <div className="caker-header-content">
-                <div onClick={() => clearTag()}>{tag}</div>
+                <div onClick={() => resetContent()}>{content}</div>
               </div>
             </div>
             <div className="caker-header-bar">&nbsp;</div>
@@ -55,7 +60,9 @@ function App() {
           <div className="caker-body-side"></div>
           <div className="caker-body-center">
             <Switch>
-              <Route exact path="/search"><Search cancel={cancel} setTag={setTag} setCancel={setCancel}></Search></Route>
+              <Route exact path="/search">
+                <Search cancel={cancel} setContent={setContent} setWriting={setWriting}></Search>
+              </Route>
               <Route exact path="/main"><Main></Main></Route>
               <Route exact path="/upload"><Upload></Upload></Route>
               <Route exact path="/list"><List></List></Route>
@@ -69,7 +76,7 @@ function App() {
           <div className="caker-footer-center">
             <div className="caker-footer-bar">&nbsp;</div>
             <div className="caker-footer-wrapper">
-              {isSearch ?
+              {search ?
                 <Link to="/main" className="caker-footer-button-wrapper" onClick={() => movePage(false)}>
                   <img alt="" src={Maps} className="icon-color caker-footer-button"></img>
                 </Link> :

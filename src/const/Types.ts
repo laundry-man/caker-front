@@ -15,6 +15,6 @@ export type ViewProps = {
 
 export type SearchProps = {
     cancel: boolean,
-    setTag: React.Dispatch<React.SetStateAction<string>>,
-    setCancel: React.Dispatch<React.SetStateAction<boolean>>
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setWriting: React.Dispatch<React.SetStateAction<boolean>>
 };
