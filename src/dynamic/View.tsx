@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ViewProps } from './Types';
+import { ViewProps } from '../const/Types';
 
 function View({ path }: ViewProps) {
     const [active, setActive] = useState(() => {

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ViewListProps } from './Types';
+import { ViewListProps } from '../const/Types';
 
 import View from './View';
 

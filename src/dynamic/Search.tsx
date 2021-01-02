@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { SearchProps } from './Types';
+import { SearchProps } from '../const/Types';
+import { EMPTY_STRING } from '../const/Constants';
 import '../static/css/search.css';
 
 function Search({ cancel, setTag, setCancel }: SearchProps) {
@@ -8,10 +9,10 @@ function Search({ cancel, setTag, setCancel }: SearchProps) {
   const [value, setValue] = useState('');
 
   const getInput = (e: React.ChangeEvent<HTMLInputElement>) => {
-    if (e.target.value === '') {
-      setClose('');
+    if (e.target.value === EMPTY_STRING) {
+      setClose(EMPTY_STRING);
       setTag('🍰');
-      setValue('');
+      setValue(EMPTY_STRING);
     }
     else {
       setClose('X');
@@ -21,18 +22,18 @@ function Search({ cancel, setTag, setCancel }: SearchProps) {
   };
 
   const setInput = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && value !== '') {
+    if (e.key === 'Enter' && value !== EMPTY_STRING) {
       setToggle(true);
-      setClose('');
-      setValue('');
+      setClose(EMPTY_STRING);
+      setValue(EMPTY_STRING);
     }
   }
 
   const clearInput = (close: string) => {
     if (close === 'X') {
-      setClose('');
+      setClose(EMPTY_STRING);
       setTag('🍰');
-      setValue('');
+      setValue(EMPTY_STRING);
     }
   }
 
