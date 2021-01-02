@@ -29,7 +29,7 @@ function Search({ cancel, setTag, setCancel }: SearchProps) {
   }
 
   const clearInput = (close: string) => {
-    if (close == 'X') {
+    if (close === 'X') {
       setClose('');
       setTag('🍰');
       setValue('');

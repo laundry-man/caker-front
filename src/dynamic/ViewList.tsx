@@ -6,7 +6,7 @@ import View from './View';
 function ViewList({paths} : ViewListProps) {
     return (
         <div className="caker-container">
-            {paths.map((path) => <View  path={path}></View>)}
+            {paths.map((path, index) => <View key={index} path={path}></View>)}
         </div>
     );
 }
