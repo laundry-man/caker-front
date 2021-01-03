@@ -62,6 +62,14 @@ function Search({ cancel, writing, setContent, setWriting }: SearchProps) {
     {name: '#brownhands', path: ''},
     {name: '#matin', path: ''},
     {name: '#whalemarket', path: ''},
+    {name: '#anthracite', path: ''},
+    {name: '#brownhands', path: ''},
+    {name: '#matin', path: ''},
+    {name: '#whalemarket', path: ''},
+    {name: '#anthracite', path: ''},
+    {name: '#brownhands', path: ''},
+    {name: '#matin', path: ''},
+    {name: '#whalemarket', path: ''},
     {name: '#anthracite', path: ''}
   ]);
 
@@ -101,8 +109,8 @@ function Search({ cancel, writing, setContent, setWriting }: SearchProps) {
             <input className="search-input" value={input} placeholder="검색" onChange={(e) => assign(e)} onKeyUp={(e) => submit(e)}></input>
             <input className="search-append" value={reset} onClick={() => clear()} readOnly></input>
           </div>
-          <div style={{ height: '6vh', width: '80vw', display: 'flex', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-            {writing ? <div className="fade-in-fast" style={{ color: '#333333', fontSize: '1.5vh' }}>●</div> : <></>}
+          <div className="dot-wrapper">
+            <div className={writing ? "dot fade-in-fast" : "invisible"}>●</div>
           </div>
           <TagList tags={tag}></TagList>
         </div>}

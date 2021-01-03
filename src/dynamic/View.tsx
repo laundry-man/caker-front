@@ -19,10 +19,7 @@ function View({ path }: ViewProps) {
     return (
         <div className="view-wrapper" onClick={getNextView}>
             {active.map((active, index) => {
-                if (active)
-                    return (<img key={index} className="view fade-in-fast" alt="" src={path[index]}></img>);
-                else
-                    return (<img key={index} className="view invisible" alt="" src={path[index]}></img>);
+                return (<img key={index} className={active ? "view fade-in-fast" : "invisible"} alt="" src={path[index]}></img>);
             })}
         </div>
     );

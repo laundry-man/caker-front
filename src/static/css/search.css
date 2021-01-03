@@ -56,7 +56,28 @@
     padding: 0;
 }
 
+.dot-wrapper {
+    width: 80vw;
+    height: 6vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.dot {
+    color: #333333;
+    font-size: 1.5vh;
+}
+
 .tag-wrapper {
+    height: 76vh;
+
+    text-align: center;
+    
     font-family: San Francisco;
     font-size: 3.6vh;
+
+    overflow: scroll;
 }
