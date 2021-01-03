@@ -61,7 +61,7 @@ function App() {
           <div className="caker-body-center">
             <Switch>
               <Route exact path="/search">
-                <Search cancel={cancel} setContent={setContent} setWriting={setWriting}></Search>
+                <Search cancel={cancel} writing={writing} setContent={setContent} setWriting={setWriting}></Search>
               </Route>
               <Route exact path="/main"><Main></Main></Route>
               <Route exact path="/upload"><Upload></Upload></Route>

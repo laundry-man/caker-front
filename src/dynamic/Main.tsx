@@ -36,20 +36,6 @@ function Main() {
     ];
     const [path, setPath] = useState(base);
 
-    const [isPullable, setIsPullable] = useState<boolean>(true);
-    const [canFetchMore, setCanFetchMore] = useState<boolean>(true);
-    const [fetchMoreThreshold, setFetchMoreThreshold] = useState<number>(0);
-    const [pullDownThreshold, setPullDownThreshold] = useState<number>(67);
-    const [maxPullDownDistance, setMaxPullDownDistance] = useState<number>(95);
-
-    const handleReset = (): void => {
-        setIsPullable(true);
-        setCanFetchMore(true);
-        setFetchMoreThreshold(0);
-        setPullDownThreshold(67);
-        setMaxPullDownDistance(95);
-    };
-
     const getNewData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
@@ -69,12 +55,12 @@ function Main() {
     return (
         <PullToRefresh
             onRefresh={resetData}
-            canFetchMore={canFetchMore}
-            isPullable={isPullable}
+            canFetchMore={true}
+            isPullable={true}
             onFetchMore={getNewData}
-            fetchMoreThreshold={fetchMoreThreshold}
-            pullDownThreshold={pullDownThreshold}
-            maxPullDownDistance={maxPullDownDistance}
+            fetchMoreThreshold={0}
+            pullDownThreshold={67}
+            maxPullDownDistance={95}
             className={"pull-to-refresh fade-in-fast"}>
             <ViewList paths={path}></ViewList>
         </PullToRefresh>

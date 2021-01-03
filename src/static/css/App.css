@@ -17,6 +17,11 @@
   display: none;
 }
 
+.pull-to-refresh {
+  border-radius: 5px;
+  background: inherit;
+}
+
 .fade-in-slow {
   animation: fadein 2s;
   -moz-animation: fadein 2s;

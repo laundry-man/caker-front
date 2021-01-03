@@ -26,6 +26,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'San Francisco';
+  src: url('../font/SFUIText-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes fadein {
   from {
       opacity: 0;
