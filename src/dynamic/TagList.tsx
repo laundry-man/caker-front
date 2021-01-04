@@ -1,11 +1,16 @@
 import React from 'react'
 import { TagListProps } from '../const/Types';
 
-function TagList({ tags }: TagListProps) {
+function TagList({ tags, assign }: TagListProps) {
     return (
         <div className="tag-wrapper">
             {tags.map((tag, index) => {
-                return <div key={index}>{tag.name}</div>
+                return (
+                    <div key={index} className="tag" onClick={() => assign(tag.name)}>
+                        <div className="tag-name">{tag.name}</div>
+                        <div className="tag-count">{tag.count}k</div>
+                    </div>
+                );
             })}
         </div>
     );

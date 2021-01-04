@@ -10,11 +10,12 @@ export type ViewProps = {
 
 export type Tag = {
     name: string,
-    path: string
+    count: number
 };
 
 export type TagListProps = {
-    tags: Tag[]
+    tags: Tag[],
+    assign: (tag: string) => void
 };
 
 export type SearchProps = {
