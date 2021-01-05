@@ -93,18 +93,21 @@
 
     font-family: San Francisco;
     font-size: 3.6vh;
+    color: #333333;
 }
 
 .tag-count {
     text-align: center;
 
-    font-family: San Francisco;
+    font-family: YANGGIN;
     font-size: 1.2vh;
     color: #F2F1ED;
+    letter-spacing: 0.5px;
 
+    opacity: 0.9;
     background: #333333;
     border-radius: 3px;
 
     margin: 0 0 0 1.5vw;
-    padding: 0.3vh 0.7vw 0.1vh 0.8vw;
+    padding: 0.4vh 0.7vw 0.1vh 0.8vw;
 }

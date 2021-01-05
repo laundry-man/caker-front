@@ -34,10 +34,11 @@
     
     text-align: left;
 
-    color: #333333;
     font-family: YANGGIN;
-    font-size: 2.2vh;
     font-weight: bold;
+    font-size: 2.2vh;
+    color: #333333;
+    letter-spacing: 0.5px;
 }
 
 .caker-header-content {
@@ -45,9 +46,10 @@
 
     text-align: right;
 
-    color: #333333;
     font-family: YANGGIN;
     font-size: 2.2vh;
+    color: #333333;
+    letter-spacing: 0.5px;
 }
 
 .caker-header-bar {
