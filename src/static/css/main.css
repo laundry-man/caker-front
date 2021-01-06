@@ -6,7 +6,7 @@
     margin-bottom: 1vh;
 }
 
-.view-container {
+.view-map-wrapper {
     font-family: YANGGIN;
     font-size: 2vh;
     color: #F2F1ED;
@@ -58,14 +58,37 @@
     position: absolute;
 }
 
-.view-footer {
+.view-detail-wrapper {
     width: 80vw;
-    height: 3.065vh;
+    height: 2.8vh;
 
-    background: #333333;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    font-family: San Francisco;
+    font-size: 1.6vh;
+    color: #F2F1ED;
+
+    background-color: #333333;
+    background-image: url("data:image/svg+xml,%3Csvg width='6' height='6' viewBox='0 0 6 6' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='%23f2f1ed' fill-opacity='0.03' fill-rule='evenodd'%3E%3Cpath d='M5 0h1L0 6V5zM6 5v1H5z'/%3E%3C/g%3E%3C/svg%3E");
     border-radius: 5px;
 
-    margin-top: -3.065vh;
-    
+    padding: 0 2vw 0 2vw;
+    margin-top: -2.8vh;
+
     position: absolute;
+}
+
+.view-detail-1 {
+    width: 65vw;
+
+    text-align: left;
+}
+
+.view-detail-2 {
+    width: 15vw;
+
+    text-align: right;
 }
