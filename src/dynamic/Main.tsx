@@ -28,11 +28,7 @@ import Terarosa4 from '../static/image/terarosa_4.png';
 
 function Main() {
     const base: string[][] = [
-        [Matin1, Matin2, Matin3, Matin4],
-        [Anthracite1, Anthracite2, Anthracite3, Anthracite4],
-        [BrownHands1, BrownHands2, BrownHands3, BrownHands4],
-        [PotatoField1, PotatoField2, PotatoField3, PotatoField4],
-        [Terarosa1, Terarosa2, Terarosa3, Terarosa4]
+        [Matin1, Matin2, Matin3, Matin4]
     ];
     const [path, setPath] = useState(base);
 
