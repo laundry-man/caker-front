@@ -14,8 +14,8 @@ function View({ path }: ViewProps) {
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
     const apiKey: string = 'n6m4itubfm';
-    const latitude: number = 37.77307289103176;
-    const longitude: number = 128.94630652778784;
+    const latitude: number = 37.56617246693808;
+    const longitude: number = 126.97789181585031;
     const color: string = '0x730D26';
 
     const setPlaceDetails = (width: number, height: number) => {
@@ -23,10 +23,10 @@ function View({ path }: ViewProps) {
         setHeight(height);
         setImgSrc([
             'https://naveropenapi.apigw.ntruss.com/map-static/v2/raster-cors?',
-            `w=${width}`,
-            `h=${height}`,
+            `w=${width * 2}`,
+            `h=${height * 2}`,
             'scale=2',
-            `markers=type:d|size:mid|pos:${longitude} ${latitude}|viewSizeRatio:0.4|color:${color}`,
+            `markers=type:d|size:mid|pos:${longitude} ${latitude}|viewSizeRatio:0.8|color:${color}`,
             `X-NCP-APIGW-API-KEY-ID=${apiKey}`,
         ].join('&'));
     }
@@ -39,11 +39,11 @@ function View({ path }: ViewProps) {
         }
         else if (width && height) {
             setToggle(true);
-            setTimer(
+            /*setTimer(
                 setTimeout(() => {
                     setToggle(false)
                 }, 5000)
-            );
+            );*/
         }
     }
 
@@ -56,10 +56,15 @@ function View({ path }: ViewProps) {
             </div>
             <div className={toggle ? "fade-in-fast" : "invisible"}>
                 <div className="view-tag-2" >#고래상점</div>
-                <div className="view-container" style={{ width: width + 'px', height: height + 'px' }}>
+                <div className="view-map-wrapper" style={{ width: width + 'px', height: height + 'px' }}>
                     <img className="view-map" src={imgSrc} alt="" />
                 </div>
-                <div className="view-footer"> </div>
+                <div className="view-detail-wrapper">
+                    <div className="view-detail-1">
+                        서울시 명동 120m
+                    </div>
+                    <div className="view-detail-2">44k</div>
+                </div>
             </div>
         </div>
     );
