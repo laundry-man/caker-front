@@ -1,5 +1,8 @@
 import React, { useState } from 'react';
-import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
+
+import { Switch, Route, Link, useHistory } from 'react-router-dom';
+
+import { EMPTY_STRING } from './const/Constant';
 
 import Search from './dynamic/Search';
 import Main from './dynamic/Main';
@@ -20,28 +23,28 @@ import './static/css/body.css';
 import './static/css/footer.css';
 
 function App() {
-  const [search, setSearch] = useState(false);
-  const [cancel, setCancel] = useState(false);
-  const [writing, setWriting] = useState(false);
   const [content, setContent] = useState('🍰');
-  const [predecessor, setPredecessor] = useState("");
+  const [predecessor, setPredecessor] = useState(EMPTY_STRING);
+  const [search, setSearch] = useState(false);
+
+  const history = useHistory();
+  const redirect = (path: string) => history.push(path);
 
   const resetContent = () => {
-    if (!writing) {
+    if (predecessor !== EMPTY_STRING) {
       setContent('🍰');
-      setCancel(!cancel);
+      redirect(predecessor);
+      setPredecessor(EMPTY_STRING);
     }
   }
 
-  const movePage = (search: boolean) => {
+  const pageDidMount = (search: boolean) => {
     if (content !== '🍰')
       setContent('🍰');
     setSearch(search);
-    setWriting(false);
   }
 
   return (
-    <BrowserRouter>
       <div className="app fade-in-slow">
         <div className="caker-header">
           <div className="caker-header-side"></div>
@@ -63,18 +66,18 @@ function App() {
           <div className="caker-body-center">
             <Switch>
               <Route exact path="/search">
-                <Search cancel={cancel} 
-                        writing={writing} 
-                        setContent={setContent} 
-                        setWriting={setWriting} 
+                <Search redirect={redirect}
+                        setContent={setContent}
                         setPredecessor={setPredecessor}></Search>
               </Route>
               <Route exact path="/main">
-                <Main setContent={setContent} 
+                <Main redirect={redirect}
+                      setContent={setContent}
                       setPredecessor={setPredecessor}></Main>
               </Route>
               <Route exact path="/result">
-                <Result tag={content}></Result>
+                <Result tag={content}
+                        redirect={redirect}></Result>
               </Route>
               <Route exact path="/upload">
                 <Upload></Upload>
@@ -94,21 +97,16 @@ function App() {
           <div className="caker-footer-center">
             <div className="caker-footer-bar">&nbsp;</div>
             <div className="caker-footer-wrapper">
-              {search ?
-                <Link to="/main" className="caker-footer-button-wrapper" onClick={() => movePage(false)}>
-                  <img alt="" src={Maps} className="icon-color caker-footer-button"></img>
-                </Link> :
-                <Link to="/search" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
-                  <img alt="" src={Glass} className="icon-color caker-footer-button"></img>
-                </Link>
-              }
-              <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
+              <Link to={search ? "/main" : "/search"} className="caker-footer-button-wrapper" onClick={() => pageDidMount(!search)}>
+                <img alt="" src={search ? Maps : Glass} className="icon-color caker-footer-button"></img>
+              </Link>
+              <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                 <img alt="" src={Notes} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/post" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
+              <Link to="/post" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                 <img alt="" src={Books} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/setting" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
+              <Link to="/setting" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                 <img alt="" src={Cogs} className="icon-color caker-footer-button"></img>
               </Link>
             </div>
@@ -116,7 +114,6 @@ function App() {
           <div className="caker-footer-side"></div>
         </div>
       </div>
-    </BrowserRouter>
   );
 };
 

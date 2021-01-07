@@ -19,18 +19,18 @@ export type TagListProps = {
 };
 
 export type SearchProps = {
-    cancel: boolean,
-    writing: boolean,
+    redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
-    setWriting: React.Dispatch<React.SetStateAction<boolean>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 };
 
 export type MainProps = {
+    redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type ResultProps = {
-    tag: string
+    tag: string,
+    redirect: (path: string) => void
 }

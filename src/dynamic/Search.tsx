@@ -1,20 +1,17 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 
-import PullToRefresh from 'react-simple-pull-to-refresh';
-
-import { SearchProps } from '../const/Type';
-import { Tag } from '../const/Type';
 import TagList from './TagList';
+
+import { SearchProps, Tag } from '../const/Type';
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../const/Constant';
 
 import '../static/css/search.css';
-import ViewList from './ViewList';
 
-function Search({ cancel, writing, setContent, setWriting, setPredecessor }: SearchProps) {
+function Search({ redirect, setContent, setPredecessor }: SearchProps) {
   const [input, setInput] = useState(EMPTY_STRING);
-  const [toggle, setToggle] = useState(false);
+  const [writing, setWriting] = useState(false);
 
-  const concat = (tag: string) => '#' + tag.toLowerCase();
+  const attach = (tag: string) => '#' + tag.toLowerCase();
 
   const change = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === EMPTY_STRING) {
@@ -24,35 +21,29 @@ function Search({ cancel, writing, setContent, setWriting, setPredecessor }: Sea
     else {
       setInput(e.target.value);
       setWriting(true);
-      setTagList([...tagList, { name: concat(e.target.value.toLowerCase()), count: 99 }]);
+      setTagList([...tagList, { name: attach(e.target.value.toLowerCase()), count: 99 }]);
     }
   };
 
   const assign = (tag: string) => {
     setContent(tag);
-    setInput(EMPTY_STRING);
-    setWriting(false);
-    setToggle(true);
-    setTagList([]);
+    setPredecessor('/search');
+    redirect('/result');
   }
 
   const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ENTER_KEY && input !== EMPTY_STRING)
-      assign(concat(input));
+      assign(attach(input));
   }
 
   const clear = () => {
     if (writing) {
       setContent('🍰');
       setInput(EMPTY_STRING);
-      setWriting(false);
       setTagList([]);
+      setWriting(false);
     }
   }
-
-  useEffect(() => {
-    setToggle(false);
-  }, [cancel]);
 
   const [path, setPath] = useState([]);
   const [tagList, setTagList] = useState<Tag[]>([]);
