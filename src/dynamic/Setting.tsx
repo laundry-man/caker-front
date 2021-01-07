@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 
-function List() {
+function Setting() {
     return (
         <div>&nbsp;</div>
     );
 }
 
-export default List;
+export default Setting;

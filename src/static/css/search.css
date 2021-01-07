@@ -103,8 +103,7 @@
     font-size: 1.2vh;
     color: #F2F1ED;
 
-    opacity: 0.9;
-    background: #333333;
+    background: rgba(51,51,51, 0.9);
     border-radius: 3px;
 
     margin-left: 1.5vw;

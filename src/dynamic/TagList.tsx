@@ -1,5 +1,5 @@
 import React from 'react'
-import { TagListProps } from '../const/Types';
+import { TagListProps } from '../const/Type';
 
 function TagList({ tags, assign }: TagListProps) {
     return (

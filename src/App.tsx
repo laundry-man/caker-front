@@ -3,9 +3,10 @@ import { BrowserRouter, Switch, Route, Link } from 'react-router-dom';
 
 import Search from './dynamic/Search';
 import Main from './dynamic/Main';
+import Result from './dynamic/Result';
 import Upload from './dynamic/Upload';
-import List from './dynamic/List';
-import Settings from './dynamic/Settings';
+import Post from './dynamic/Post';
+import Setting from './dynamic/Setting';
 
 import Glass from './static/icon/magnifying-glass.svg';
 import Maps from './static/icon/map-marker.svg';
@@ -23,6 +24,7 @@ function App() {
   const [cancel, setCancel] = useState(false);
   const [writing, setWriting] = useState(false);
   const [content, setContent] = useState('🍰');
+  const [predecessor, setPredecessor] = useState("");
 
   const resetContent = () => {
     if (!writing) {
@@ -61,12 +63,28 @@ function App() {
           <div className="caker-body-center">
             <Switch>
               <Route exact path="/search">
-                <Search cancel={cancel} writing={writing} setContent={setContent} setWriting={setWriting}></Search>
+                <Search cancel={cancel} 
+                        writing={writing} 
+                        setContent={setContent} 
+                        setWriting={setWriting} 
+                        setPredecessor={setPredecessor}></Search>
               </Route>
-              <Route exact path="/main"><Main></Main></Route>
-              <Route exact path="/upload"><Upload></Upload></Route>
-              <Route exact path="/list"><List></List></Route>
-              <Route exact path="/settings"><Settings></Settings></Route>
+              <Route exact path="/main">
+                <Main setContent={setContent} 
+                      setPredecessor={setPredecessor}></Main>
+              </Route>
+              <Route exact path="/result">
+                <Result tag={content}></Result>
+              </Route>
+              <Route exact path="/upload">
+                <Upload></Upload>
+              </Route>
+              <Route exact path="/post">
+                <Post></Post>
+              </Route>
+              <Route exact path="/setting">
+                <Setting></Setting>
+              </Route>
             </Switch>
           </div>
           <div className="caker-body-side"></div>
@@ -87,10 +105,10 @@ function App() {
               <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Notes} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/list" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
+              <Link to="/post" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Books} className="icon-color caker-footer-button"></img>
               </Link>
-              <Link to="/settings" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
+              <Link to="/setting" className="caker-footer-button-wrapper" onClick={() => movePage(true)}>
                 <img alt="" src={Cogs} className="icon-color caker-footer-button"></img>
               </Link>
             </div>
