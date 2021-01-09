@@ -30,6 +30,18 @@ export type MainProps = {
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
+export type TagViewListProps = {
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
+export type TagViewProps = {
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
 export type ResultProps = {
     tag: string,
     redirect: (path: string) => void

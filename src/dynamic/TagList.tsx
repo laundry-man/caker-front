@@ -8,7 +8,7 @@ function TagList({ tags, assign }: TagListProps) {
                 return (
                     <div key={index} className="tag" onClick={() => assign(tag.name)}>
                         <div className="tag-name">{tag.name}</div>
-                        <div className="tag-count">{tag.count}k</div>
+                        <div className="tag-count">{tag.count}K</div>
                     </div>
                 );
             })}

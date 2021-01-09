@@ -7,14 +7,14 @@ import { MainProps } from '../const/Type';
 import TagViewList from './TagViewList';
 import '../static/css/main.css';
 
-function Main({ setContent, setPredecessor }: MainProps) {
+function Main({ redirect, setContent, setPredecessor }: MainProps) {
     const base: string[][] = [];
     const [path, setPath] = useState(base);
 
     const getNewData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(setPath([...path, ...path]));
+                resolve();
             }, 1000);
         });
     };
@@ -22,7 +22,7 @@ function Main({ setContent, setPredecessor }: MainProps) {
     const resetData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(setPath(base));
+                resolve();
             }, 1000);
         });
     }
@@ -37,7 +37,9 @@ function Main({ setContent, setPredecessor }: MainProps) {
             pullDownThreshold={67}
             maxPullDownDistance={95}
             className={"pull-to-refresh fade-in-fast"}>
-            <TagViewList></TagViewList>
+            <TagViewList redirect={redirect}
+                         setContent={setContent}
+                         setPredecessor={setPredecessor}></TagViewList>
         </PullToRefresh>
     );
 }

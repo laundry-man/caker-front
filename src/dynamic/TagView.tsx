@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
 
 import { EMPTY_STRING } from '../const/Constant';
+import { TagViewProps } from '../const/Type';
 import Matin1 from '../static/image/matin_1.png';
 
-function TagView() {
+function TagView({ redirect, setContent, setPredecessor }: TagViewProps) {
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
     const [imgSrc, setImgSrc] = useState(EMPTY_STRING);
@@ -11,59 +12,47 @@ function TagView() {
     const [toggle, setToggle] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
-    const apiKey: string = 'n6m4itubfm';
-    const latitude: number = 37.56617246693808;
-    const longitude: number = 126.97789181585031;
-    const color: string = '0x730D26';
-
-    const setPlaceDetails = (width: number, height: number) => {
-        setWidth(width);
-        setHeight(height);
-        setImgSrc([
-            'https://naveropenapi.apigw.ntruss.com/map-static/v2/raster-cors?',
-            `w=${width * 2}`,
-            `h=${height * 2}`,
-            'scale=2',
-            `markers=type:d|size:mid|pos:${longitude} ${latitude}|viewSizeRatio:0.8|color:${color}`,
-            `X-NCP-APIGW-API-KEY-ID=${apiKey}`,
-        ].join('&'));
-    }
-
     const getNextView = () => {
         if (toggle) {
             if (timer !== undefined)
                 clearInterval(timer);
-            setToggle(false);
+            setContent('#고래상점');
+            setPredecessor('/main');
+            redirect('/result');
         }
         else if (width && height) {
             setToggle(true);
-            /*setTimer(
+            setTimer(
                 setTimeout(() => {
                     setToggle(false)
                 }, 5000)
-            );*/
+            );
         }
     }
 
+    const getImageSize = (width: number, height: number) => {
+        setWidth(width);
+        setHeight(height);
+    };
+
     return (
-        <div className="view-wrapper" onClick={getNextView}>
+        <div className="tag-view-wrapper" onClick={getNextView}>
             <div className={toggle ? "invisible" : "fade-in-fast"}>
-                <div className="view-tag-1" >
-                    <span>#고래상점</span>
+                <div className="circle-wrapper">
+                    <div className="circle-1"></div>
                 </div>
-                <img className="view-image" alt="" src={Matin1}
-                    onLoad={(e) => { setPlaceDetails(e.currentTarget.width, e.currentTarget.height) }} />
+                <img className="tag-view-image" alt="" src={Matin1}
+                    onLoad={(e) => getImageSize(e.currentTarget.width, e.currentTarget.height)} />
             </div>
             <div className={toggle ? "fade-in-fast" : "invisible"}>
-                <div className="view-tag-2" >#고래상점</div>
-                <div className="view-map-wrapper" style={{ width: width + 'px', height: height + 'px' }}>
-                    <img className="view-map" src={imgSrc} alt="" />
+                <div className="circle-wrapper">
+                    <div className="circle-2"></div>
                 </div>
-                <div className="view-detail-wrapper">
-                    <div className="view-detail-1">
-                        서울시 명동 120m
+                <div className="tag-view-detail-wrapper" style={{width: width, height: height, backgroundImage: 'url(' + Matin1 + ')'}}>
+                    <div className="tag-view-detail" style={{width: width, height: height}}>
+                        <div className="tag-view-tag">#고래상점</div>
+                        <div className="tag-view-distance">1.2KM 44K</div>
                     </div>
-                    <div className="view-detail-2">44k</div>
                 </div>
             </div>
         </div>
