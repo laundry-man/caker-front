@@ -6,7 +6,7 @@ export type Tag = {
 };
 
 export type ViewListProps = {
-    paths: string[][]
+    pathList: string[][]
 };
 
 export type ViewProps = {
@@ -31,12 +31,14 @@ export type MainProps = {
 }
 
 export type TagViewListProps = {
+    pathList: string[],
     redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type TagViewProps = {
+    path: string,
     redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>

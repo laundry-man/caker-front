@@ -3,10 +3,10 @@ import { ViewListProps } from '../const/Type';
 
 import View from './View';
 
-function ViewList({ paths }: ViewListProps) {
+function ViewList({ pathList }: ViewListProps) {
     return (
         <div className="caker-container">
-            {paths.map((path, index) => <View key={index} path={path}></View>)}
+            {pathList.map((path, index) => <View key={index} path={path}></View>)}
         </div>
     );
 }

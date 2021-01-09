@@ -1,4 +1,4 @@
-.tag-view-wrapper {
+.view-wrapper {
     width: 100%;
 
     position: relative;
@@ -6,7 +6,7 @@
     margin-bottom: 1vh;
 }
 
-.tag-view-image {
+.view-image {
     width: 100%;
 
     border-radius: 5px;
@@ -56,8 +56,8 @@
 }
 
 .circle-1 {
-    width: 1.85vh;
-    height: 1.85vh;
+    width: 1.8vh;
+    height: 1.8vh;
 
     background: #333333;
     border-radius: 50%;
@@ -66,8 +66,8 @@
 }
 
 .circle-2 {
-    width: 1.85vh;
-    height: 1.85vh;
+    width: 1.8vh;
+    height: 1.8vh;
 
     background: #424242;
     border-radius: 50%;

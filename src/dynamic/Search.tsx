@@ -38,7 +38,7 @@ function Search({ redirect, setContent, setPredecessor }: SearchProps) {
 
   const clear = () => {
     if (writing) {
-      setContent('🍰');
+      setContent(EMPTY_STRING);
       setInput(EMPTY_STRING);
       setTagList([]);
       setWriting(false);

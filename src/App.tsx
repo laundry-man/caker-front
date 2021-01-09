@@ -23,7 +23,7 @@ import './static/css/body.css';
 import './static/css/footer.css';
 
 function App() {
-  const [content, setContent] = useState('🍰');
+  const [content, setContent] = useState(EMPTY_STRING);
   const [predecessor, setPredecessor] = useState(EMPTY_STRING);
   const [search, setSearch] = useState(false);
 
@@ -32,15 +32,15 @@ function App() {
 
   const resetContent = () => {
     if (predecessor !== EMPTY_STRING) {
-      setContent('🍰');
+      setContent(EMPTY_STRING);
       redirect(predecessor);
       setPredecessor(EMPTY_STRING);
     }
   }
 
   const pageDidMount = (search: boolean) => {
-    if (content !== '🍰')
-      setContent('🍰');
+    if (content !== EMPTY_STRING)
+      setContent(EMPTY_STRING);
     setSearch(search);
   }
 
