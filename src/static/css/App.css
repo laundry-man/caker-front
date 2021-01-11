@@ -4,6 +4,12 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
+.inverse {
+  background: #333333;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
 .icon-color {
   filter: invert(20%) 
           sepia(7%) 
@@ -13,6 +19,15 @@
           contrast(94%);
 }
 
+.inverse-color {
+  filter: invert(99%) 
+          sepia(0%) 
+          saturate(4121%) 
+          hue-rotate(295deg) 
+          brightness(128%) 
+          contrast(89%);
+}
+
 .invisible {
   display: none;
 }
@@ -20,6 +35,13 @@
 .pull-to-refresh {
   border-radius: 5px;
   background: inherit;
+}
+
+.fade-in-slow {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
 }
 
 .fade-in-slow {
