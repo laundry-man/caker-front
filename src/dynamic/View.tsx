@@ -15,10 +15,12 @@ function View({ path }: ViewProps) {
     });
 
     const getNextView = () => {
-        let _active: boolean[] = [...active];
-        let _f: boolean | undefined = _active.pop();
-        _active.unshift(_f === undefined ? false : _f);
-        setActive(_active);
+        if (loaded) {
+            let _active: boolean[] = [...active];
+            let _f: boolean | undefined = _active.pop();
+            _active.unshift(_f === undefined ? false : _f);
+            setActive(_active);
+        }
     };
 
     const getImageSize = (width: number, height: number) => {
@@ -37,7 +39,7 @@ function View({ path }: ViewProps) {
 
     return (
         <div className="view-wrapper" onClick={getNextView}>
-            {active.map((active, index) => { if (active) return (<ActiveView path={path[index]}></ActiveView>)})}
+            {active.map((active, index) => { if (active) return (<ActiveView path={path[index]}></ActiveView>) })}
         </div>
     );
 }

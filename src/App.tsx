@@ -39,9 +39,14 @@ function App() {
     }
   }
 
+  const changeBackground = (upload: boolean) => {
+    document.body.style.background = upload ? '#333333' : '#F2F1ED';
+  }
+
   const pageDidMount = (search: boolean, upload: boolean = false) => {
     if (content !== EMPTY_STRING)
       setContent(EMPTY_STRING);
+    changeBackground(upload);
     setSearch(search);
     setUpload(upload);
   }
