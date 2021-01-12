@@ -13,6 +13,10 @@ export type ViewProps = {
     path: string[]
 };
 
+export type ActiveViewProps = {
+    path: string
+}
+
 export type TagListProps = {
     tags: Tag[],
     assign: (tag: string) => void
