@@ -1,0 +1,31 @@
+.upload-button {
+    width: 80vw;
+    height: 86vh;
+    
+    text-align: left;
+
+    font-family: San Francisco;
+    font-size: 7vh;
+    color: #F2F1ED;
+    letter-spacing: 1.5px;
+}
+
+.upload-button-content-1 {
+    margin-top: 0.5vh;
+    margin-bottom: -1vh;
+}
+
+.upload-button-content-2 {
+    margin-bottom: -1vh;
+}
+
+.upload-button-content-3 {
+    margin-bottom: -0.8vh;
+}
+
+.upload-button-content-4 {
+    height: 6.5vh;
+    width: 6.5vh;
+
+    margin-left: -0.2vw;
+}
