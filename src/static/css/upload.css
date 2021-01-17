@@ -29,3 +29,32 @@
 
     margin-left: -0.2vw;
 }
+
+.upload-wrapper {
+    width: 80vw; 
+    height: 86vh;
+    
+    border-radius: 5px;
+
+    position: relative;
+    overflow: hidden; 
+
+    z-index: 1;
+}
+
+.inverse-dot-wrapper {
+    width: 80vw;
+    height: 6vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.inverse-dot {
+    color: #F2F1ED;
+    font-size: 1vh;
+    
+    z-index: 1;
+}

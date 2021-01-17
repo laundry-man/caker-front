@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import Cropper from 'react-easy-crop';
 
@@ -6,6 +6,9 @@ import '../static/css/upload.css';
 
 import Tux from '../static/image/Tux.png';
 import Matin1 from '../static/image/matin_1.png';
+import BrownHands3 from '../static/image/brownhands_3.png';
+import Terarosa1 from '../static/image/terarosa_1.png';
+import Anthracite1 from '../static/image/anthracite_1.png';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 function Front() {
@@ -40,34 +43,22 @@ function Upload() {
     }
 
     return (
-        <PullToRefresh
-            onRefresh={getNewData}
-            canFetchMore={true}
-            isPullable={false}
-            fetchMoreThreshold={0}
-            pullDownThreshold={67}
-            maxPullDownDistance={95}
-            className={"pull-to-refresh fade-in-fast"}>
-            <div className="caker-container">
-                <Cropper image={Matin1}
-                    crop={crop}
-                    zoom={zoom}
-                    aspect={1}
-                    onCropChange={setCrop}
-                    onZoomChange={setZoom}
-                    showGrid={false}
-                    style={{ 
-                        containerStyle: { position: 'relative', width: '80vw', height: '80vw' }, 
-                        mediaStyle: { width: '80vw' }, 
-                        cropAreaStyle: { borderRadius: '5px', border: 'none' } 
-                        }}>
-                </Cropper>
-                <div style={{ width: '80vw', height: '80vw' }}>
-                    <Front></Front>
-                    <Front></Front>
-                </div>
+        <div className="upload-wrapper">
+            <div className="inverse-dot-wrapper">
+                <div className="inverse-dot">●</div>
             </div>
-        </PullToRefresh>
+            <Cropper image={BrownHands3}
+                crop={crop}
+                zoom={zoom}
+                aspect={1}
+                onCropChange={setCrop}
+                onZoomChange={setZoom}
+                showGrid={true}
+                style={{
+                    cropAreaStyle: { border: 'none' }
+                }}>
+            </Cropper>
+        </div>
     );
 }
 
