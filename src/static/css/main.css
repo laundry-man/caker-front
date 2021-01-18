@@ -46,7 +46,7 @@
     letter-spacing: 0.5px;
 }
 
-.circle-wrapper {
+.tag-dot-wrapper {
     padding-top: 1vh;
     padding-left: 2vw;
 
@@ -55,22 +55,9 @@
     z-index: 1;
 }
 
-.circle-1 {
-    width: 1.8vh;
-    height: 1.8vh;
-
-    background: #333333;
-    border-radius: 50%;
-    border: 0.2vh solid #333333;
-    box-shadow: inset 0 0 0 0.25vh #F2F1ED;
-}
-
-.circle-2 {
-    width: 1.8vh;
-    height: 1.8vh;
-
-    background: #424242;
-    border-radius: 50%;
-    border: 0.2vh solid #424242;
-    box-shadow: inset 0 0 0 0.25vh #F2F1ED;
+.tag-dot {
+    color: #F2F1ED;
+    font-size: 1vh;
+    
+    z-index: 1;
 }

@@ -37,8 +37,8 @@ function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
     function FrontTagView() {
         return (
             <div className="fade-in-fast" style={{ width: loaded ? width : 'auto', height: loaded ? height : 'auto' }}>
-                <div className="circle-wrapper">
-                    <div className="circle-1"></div>
+                <div className="tag-dot-wrapper">
+                    <div className="tag-dot">●</div>
                 </div>
                 <img className="view-image" alt="" src={path}
                     onLoad={(e) => { if (!loaded) getImageSize(e.currentTarget.width, e.currentTarget.height); }} />
@@ -49,8 +49,8 @@ function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
     function BackTagView() {
         return (
             <div className="fade-in-fast">
-                <div className="circle-wrapper">
-                    <div className="circle-2"></div>
+                <div className="tag-dot-wrapper">
+                    <div className="tag-dot">●</div>
                 </div>
                 <div className="tag-view-detail-wrapper" style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
                     <div className="tag-view-detail" style={{ width: width, height: height }}>
