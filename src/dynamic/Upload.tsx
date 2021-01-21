@@ -1,7 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
 import ImageView from './ImageView';
-import { UploadProps } from '../const/Type';
+import { ActiveImageViewProps, UploadProps } from '../const/Type';
 
 import '../static/css/upload.css';
 
@@ -9,10 +9,34 @@ import Tux from '../static/image/Tux.png';
 
 function Upload({ redirect, setContent, setPredecessor }: UploadProps) {
     const [toggle, setToggle] = useState(false);
-    const [pathList, setPathList] = useState<string[]>([]);
+
+    const [imageViewList, setImageViewList] = useState<JSX.Element[]>();
+
+    const [length, setLength] = useState(0);
+    const [pathIndex, setPathIndex] = useState(0);
+
+    const getNextView = () => {
+        setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
+    };
 
     function Entrance() {
         const fileRef = useRef<HTMLInputElement>(null);
+
+        const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+            let _length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
+            let _imageViewList: JSX.Element[] = [];
+
+            for (let i = 0; _length && i < _length; i++) {
+                const path = (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
+                _imageViewList.push(<ImageView path={path}></ImageView>);
+            }
+
+            setImageViewList(_imageViewList);
+            setLength(_length);
+            setPathIndex(0);
+
+            setToggle(true);
+        };
 
         return (
             <div className="upload fade-in-slow">
@@ -25,25 +49,25 @@ function Upload({ redirect, setContent, setPredecessor }: UploadProps) {
                     accept="image/*"
                     style={{ display: 'none' }}
                     multiple={true}
-                    onChange={(e) => {
-                        let _length = e.currentTarget.files?.length;
-                        let _pathList: string[] = [];
-                        for (let i = 0; _length && i < _length; i++)
-                            _pathList.push((window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i)));
-                        setToggle(!toggle);
-                        setPathList(_pathList);
-                    }} />
+                    onChange={(e) => onChange(e)} />
+            </div>
+        );
+    }
+
+    function ActiveView({ innerElement }: ActiveImageViewProps) {
+        return (
+            <div className="fade-in-slow">
+                {innerElement}
             </div>
         );
     }
 
     return (
         <div className="upload-wrapper">
-            {toggle ? 
-                <ImageView pathList={pathList} 
-                           redirect={redirect} 
-                           setContent={setContent} 
-                           setPredecessor={setPredecessor}></ImageView> :
+            {toggle && imageViewList ?
+                <div onClick={getNextView}>
+                    <ActiveView innerElement={imageViewList[pathIndex]}></ActiveView>
+                </div> :
                 <Entrance></Entrance>
             }
         </div>
