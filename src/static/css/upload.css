@@ -1,35 +1,3 @@
-.upload-button {
-    width: 80vw;
-    height: 86vh;
-    
-    text-align: left;
-
-    font-family: San Francisco;
-    font-size: 7vh;
-    color: #F2F1ED;
-    letter-spacing: 1.5px;
-}
-
-.upload-button-content-1 {
-    margin-top: 0.5vh;
-    margin-bottom: -1vh;
-}
-
-.upload-button-content-2 {
-    margin-bottom: -1vh;
-}
-
-.upload-button-content-3 {
-    margin-bottom: -0.8vh;
-}
-
-.upload-button-content-4 {
-    height: 6.5vh;
-    width: 6.5vh;
-
-    margin-left: -0.2vw;
-}
-
 .upload-wrapper {
     width: 80vw; 
     height: 86vh;
@@ -42,6 +10,43 @@
     z-index: 1;
 }
 
+.upload {
+    width: 80vw;
+    height: 86vh;
+    
+    text-align: left;
+
+    font-family: San Francisco;
+    font-size: 7vh;
+    color: #F2F1ED;
+    letter-spacing: 1.5px;
+}
+
+.upload-content-1 {
+    margin-top: 0.5vh;
+    margin-bottom: -1vh;
+}
+
+.upload-content-2 {
+    margin-bottom: -1vh;
+}
+
+.upload-content-3 {
+    margin-bottom: -0.8vh;
+}
+
+.upload-content-4 {
+    height: 6.5vh;
+    width: 6.5vh;
+
+    margin-left: -0.2vw;
+}
+
+.cropper {
+    width: 80vw;
+    height: 86vh;
+}
+
 .inverse-dot-wrapper {
     width: 80vw;
     height: 6vh;
@@ -50,6 +55,8 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
+
+    z-index: 1;
 }
 
 .inverse-dot {

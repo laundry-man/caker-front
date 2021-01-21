@@ -39,7 +39,7 @@ function Result({ tag }: ResultProps) {
     const getNewData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(setPathList([...pathList, ...pathList]));
+                resolve();
             }, 1000);
         });
     };
@@ -47,7 +47,7 @@ function Result({ tag }: ResultProps) {
     const resetData = (): Promise<void> => {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve(setPathList(base));
+                resolve();
             }, 1000);
         });
     }
@@ -62,10 +62,10 @@ function Result({ tag }: ResultProps) {
 
     return (
         <PullToRefresh
-          onRefresh={getNewData}
+          onRefresh={resetData}
           canFetchMore={true}
           isPullable={true}
-          onFetchMore={resetData}
+          onFetchMore={getNewData}
           fetchMoreThreshold={0}
           pullDownThreshold={67}
           maxPullDownDistance={95}

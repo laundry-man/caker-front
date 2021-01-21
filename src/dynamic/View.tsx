@@ -7,12 +7,12 @@ function View({ path }: ViewProps) {
     const [height, setHeight] = useState(0);
 
     const [loaded, setLoaded] = useState(false);
-    const [active, setActive] = useState(() => {
+    const [active, setActive] = useState((() => {
         let _active: boolean[] = [];
         for (let i = 0; i < path.length; i++)
             _active.push(!i ? true : false);
         return _active;
-    });
+    })());
 
     const getNextView = () => {
         if (loaded) {

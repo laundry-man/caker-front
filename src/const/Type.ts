@@ -5,6 +5,20 @@ export type Tag = {
     count: number
 };
 
+export type TagViewListProps = {
+    pathList: string[],
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
+export type TagViewProps = {
+    path: string,
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
 export type ViewListProps = {
     pathList: string[][]
 };
@@ -15,6 +29,13 @@ export type ViewProps = {
 
 export type ActiveViewProps = {
     path: string
+}
+
+export type ImageViewProps = {
+    pathList: string[],
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
 export type TagListProps = {
@@ -34,21 +55,19 @@ export type MainProps = {
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
-export type TagViewListProps = {
-    pathList: string[],
-    redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
-}
-
-export type TagViewProps = {
-    path: string,
-    redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
-}
-
 export type ResultProps = {
     tag: string,
     redirect: (path: string) => void
+}
+
+export type UploadProps = {
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
+export type FileProps = {
+    tempPath: string,
+    fileList: FileList | null,
+    setFileList: React.Dispatch<React.SetStateAction<FileList | null>>
 }

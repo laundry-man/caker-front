@@ -61,7 +61,7 @@ function App() {
               <div className="inverse-header-title">
                 <div>CAKER</div>
               </div>
-              <div className="inverse-header-title">
+              <div className="inverse-header-content">
                 <div onClick={() => resetContent()}>{content}</div>
               </div>
             </div>
@@ -88,7 +88,9 @@ function App() {
                   redirect={redirect}></Result>
               </Route>
               <Route exact path="/upload">
-                <Upload></Upload>
+                <Upload redirect={redirect}
+                  setContent={setContent}
+                  setPredecessor={setPredecessor}></Upload>
               </Route>
               <Route exact path="/post">
                 <Post></Post>
@@ -163,7 +165,9 @@ function App() {
                     redirect={redirect}></Result>
                 </Route>
                 <Route exact path="/upload">
-                  <Upload></Upload>
+                  <Upload redirect={redirect}
+                    setContent={setContent}
+                    setPredecessor={setPredecessor}></Upload>
                 </Route>
                 <Route exact path="/post">
                   <Post></Post>
