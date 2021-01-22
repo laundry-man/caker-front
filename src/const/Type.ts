@@ -62,7 +62,7 @@ export type ResultProps = {
 }
 
 export type UploadProps = {
+    contentRef: React.RefObject<HTMLDivElement>,
     redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }

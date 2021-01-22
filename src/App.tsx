@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useRef, useState } from 'react';
 
 import { Switch, Route, Link, useHistory } from 'react-router-dom';
 
@@ -31,6 +31,8 @@ function App() {
   const history = useHistory();
   const redirect = (path: string) => history.push(path);
 
+  const contentRef = useRef<HTMLDivElement>(null);
+
   const resetContent = () => {
     if (predecessor !== EMPTY_STRING) {
       setContent(EMPTY_STRING);
@@ -62,7 +64,7 @@ function App() {
                 <div>CAKER</div>
               </div>
               <div className="inverse-header-content">
-                <div onClick={() => resetContent()}>{content}</div>
+                <div id="content" ref={contentRef} onClick={() => resetContent()}>{content}</div>
               </div>
             </div>
             <div className="inverse-header-bar">&nbsp;</div>
@@ -88,8 +90,8 @@ function App() {
                   redirect={redirect}></Result>
               </Route>
               <Route exact path="/upload">
-                <Upload redirect={redirect}
-                  setContent={setContent}
+                <Upload contentRef={contentRef}
+                  redirect={redirect}
                   setPredecessor={setPredecessor}></Upload>
               </Route>
               <Route exact path="/post">
@@ -165,8 +167,9 @@ function App() {
                     redirect={redirect}></Result>
                 </Route>
                 <Route exact path="/upload">
-                  <Upload redirect={redirect}
-                    setContent={setContent}
+                  <Upload 
+                  contentRef={contentRef}
+                  redirect={redirect}
                     setPredecessor={setPredecessor}></Upload>
                 </Route>
                 <Route exact path="/post">

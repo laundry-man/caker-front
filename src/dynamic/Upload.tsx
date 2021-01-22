@@ -7,15 +7,18 @@ import '../static/css/upload.css';
 
 import Tux from '../static/image/Tux.png';
 
-function Upload({ redirect, setContent, setPredecessor }: UploadProps) {
+function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     const [toggle, setToggle] = useState(false);
 
     const [imageViewList, setImageViewList] = useState<JSX.Element[]>();
 
     const [length, setLength] = useState(0);
+
+    const [preIndex, setPreIndex] = useState(0);
     const [pathIndex, setPathIndex] = useState(0);
 
     const getNextView = () => {
+        setPreIndex(pathIndex);
         setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
     };
 
@@ -33,7 +36,8 @@ function Upload({ redirect, setContent, setPredecessor }: UploadProps) {
 
             setImageViewList(_imageViewList);
             setLength(_length);
-            setPathIndex(0);
+
+            contentRef.current?.append(`1/${_length}`);
 
             setToggle(true);
         };
@@ -62,10 +66,21 @@ function Upload({ redirect, setContent, setPredecessor }: UploadProps) {
         );
     }
 
+    useEffect(() => {
+        setPredecessor('/upload');
+    }, []);
+
+    useEffect(() => {
+        if (preIndex != pathIndex) {
+            contentRef.current?.removeChild(contentRef.current?.childNodes[0]);
+            contentRef.current?.append(`${pathIndex + 1}/${length}`);
+        }
+    }, [pathIndex]);
+
     return (
         <div className="upload-wrapper">
             {toggle && imageViewList ?
-                <div onClick={getNextView}>
+                <div onClick={() => getNextView()}>
                     <ActiveView innerElement={imageViewList[pathIndex]}></ActiveView>
                 </div> :
                 <Entrance></Entrance>
