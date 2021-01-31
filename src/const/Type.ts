@@ -36,6 +36,7 @@ export type ImageViewProps = {
 }
 
 export type ActiveImageViewProps = {
+    getNextView: () => void,
     innerElement: JSX.Element
 }
 

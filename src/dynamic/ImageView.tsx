@@ -20,6 +20,7 @@ function ImageView({ path }: ActiveViewProps) {
                     aspect={1}
                     onCropChange={setCrop}
                     onZoomChange={setZoom}
+                    onCropComplete={(croppedArea, croppedAreaPixels) => {console.log(croppedArea); console.log(croppedAreaPixels);}}
                     style={{
                         cropAreaStyle: { border: 'none' }
                     }}>

@@ -1,10 +1,12 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import PullToRefresh from 'react-simple-pull-to-refresh';
+
 import ImageView from './ImageView';
+import ImageList from './ImageList';
 import { ActiveImageViewProps, UploadProps } from '../const/Type';
 
 import '../static/css/upload.css';
-
 import Tux from '../static/image/Tux.png';
 
 function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
@@ -22,7 +24,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
         setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
     };
 
-    function Entrance() {
+    function FrontUpload() {
         const fileRef = useRef<HTMLInputElement>(null);
 
         const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -34,10 +36,12 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
                 _imageViewList.push(<ImageView path={path}></ImageView>);
             }
 
-            setImageViewList(_imageViewList);
-            setLength(_length);
+            _imageViewList.push(<BackUpload></BackUpload>);
 
-            contentRef.current?.append(`1/${_length}`);
+            setImageViewList(_imageViewList);
+            setLength(_length + 1);
+
+            contentRef.current?.append(`1/${_length + 1}`);
 
             setToggle(true);
         };
@@ -58,9 +62,50 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
         );
     }
 
-    function ActiveView({ innerElement }: ActiveImageViewProps) {
+    function BackUpload() {
+        const getNewData = (): Promise<void> => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+        };
+
+        const resetData = (): Promise<void> => {
+            return new Promise((resolve, reject) => {
+                setTimeout(() => {
+                    resolve();
+                }, 1000);
+            });
+        }
+
         return (
-            <div className="fade-in-slow">
+            <div className="cropper">
+                <div className="text-input-wrapper">
+                    <input className="text-input-prepend" value="#" readOnly />
+                    <input className="text-input" placeholder="태그" />
+                    <input className="text-input-append" readOnly />
+                </div>
+                <div className="temp">
+                </div>
+                <PullToRefresh
+                    onRefresh={resetData}
+                    canFetchMore={true}
+                    isPullable={true}
+                    onFetchMore={getNewData}
+                    fetchMoreThreshold={0}
+                    pullDownThreshold={67}
+                    maxPullDownDistance={95}
+                    className={"pull-to-refresh fade-in-fast"}>
+                    <ImageList></ImageList>
+                </PullToRefresh>
+            </div>
+        );
+    }
+
+    function ActiveView({ getNextView, innerElement }: ActiveImageViewProps) {
+        return (
+            <div onClick={() => getNextView()} className="fade-in-slow">
                 {innerElement}
             </div>
         );
@@ -80,11 +125,8 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     return (
         <div className="upload-wrapper">
             {toggle && imageViewList ?
-                <div onClick={() => getNextView()}>
-                    <ActiveView innerElement={imageViewList[pathIndex]}></ActiveView>
-                </div> :
-                <Entrance></Entrance>
-            }
+                <ActiveView getNextView={getNextView} innerElement={imageViewList[pathIndex]}></ActiveView> :
+                <FrontUpload></FrontUpload>}
         </div>
     );
 }
