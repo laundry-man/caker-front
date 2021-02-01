@@ -4,7 +4,10 @@ import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import ImageView from './ImageView';
 import ImageList from './ImageList';
-import { ActiveImageViewProps, UploadProps } from '../const/Type';
+import TagList from './TagList';
+
+import { ActiveImageViewProps, UploadProps, Tag } from '../const/Type';
+import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../const/Constant';
 
 import '../static/css/upload.css';
 import Tux from '../static/image/Tux.png';
@@ -63,6 +66,44 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     }
 
     function BackUpload() {
+        const [toggle, setToggle] = useState(false);
+        
+        const [input, setInput] = useState(EMPTY_STRING);
+        const [writing, setWriting] = useState(false);
+        const [tagList, setTagList] = useState<Tag[]>([]);
+
+        const attach = (tag: string) => '#' + tag.toLowerCase();
+
+        const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+            if (e.target.value === EMPTY_STRING) {
+                setInput(EMPTY_STRING);
+                setWriting(false);
+            }
+            else {
+                setInput(e.target.value);
+                setWriting(true);
+                setTagList([...tagList, { name: attach(e.target.value.toLowerCase()), count: 99 }]);
+            }
+        };
+
+        const assign = () => {
+            setToggle(false);
+        }
+
+        const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+            if (e.key === ENTER_KEY)
+                assign();
+        }
+
+        const clear = () => {
+            if (writing) {
+                setInput(EMPTY_STRING);
+                setTagList([]);
+                setWriting(false);
+                setToggle(false);
+            }
+        }
+
         const getNewData = (): Promise<void> => {
             return new Promise((resolve, reject) => {
                 setTimeout(() => {
@@ -81,24 +122,37 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 
         return (
             <div className="cropper">
-                <div className="text-input-wrapper">
-                    <input className="text-input-prepend" value="#" readOnly />
-                    <input className="text-input" placeholder="태그" />
-                    <input className="text-input-append" readOnly />
+                <div className="post-wrapper">
+                    <input className="post-prepend" value="#" readOnly />
+                    <input className="post-input" placeholder="태그"
+                        value={input}
+                        onClick={() => setToggle(true)}
+                        onChange={(e) => change(e)}
+                        onKeyUp={(e) => submit(e)} />
+                    <input className="post-append"
+                        value={writing ? RESET_ICON : EMPTY_STRING}
+                        onClick={() => clear()}
+                        readOnly />
                 </div>
-                <div className="temp">
-                </div>
-                <PullToRefresh
-                    onRefresh={resetData}
-                    canFetchMore={true}
-                    isPullable={true}
-                    onFetchMore={getNewData}
-                    fetchMoreThreshold={0}
-                    pullDownThreshold={67}
-                    maxPullDownDistance={95}
-                    className={"pull-to-refresh fade-in-fast"}>
-                    <ImageList></ImageList>
-                </PullToRefresh>
+
+                { toggle ?
+                    <TagList tags={tagList} inverse={true} writing={writing} assign={assign}></TagList> :
+                    <>
+                        <div className="temp fade-in-fast">
+                        </div>
+                        <PullToRefresh
+                            onRefresh={resetData}
+                            canFetchMore={true}
+                            isPullable={true}
+                            onFetchMore={getNewData}
+                            fetchMoreThreshold={0}
+                            pullDownThreshold={67}
+                            maxPullDownDistance={95}
+                            className={"pull-to-refresh fade-in-fast"}>
+                            <ImageList></ImageList>
+                        </PullToRefresh>
+                    </>
+                }
             </div>
         );
     }
@@ -126,7 +180,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
         <div className="upload-wrapper">
             {toggle && imageViewList ?
                 <ActiveView getNextView={getNextView} innerElement={imageViewList[pathIndex]}></ActiveView> :
-                <FrontUpload></FrontUpload>}
+                <BackUpload></BackUpload>}
         </div>
     );
 }

@@ -73,6 +73,11 @@
     font-size: 1vh;
 }
 
+.inverse-dot {
+    color: #F2F1Ed;
+    font-size: 1vh;
+}
+
 .tag-wrapper {
     height: 76vh;
 
@@ -96,6 +101,14 @@
     font-family: San Francisco;
     font-size: 3.6vh;
     color: #333333;
+}
+
+.inverse-tag-name {
+    text-align: center;
+
+    font-family: San Francisco;
+    font-size: 3.6vh;
+    color: #F2F1ED;
 }
 
 .tag-count {

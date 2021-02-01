@@ -10,6 +10,7 @@ import '../static/css/search.css';
 function Search({ redirect, setContent, setPredecessor }: SearchProps) {
   const [input, setInput] = useState(EMPTY_STRING);
   const [writing, setWriting] = useState(false);
+  const [tagList, setTagList] = useState<Tag[]>([]);
 
   const attach = (tag: string) => '#' + tag.toLowerCase();
 
@@ -45,9 +46,6 @@ function Search({ redirect, setContent, setPredecessor }: SearchProps) {
     }
   }
 
-  const [path, setPath] = useState([]);
-  const [tagList, setTagList] = useState<Tag[]>([]);
-
   return (
     <div className="fade-in-fast">
       <div className="search-wrapper">
@@ -57,10 +55,7 @@ function Search({ redirect, setContent, setPredecessor }: SearchProps) {
         <input className="search-append" value={writing ? RESET_ICON : EMPTY_STRING}
           onClick={() => clear()} readOnly />
       </div>
-      <div className="dot-wrapper">
-        <div className={writing ? "dot fade-in-fast" : "invisible"}>●</div>
-      </div>
-      <TagList tags={tagList} assign={assign}></TagList>
+      <TagList tags={tagList} inverse={false} writing={writing} assign={assign}></TagList>
     </div>
   );
 }

@@ -42,6 +42,8 @@ export type ActiveImageViewProps = {
 
 export type TagListProps = {
     tags: Tag[],
+    inverse: boolean,
+    writing: boolean,
     assign: (tag: string) => void
 };
 
