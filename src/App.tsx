@@ -2,8 +2,6 @@ import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { EMPTY_STRING } from './const/Constant';
-import Primary from './dynamic/frame/Primary';
-import Secondary from './dynamic/frame/Secondary';
 
 function App() {
   const [content, setContent] = useState(EMPTY_STRING);
@@ -43,28 +41,7 @@ function App() {
 
   return (
     <>
-      {isPostUpload ?
-        <Secondary
-          content={content}
-          isTagSearch={isTagSearch}
-          contentRef={contentRef}
-          setContent={setContent}
-          setPredecessor={setPredecessor}
-          redirect={redirect}
-          clearContent={clearContent}
-          pageDidMount={pageDidMount}
-        /> :
-        <Primary
-          content={content}
-          isTagSearch={isTagSearch}
-          contentRef={contentRef}
-          setContent={setContent}
-          setPredecessor={setPredecessor}
-          redirect={redirect}
-          clearContent={clearContent}
-          pageDidMount={pageDidMount}
-        />
-      }
+      {isPostUpload ? "" : ""}
     </>
   );
 };
