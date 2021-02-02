@@ -108,13 +108,13 @@ function Primary({
                         <Link to={isTagSearch ? "/geotagsearch" : "/tagsearch"} className={primary.footerButtonWrapper} onClick={() => pageDidMount(!isTagSearch)}>
                             <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([primary.primaryColor, primary.footerButton])} />
                         </Link>
-                        <Link to="/postupload" className="footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
+                        <Link to="/postupload" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true, true)}>
                             <img alt="" src={Notes} className={classNames([primary.primaryColor, primary.footerButton])} />
                         </Link>
-                        <Link to="/mypostlist" className="footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                        <Link to="/mypostlist" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
                             <img alt="" src={Books} className={classNames([primary.primaryColor, primary.footerButton])} />
                         </Link>
-                        <Link to="/config" className="footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                        <Link to="/config" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
                             <img alt="" src={Cogs} className={classNames([primary.primaryColor, primary.footerButton])} />
                         </Link>
                     </div>

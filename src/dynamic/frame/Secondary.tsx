@@ -108,13 +108,13 @@ function Secondary({
                         <Link to={isTagSearch ? "/geotagsearch" : "/tagsearch"} className={secondary.footerButtonWrapper} onClick={() => pageDidMount(!isTagSearch)}>
                             <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
                         </Link>
-                        <Link to="/postupload" className="footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
+                        <Link to="/postupload" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true, true)}>
                             <img alt="" src={Notes} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
                         </Link>
-                        <Link to="/mypostlist" className="footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                        <Link to="/mypostlist" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
                             <img alt="" src={Books} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
                         </Link>
-                        <Link to="/config" className="footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                        <Link to="/config" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
                             <img alt="" src={Cogs} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
                         </Link>
                     </div>
