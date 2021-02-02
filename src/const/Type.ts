@@ -5,20 +5,6 @@ export type Tag = {
     count: number
 };
 
-export type TagViewListProps = {
-    pathList: string[],
-    redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
-}
-
-export type TagViewProps = {
-    path: string,
-    redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
-}
-
 export type ViewListProps = {
     pathList: string[][]
 };
@@ -52,12 +38,6 @@ export type SearchProps = {
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 };
-
-export type MainProps = {
-    redirect: (path: string) => void,
-    setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
-}
 
 export type ResultProps = {
     tag: string,

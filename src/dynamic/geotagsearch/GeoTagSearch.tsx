@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
-import { MainProps } from '../../const/Type';
 import TagViewList from './TagViewList';
 
 import Matin1 from '../../static/image/matin_1.png';
@@ -14,7 +13,17 @@ import Terarosa1 from '../../static/image/terarosa_1.png';
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 
-function GeoTagSearch({ redirect, setContent, setPredecessor }: MainProps) {
+type GeoTagSearchProps = {
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
+function GeoTagSearch({ 
+    redirect, 
+    setContent, 
+    setPredecessor }: GeoTagSearchProps) {
+
     const [pathList, setPathList] = useState([Matin1, Anthracite1, BrownHands3, PotatoField2, Terarosa1]);
 
     const getNewData = (): Promise<void> => {
@@ -43,10 +52,12 @@ function GeoTagSearch({ redirect, setContent, setPredecessor }: MainProps) {
             pullDownThreshold={67}
             maxPullDownDistance={95}
             className={classNames([index.pullToRefresh, index.fadeInFast])}>
-            <TagViewList pathList={pathList}
-                         redirect={redirect}
-                         setContent={setContent}
-                         setPredecessor={setPredecessor}></TagViewList>
+            <TagViewList 
+                pathList={pathList}
+                redirect={redirect}
+                setContent={setContent}
+                setPredecessor={setPredecessor}
+            />
         </PullToRefresh>
     );
 }

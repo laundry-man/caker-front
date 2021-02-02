@@ -1,11 +1,11 @@
 import React from 'react';
 import { Switch, Route, Link } from 'react-router-dom';
 
-import GeoTagSearch from '../geo_tag_search/GeoTagSearch';
-import TagSearch from '../tag_search/TagSearch';
-import TagSearchResult from '../tag_search_result/TagSearchResult';
-import PostUpload from '../post_upload/PostUpload';
-import MyPostList from '../my_post_list/MyPostList';
+import GeoTagSearch from '../geotagsearch/GeoTagSearch';
+import TagSearch from '../tagsearch/TagSearch';
+import TagSearchResult from '../tagsearchresult/TagSearchResult';
+import PostUpload from '../postupload/PostUpload';
+import MyPostList from '../mypostlist/MyPostList';
 import Config from '../config/Config';
 
 /* temp */

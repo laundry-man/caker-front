@@ -1,11 +1,21 @@
 import React, { useState } from 'react';
 
-import { TagViewProps } from '../../const/Type';
-
 import index from '../../static/css/index.module.css';
-import tagView from '../../static/css/geo_tag_search/tagView.module.css';
+import tagView from '../../static/css/geotagsearch/tagView.module.css';
 
-function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
+type TagViewProps = {
+    path: string,
+    redirect: (path: string) => void,
+    setContent: React.Dispatch<React.SetStateAction<string>>,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
+
+function TagView({
+    path,
+    redirect,
+    setContent,
+    setPredecessor }: TagViewProps) {
+
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
@@ -37,26 +47,37 @@ function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
         setLoaded(true);
     };
 
-    function FrontTagView() {
+    function Primary() {
         return (
-            <div className={index.fadeInFast} style={{ width: loaded ? width : 'auto', height: loaded ? height : 'auto' }}>
+            <div className={index.fadeInFast} 
+                style={{ 
+                    width: loaded ? width : 'auto', 
+                    height: loaded ? height : 'auto'
+                }}>
                 <div className={tagView.dotWrapper}>
                     <div className={tagView.dot}>●</div>
                 </div>
                 <img className={tagView.image} alt="" src={path}
-                    onLoad={(e) => { if (!loaded) getImageSize(e.currentTarget.width, e.currentTarget.height); }} />
+                    onLoad={(e) => { 
+                        if (!loaded) 
+                            getImageSize(e.currentTarget.width, e.currentTarget.height); 
+                        }
+                    } 
+                />
             </div>
         );
     }
 
-    function BackTagView() {
+    function Secondary() {
         return (
             <div className={index.fadeInFast}>
                 <div className={tagView.dotWrapper}>
                     <div className={tagView.dot}>●</div>
                 </div>
-                <div className={tagView.detailWrapper} style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
-                    <div className={tagView.detail} style={{ width: width, height: height }}>
+                <div className={tagView.detailWrapper} 
+                    style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
+                    <div className={tagView.detail} 
+                        style={{ width: width, height: height }}>
                         <div className={tagView.tag}>#고래상점</div>
                         <div className={tagView.distance}>1.2KM 44K</div>
                     </div>
@@ -67,7 +88,7 @@ function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
 
     return (
         <div className={tagView.wrapper} onClick={getNextView}>
-            {toggle ? <BackTagView></BackTagView> : <FrontTagView></FrontTagView>}
+            {toggle ? <Secondary /> : <Primary />}
         </div>
     );
 }
