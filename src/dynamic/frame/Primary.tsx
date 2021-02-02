@@ -60,8 +60,8 @@ function Primary({
                 <div className={primary.headerSide} />
             </div>
             <div className={primary.body}>
-                <div className={primary.bodySide}></div>
-                <div className={primary.bodyCentor}>
+                <div className={primary.bodySide} />
+                <div className={primary.bodyCenter}>
                     <Switch>
                         <Route exact path="/tagsearch">
                             <TagSearch
@@ -102,7 +102,7 @@ function Primary({
             </div>
             <div className={primary.footer}>
                 <div className={primary.footerSide} />
-                <div className={primary.footerCentor}>
+                <div className={primary.footerCenter}>
                     <div className={primary.footerBar}>&nbsp;</div>
                     <div className={primary.footerWrapper}>
                         <Link to={isTagSearch ? "/geotagsearch" : "/tagsearch"} className={primary.footerButtonWrapper} onClick={() => pageDidMount(!isTagSearch)}>

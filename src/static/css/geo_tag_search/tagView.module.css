@@ -1,4 +1,4 @@
-.view-wrapper {
+.wrapper {
     width: 100%;
 
     position: relative;
@@ -6,18 +6,18 @@
     margin-bottom: 1vh;
 }
 
-.view-image {
+.image {
     width: 100%;
 
     border-radius: 5px;
 }
 
-.tag-view-detail-wrapper {
+.detail-wrapper {
     background-size: cover;
     border-radius: 5px;
 }
 
-.tag-view-detail {
+.detail {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +29,7 @@
     backdrop-filter: brightness(60%);
 }
 
-.tag-view-tag {
+.tag {
     font-family: San Francisco;
     font-size: 2.1vh;
     color: #FFFFFF;
@@ -38,7 +38,7 @@
     margin-bottom: 0.6vh;
 }
 
-.tag-view-distance {
+.distance {
     font-family: San Francisco;
     font-weight: bold;
     font-size: 1.8vh;
@@ -46,7 +46,7 @@
     letter-spacing: 0.5px;
 }
 
-.tag-dot-wrapper {
+.dot-wrapper {
     padding-top: 1vh;
     padding-left: 2vw;
 
@@ -55,7 +55,7 @@
     z-index: 1;
 }
 
-.tag-dot {
+.dot {
     color: #F2F1ED;
     font-size: 1vh;
     
