@@ -118,3 +118,65 @@ body {
   margin: 0;
   background-color: #F2F1ED;
 }
+
+.primary-color {
+  filter: invert(20%) 
+          sepia(7%) 
+          saturate(6%) 
+          hue-rotate(49deg) 
+          brightness(89%) 
+          contrast(94%);
+}
+
+.secondary-color {
+  filter: invert(99%) 
+          sepia(0%) 
+          saturate(4121%) 
+          hue-rotate(295deg) 
+          brightness(128%) 
+          contrast(89%);
+}
+
+.invisible {
+  display: none;
+}
+
+.pull-to-refresh {
+  border-radius: 5px;
+  background: inherit;
+}
+
+.fade-in-slow {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+}
+
+.fade-in-slow {
+  animation: fadein 2s;
+  -moz-animation: fadein 2s;
+  -webkit-animation: fadein 2s;
+  -o-animation: fadein 2s;
+}
+
+.fade-in-fast {
+  animation: fadein 1.2s;
+  -moz-animation: fadein 1.2s;
+  -webkit-animation: fadein 1.2s;
+  -o-animation: fadein 1.2s;
+}
+
+.fade-out-slow {
+  animation: fadeout 2s;
+  -moz-animation: fadeout 2s;
+  -webkit-animation: fadeout 2s;
+  -o-animation: fadeout 2s;
+}
+
+.fade-out-fast {
+  animation: fadeout 1.2s;
+  -moz-animation: fadeout 1.2s;
+  -webkit-animation: fadeout 1.2s;
+  -o-animation: fadeout 1.2s;
+}
