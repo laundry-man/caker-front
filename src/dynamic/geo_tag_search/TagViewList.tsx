@@ -1,5 +1,5 @@
 import React from 'react';
-import { TagViewListProps } from '../const/Type';
+import { TagViewListProps } from '../../const/Type';
 
 import TagView from './TagView';
 

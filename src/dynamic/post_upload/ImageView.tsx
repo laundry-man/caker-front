@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import Cropper from 'react-easy-crop';
 
-import { ActiveViewProps } from '../const/Type';
+import { ActiveViewProps } from '../../const/Type';
 
 function ImageView({ path }: ActiveViewProps) {
     const [crop, setCrop] = useState({ x: 0, y: 0 });

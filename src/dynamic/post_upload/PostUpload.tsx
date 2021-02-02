@@ -4,13 +4,13 @@ import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import ImageView from './ImageView';
 import ImageList from './ImageList';
-import TagList from './TagList';
+import TagList from '../common/TagList';
 
-import { ActiveImageViewProps, UploadProps, Tag } from '../const/Type';
-import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../const/Constant';
+import { ActiveImageViewProps, UploadProps, Tag } from '../../const/Type';
+import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../../const/Constant';
 
-import '../static/css/upload.css';
-import Tux from '../static/image/Tux.png';
+import '../../static/css/upload.css';
+import Tux from '../../static/image/Tux.png';
 
 function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     const [toggle, setToggle] = useState(false);
@@ -74,6 +74,13 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 
         const attach = (tag: string) => '#' + tag.toLowerCase();
 
+        const search = () => {
+            setInput(EMPTY_STRING);
+            setTagList([]);
+            setWriting(false);
+            setToggle(true);
+        }
+
         const change = (e: React.ChangeEvent<HTMLInputElement>) => {
             if (e.target.value === EMPTY_STRING) {
                 setInput(EMPTY_STRING);
@@ -126,7 +133,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
                     <input className="post-prepend" value="#" readOnly />
                     <input className="post-input" placeholder="태그"
                         value={input}
-                        onClick={() => setToggle(true)}
+                        onClick={search}
                         onChange={(e) => change(e)}
                         onKeyUp={(e) => submit(e)} />
                     <input className="post-append"

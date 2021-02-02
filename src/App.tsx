@@ -4,12 +4,12 @@ import { Switch, Route, Link, useHistory } from 'react-router-dom';
 
 import { EMPTY_STRING } from './const/Constant';
 
-import Search from './dynamic/Search';
-import Main from './dynamic/Main';
-import Result from './dynamic/Result';
-import Upload from './dynamic/Upload';
-import Post from './dynamic/Post';
-import Setting from './dynamic/Setting';
+import GeoTagSearch from './dynamic/geo_tag_search/GeoTagSearch';
+import TagSearch from './dynamic/tag_search/TagSearch';
+import TagSearchResult from './dynamic/tag_search_result/TagSearchResult';
+import PostUpload from './dynamic/post_upload/PostUpload';
+import MyPostList from './dynamic/my_post_list/MyPostList';
+import Config from './dynamic/config/Config';
 
 import Glass from './static/icon/magnifying-glass.svg';
 import Maps from './static/icon/map-marker.svg';
@@ -75,30 +75,36 @@ function App() {
           <div className="caker-body-side"></div>
           <div className="caker-body-center">
             <Switch>
-              <Route exact path="/search">
-                <Search redirect={redirect}
-                  setContent={setContent}
-                  setPredecessor={setPredecessor}></Search>
-              </Route>
-              <Route exact path="/main">
-                <Main redirect={redirect}
-                  setContent={setContent}
-                  setPredecessor={setPredecessor}></Main>
-              </Route>
-              <Route exact path="/result">
-                <Result tag={content}
-                  redirect={redirect}></Result>
-              </Route>
-              <Route exact path="/upload">
-                <Upload contentRef={contentRef}
+              <Route exact path="/tagsearch">
+                <TagSearch
                   redirect={redirect}
-                  setPredecessor={setPredecessor}></Upload>
+                  setContent={setContent}
+                  setPredecessor={setPredecessor}
+                />
               </Route>
-              <Route exact path="/post">
-                <Post></Post>
+              <Route exact path="/geotagsearch">
+                <GeoTagSearch redirect={redirect}
+                  setContent={setContent}
+                  setPredecessor={setPredecessor}></GeoTagSearch>
               </Route>
-              <Route exact path="/setting">
-                <Setting></Setting>
+              <Route exact path="/tagsearchresult">
+                <TagSearchResult 
+                  tag={content}
+                  redirect={redirect} 
+                />
+              </Route>
+              <Route exact path="/postupload">
+                <PostUpload 
+                  contentRef={contentRef}
+                  redirect={redirect}
+                  setPredecessor={setPredecessor} 
+                />
+              </Route>
+              <Route exact path="/mypostlist">
+                <MyPostList />
+              </Route>
+              <Route exact path="/config">
+                <Config></Config>
               </Route>
             </Switch>
           </div>
@@ -109,16 +115,16 @@ function App() {
           <div className="caker-footer-center">
             <div className="inverse-footer-bar">&nbsp;</div>
             <div className="caker-footer-wrapper">
-              <Link to={search ? "/main" : "/search"} className="caker-footer-button-wrapper" onClick={() => pageDidMount(!search)}>
+              <Link to={search ? "/geotagsearch" : "/tagsearch"} className="caker-footer-button-wrapper" onClick={() => pageDidMount(!search)}>
                 <img alt="" src={search ? Maps : Glass} className="inverse-color caker-footer-button"></img>
               </Link>
-              <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
+              <Link to="/postupload" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
                 <img alt="" src={Notes} className="inverse-color caker-footer-button"></img>
               </Link>
-              <Link to="/post" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
+              <Link to="/mypostlist" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                 <img alt="" src={Books} className="inverse-color caker-footer-button"></img>
               </Link>
-              <Link to="/setting" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
+              <Link to="/config" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                 <img alt="" src={Cogs} className="inverse-color caker-footer-button"></img>
               </Link>
             </div>
@@ -152,31 +158,36 @@ function App() {
             <div className="caker-body-side"></div>
             <div className="caker-body-center">
               <Switch>
-                <Route exact path="/search">
-                  <Search redirect={redirect}
+                <Route exact path="/tagsearch">
+                  <TagSearch
+                    redirect={redirect}
                     setContent={setContent}
-                    setPredecessor={setPredecessor}></Search>
+                    setPredecessor={setPredecessor}
+                  />
                 </Route>
-                <Route exact path="/main">
-                  <Main redirect={redirect}
+                <Route exact path="/geotagsearch">
+                  <GeoTagSearch redirect={redirect}
                     setContent={setContent}
-                    setPredecessor={setPredecessor}></Main>
+                    setPredecessor={setPredecessor}></GeoTagSearch>
                 </Route>
-                <Route exact path="/result">
-                  <Result tag={content}
-                    redirect={redirect}></Result>
+                <Route exact path="/tagsearchresult">
+                  <TagSearchResult 
+                    tag={content}
+                    redirect={redirect}
+                  />
                 </Route>
-                <Route exact path="/upload">
-                  <Upload 
-                  contentRef={contentRef}
-                  redirect={redirect}
-                    setPredecessor={setPredecessor}></Upload>
+                <Route exact path="/postupload">
+                  <PostUpload
+                    contentRef={contentRef}
+                    redirect={redirect}
+                    setPredecessor={setPredecessor}
+                  />
                 </Route>
-                <Route exact path="/post">
-                  <Post></Post>
+                <Route exact path="/mypostlist">
+                  <MyPostList />
                 </Route>
-                <Route exact path="/setting">
-                  <Setting></Setting>
+                <Route exact path="/config">
+                  <Config></Config>
                 </Route>
               </Switch>
             </div>
@@ -187,16 +198,16 @@ function App() {
             <div className="caker-footer-center">
               <div className="caker-footer-bar">&nbsp;</div>
               <div className="caker-footer-wrapper">
-                <Link to={search ? "/main" : "/search"} className="caker-footer-button-wrapper" onClick={() => pageDidMount(!search)}>
+                <Link to={search ? "/geotagsearch" : "/tagsearch"} className="caker-footer-button-wrapper" onClick={() => pageDidMount(!search)}>
                   <img alt="" src={search ? Maps : Glass} className="icon-color caker-footer-button"></img>
                 </Link>
-                <Link to="/upload" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
+                <Link to="/postupload" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true, true)}>
                   <img alt="" src={Notes} className="icon-color caker-footer-button"></img>
                 </Link>
-                <Link to="/post" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                <Link to="/mypostlist" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                   <img alt="" src={Books} className="icon-color caker-footer-button"></img>
                 </Link>
-                <Link to="/setting" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
+                <Link to="/config" className="caker-footer-button-wrapper" onClick={() => pageDidMount(true)}>
                   <img alt="" src={Cogs} className="icon-color caker-footer-button"></img>
                 </Link>
               </div>

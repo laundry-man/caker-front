@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { ActiveViewProps, ViewProps } from '../const/Type';
+import { ActiveViewProps, ViewProps } from '../../const/Type';
 
 function View({ path }: ViewProps) {
     const [width, setWidth] = useState(0);

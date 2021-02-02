@@ -1,6 +1,6 @@
 import React from 'react'
 
-import Matin3 from '../static/image/matin_3.png';
+import Matin3 from '../../static/image/matin_3.png';
 
 function ImageList() {
     return (

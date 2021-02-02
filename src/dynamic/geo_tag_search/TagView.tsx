@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { TagViewProps } from '../const/Type';
+import { TagViewProps } from '../../const/Type';
 
 function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
     const [width, setWidth] = useState(0);
@@ -15,8 +15,8 @@ function TagView({ path, redirect, setContent, setPredecessor }: TagViewProps) {
             if (timer !== undefined)
                 clearInterval(timer);
             setContent('#고래상점');
-            setPredecessor('/main');
-            redirect('/result');
+            setPredecessor('/geotagsearch');
+            redirect('/tagsearchresult');
         }
         else if (loaded) {
             setToggle(true);

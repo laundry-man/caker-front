@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
-import TagList from './TagList';
+import TagList from '../common/TagList';
 
-import { SearchProps, Tag } from '../const/Type';
-import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../const/Constant';
+import { SearchProps, Tag } from '../../const/Type';
+import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
 
-import '../static/css/search.css';
+import '../../static/css/search.css';
 
-function Search({ redirect, setContent, setPredecessor }: SearchProps) {
+function TagSearch({ redirect, setContent, setPredecessor }: SearchProps) {
   const [input, setInput] = useState(EMPTY_STRING);
   const [writing, setWriting] = useState(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
@@ -28,8 +28,8 @@ function Search({ redirect, setContent, setPredecessor }: SearchProps) {
 
   const assign = (tag: string) => {
     setContent(tag);
-    setPredecessor('/search');
-    redirect('/result');
+    setPredecessor('/tagsearch');
+    redirect('/tagsearchresult');
   }
 
   const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
@@ -60,4 +60,4 @@ function Search({ redirect, setContent, setPredecessor }: SearchProps) {
   );
 }
 
-export default Search;
+export default TagSearch;
