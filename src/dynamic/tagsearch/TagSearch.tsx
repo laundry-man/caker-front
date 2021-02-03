@@ -1,61 +1,81 @@
 import React, { useState } from 'react';
 
-import TagList from '../common/TagList';
+import TagList from './TagList';
 
-import { SearchProps, Tag } from '../../const/Type';
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
 
-import '../../static/css/search.css';
+import index from '../../static/css/index.module.css';
+import tagSearch from '../../static/css/tagsearch/tagSearch.module.css';
 
-function TagSearch({ redirect, setContent, setPredecessor }: SearchProps) {
+type Tag = {
+  name: string,
+  count: number
+};
+
+type TagSearchProps = {
+  redirect: (path: string) => void,
+  setContent: React.Dispatch<React.SetStateAction<string>>,
+  setPredecessor: React.Dispatch<React.SetStateAction<string>>
+};
+
+function TagSearch({
+  redirect,
+  setContent,
+  setPredecessor }: TagSearchProps) {
+
   const [input, setInput] = useState(EMPTY_STRING);
-  const [writing, setWriting] = useState(false);
+  const [isWritten, setIsWritten] = useState(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
 
-  const attach = (tag: string) => '#' + tag.toLowerCase();
+  const attachHashtag = (tag: string) => '#' + tag.toLowerCase();
 
-  const change = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.value === EMPTY_STRING) {
       setInput(EMPTY_STRING);
-      setWriting(false);
+      setIsWritten(false);
     }
     else {
+      if (!isWritten)
+        setIsWritten(true);
       setInput(e.target.value);
-      setWriting(true);
-      setTagList([...tagList, { name: attach(e.target.value.toLowerCase()), count: 99 }]);
+      setTagList([...tagList, { name: attachHashtag(e.target.value.toLowerCase()), count: 99 }]);
     }
   };
 
-  const assign = (tag: string) => {
+  const assignKeyword = (tag: string) => {
     setContent(tag);
     setPredecessor('/tagsearch');
     redirect('/tagsearchresult');
   }
 
-  const submit = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  const submitKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === ENTER_KEY && input !== EMPTY_STRING)
-      assign(attach(input));
+      assignKeyword(attachHashtag(input));
   }
 
-  const clear = () => {
-    if (writing) {
+  const clearKeyword = () => {
+    if (isWritten) {
       setContent(EMPTY_STRING);
       setInput(EMPTY_STRING);
       setTagList([]);
-      setWriting(false);
+      setIsWritten(false);
     }
   }
 
   return (
-    <div className="fade-in-fast">
-      <div className="search-wrapper">
-        <input className="search-prepend" value="#" readOnly />
-        <input className="search-input" value={input} placeholder="검색"
-          onChange={(e) => change(e)} onKeyUp={(e) => submit(e)} />
-        <input className="search-append" value={writing ? RESET_ICON : EMPTY_STRING}
-          onClick={() => clear()} readOnly />
+    <div className={index.fadeInFast}>
+      <div className={tagSearch.wrapper}>
+        <input className={tagSearch.prepend} value="#" readOnly />
+        <input className={tagSearch.input} value={input} placeholder="검색"
+          onChange={(e) => changeInput(e)} onKeyUp={(e) => submitKeyword(e)} />
+        <input className={tagSearch.append} value={isWritten ? RESET_ICON : EMPTY_STRING}
+          onClick={() => clearKeyword()} readOnly />
       </div>
-      <TagList tags={tagList} inverse={false} writing={writing} assign={assign}></TagList>
+      <TagList
+        tagListProp={tagList}
+        isWritten={isWritten}
+        assignKeyword={assignKeyword}
+      />
     </div>
   );
 }

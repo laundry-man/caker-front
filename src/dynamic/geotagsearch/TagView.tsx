@@ -19,7 +19,7 @@ function TagView({
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
 
-    const [loaded, setLoaded] = useState(false);
+    const [isLoaded, setIsLoaded] = useState(false);
     const [toggle, setToggle] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
@@ -31,7 +31,7 @@ function TagView({
             setPredecessor('/geotagsearch');
             redirect('/tagsearchresult');
         }
-        else if (loaded) {
+        else if (isLoaded) {
             setToggle(true);
             setTimer(
                 setTimeout(() => {
@@ -44,22 +44,22 @@ function TagView({
     const getImageSize = (width: number, height: number) => {
         setWidth(width);
         setHeight(height);
-        setLoaded(true);
+        setIsLoaded(true);
     };
 
     function Primary() {
         return (
             <div className={index.fadeInFast} 
                 style={{ 
-                    width: loaded ? width : 'auto', 
-                    height: loaded ? height : 'auto'
+                    width: isLoaded ? width : 'auto', 
+                    height: isLoaded ? height : 'auto'
                 }}>
                 <div className={tagView.dotWrapper}>
                     <div className={tagView.dot}>●</div>
                 </div>
                 <img className={tagView.image} alt="" src={path}
                     onLoad={(e) => { 
-                        if (!loaded) 
+                        if (!isLoaded) 
                             getImageSize(e.currentTarget.width, e.currentTarget.height); 
                         }
                     } 
