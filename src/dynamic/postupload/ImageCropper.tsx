@@ -2,25 +2,32 @@ import React, { useState } from 'react';
 
 import Cropper from 'react-easy-crop';
 
-import { ActiveViewProps } from '../../const/Type';
+import imageCropper from '../../static/css/postupload/imageCropper.module.css';
 
-function ImageCropper({ path }: ActiveViewProps) {
-    const [crop, setCrop] = useState({ x: 0, y: 0 });
-    const [zoom, setZoom] = useState(1);
+type ImageCropperProps = {
+    imagePath: string
+}
+
+function ImageCropper({ imagePath }: ImageCropperProps) {
+    const [coordinates, setCoordinate] = useState({ x: 0, y: 0 });
+    const [zoomRatio, setZoomRatio] = useState(1);
 
     return (
         <>
-            <div className="cropper">
-                <div className="inverse-dot-wrapper">
-                    <div className="inverse-dot">●</div>
+            <div className={imageCropper.imageCropper}>
+                <div className={imageCropper.dotWrapper}>
+                    <div className={imageCropper.dot}>●</div>
                 </div>
-                <Cropper image={path}
-                    crop={crop}
-                    zoom={zoom}
+                <Cropper image={imagePath}
+                    crop={coordinates}
+                    zoom={zoomRatio}
                     aspect={1}
-                    onCropChange={setCrop}
-                    onZoomChange={setZoom}
-                    onCropComplete={(croppedArea, croppedAreaPixels) => {console.log(croppedArea); console.log(croppedAreaPixels);}}
+                    onCropChange={setCoordinate}
+                    onZoomChange={setZoomRatio}
+                    onCropComplete={(croppedArea, croppedAreaPixels) => {
+                        console.log(croppedArea); 
+                        console.log(croppedAreaPixels);
+                    }}
                     style={{
                         cropAreaStyle: { border: 'none' }
                     }}>

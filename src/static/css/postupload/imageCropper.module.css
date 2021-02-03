@@ -1,0 +1,23 @@
+.image-cropper {
+    width: 80vw;
+    height: 86vh;
+}
+
+.dot-wrapper {
+    width: 80vw;
+    height: 6vh;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+
+    z-index: 1;
+}
+
+.dot {
+    color: #F2F1ED;
+    font-size: 1vh;
+    
+    z-index: 1;
+}

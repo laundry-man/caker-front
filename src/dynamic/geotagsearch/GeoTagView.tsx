@@ -47,48 +47,84 @@ function GeoTagView({
         setIsLoaded(true);
     };
 
-    function Primary() {
-        return (
-            <div className={index.fadeInFast} 
-                style={{ 
-                    width: isLoaded ? width : 'auto', 
-                    height: isLoaded ? height : 'auto'
-                }}>
-                <div className={geoTagView.dotWrapper}>
-                    <div className={geoTagView.dot}>●</div>
-                </div>
-                <img className={geoTagView.image} alt="" src={path}
-                    onLoad={(e) => { 
-                        if (!isLoaded) 
-                            getImageSize(e.currentTarget.width, e.currentTarget.height); 
-                        }
-                    } 
-                />
-            </div>
-        );
-    }
-
-    function Secondary() {
-        return (
-            <div className={index.fadeInFast}>
-                <div className={geoTagView.dotWrapper}>
-                    <div className={geoTagView.dot}>●</div>
-                </div>
-                <div className={geoTagView.detailWrapper} 
-                    style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
-                    <div className={geoTagView.detail} 
-                        style={{ width: width, height: height }}>
-                        <div className={geoTagView.tag}>#고래상점</div>
-                        <div className={geoTagView.distance}>1.2KM 44K</div>
-                    </div>
-                </div>
-            </div>
-        );
-    }
-
     return (
         <div className={geoTagView.wrapper} onClick={getNextView}>
-            {toggle ? <Secondary /> : <Primary />}
+            {toggle ? 
+                <Secondary 
+                    path={path} 
+                    width={width} 
+                    height={height}
+                /> : 
+                <Primary 
+                    path={path}
+                    width={width}
+                    height={height}
+                    isLoaded={isLoaded}
+                    getImageSize={getImageSize}
+                />
+            }
+        </div>
+    );
+}
+
+type PrimaryProps = {
+    path: string,
+    width: number,
+    height: number,
+    isLoaded: boolean,
+    getImageSize: (width: number, height: number) => void
+};
+
+function Primary({ 
+    path, 
+    width, 
+    height, 
+    isLoaded,
+    getImageSize}: PrimaryProps) {
+
+    return (
+        <div className={index.fadeInFast} 
+            style={{ 
+                width: isLoaded ? width : 'auto', 
+                height: isLoaded ? height : 'auto'
+            }}>
+            <div className={geoTagView.dotWrapper}>
+                <div className={geoTagView.dot}>●</div>
+            </div>
+            <img className={geoTagView.image} alt="" src={path}
+                onLoad={(e) => { 
+                    if (!isLoaded) 
+                        getImageSize(e.currentTarget.width, e.currentTarget.height); 
+                }} 
+            />
+        </div>
+    );
+}
+
+type SecondaryProps = {
+    path: string,
+    width: number,
+    height: number
+};
+
+function Secondary({ 
+    path, 
+    width, 
+    height }: SecondaryProps) {
+
+    return (
+        <div className={index.fadeInFast}>
+            <div className={geoTagView.dotWrapper}>
+                <div className={geoTagView.dot}>●</div>
+            </div>
+            <div className={geoTagView.detailWrapper} 
+                style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
+                <div className={geoTagView.detail} 
+                    style={{ width: width, height: height }}>
+                    <div className={geoTagView.tag}>#고래상점</div>
+                    <div className={geoTagView.distance}>1.2KM 44K</div>
+                </div>
+            </div>
         </div>
     );
 }

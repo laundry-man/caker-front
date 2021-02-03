@@ -2,7 +2,7 @@ import React from 'react';
 
 import GeoTagView from './GeoTagView';
 
-import geoTagViewList from '../../static/css/geotagsearch/geoTagSearchViewList.module.css';
+import geoTagViewList from '../../static/css/geotagsearch/geoTagViewList.module.css';
 
 type GeoTagViewListProps = {
     pathList: string[],

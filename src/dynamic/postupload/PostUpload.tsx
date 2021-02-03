@@ -8,7 +8,7 @@ import TagList from './TagList';
 
 import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../../const/Constant';
 
-import '../../static/css/upload.css';
+import postUpload from '../../static/css/postupload/postUpload.module.css';
 import Tux from '../../static/image/Tux.png';
 
 type Tag = {
@@ -30,7 +30,7 @@ type UploadProps = {
 function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     const [toggle, setToggle] = useState(false);
 
-    const [imageViewList, setImageViewList] = useState<JSX.Element[]>();
+    const [imageCropperList, setImageCropperList] = useState<JSX.Element[]>();
 
     const [length, setLength] = useState(0);
 
@@ -47,16 +47,17 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 
         const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
             let _length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
-            let _imageViewList: JSX.Element[] = [];
+            let _imageCropperList: JSX.Element[] = [];
 
             for (let i = 0; _length && i < _length; i++) {
                 const path = (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
-                _imageViewList.push(<ImageCropper path={path}></ImageCropper>);
+                _imageCropperList.push(<ImageCropper imagePath={path}></ImageCropper>);
             }
 
-            _imageViewList.push(<BackUpload></BackUpload>);
+            //Uploader
+            _imageCropperList.push(<BackUpload></BackUpload>);
 
-            setImageViewList(_imageViewList);
+            setImageCropperList(_imageCropperList);
             setLength(_length + 1);
 
             contentRef.current?.append(`1/${_length + 1}`);
@@ -200,9 +201,12 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 
     return (
         <div className="upload-wrapper">
-            {toggle && imageViewList ?
-                <ActiveView getNextView={getNextView} innerElement={imageViewList[pathIndex]}></ActiveView> :
-                <BackUpload></BackUpload>}
+            {toggle && imageCropperList ?
+                <ActiveView 
+                    getNextView={getNextView} 
+                    innerElement={imageCropperList[pathIndex]} 
+                /> :
+                <BackUpload />}
         </div>
     );
 }

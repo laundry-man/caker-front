@@ -2,7 +2,7 @@ import React from 'react'
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
-import tagList from '../../static/css/tagsearch/tagList.module.css';
+import tagList from '../../static/css/postupload/tagList.module.css';
 
 type Tag = {
     name: string,

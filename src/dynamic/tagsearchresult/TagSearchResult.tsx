@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
-import ViewList from './ViewList';
-
-import { ResultProps } from '../../const/Type';
+import PostList from './PostList';
 
 import Matin1 from '../../static/image/matin_1.png';
 import Matin2 from '../../static/image/matin_2.png';
@@ -26,7 +24,15 @@ import Terarosa2 from '../../static/image/terarosa_2.png';
 import Terarosa3 from '../../static/image/terarosa_3.png';
 import Terarosa4 from '../../static/image/terarosa_4.png';
 
-function TagSearchResult({ tag }: ResultProps) {
+import classNames from 'classnames';
+import index from '../../static/css/index.module.css';
+
+type TagSearchResultProps = {
+    tag: string,
+    redirect: (path: string) => void
+}
+
+function TagSearchResult({ tag }: TagSearchResultProps) {
     const base: string[][] = [
         [Matin1, Matin2, Matin3, Matin4],
         [Anthracite1, Anthracite2, Anthracite3, Anthracite4],
@@ -34,25 +40,26 @@ function TagSearchResult({ tag }: ResultProps) {
         [PotatoField1, PotatoField2, PotatoField3, PotatoField4],
         [Terarosa1, Terarosa2, Terarosa3, Terarosa4]
     ];
-    const [pathList, setPathList] = useState(base);
 
-    const getNewData = (): Promise<void> => {
+    const [pathListList, setPathListList] = useState(base);
+
+    function getNewData() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve();
+                resolve(undefined);
             }, 1000);
         });
     };
 
-    const resetData = (): Promise<void> => {
+    function resetData() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve();
+                resolve(undefined);
             }, 1000);
         });
     }
 
-    const dummySearch = (tag: string) => {
+    function dummySearch(tag: string) {
         
     }
 
@@ -69,8 +76,8 @@ function TagSearchResult({ tag }: ResultProps) {
           fetchMoreThreshold={0}
           pullDownThreshold={67}
           maxPullDownDistance={95}
-          className={"pull-to-refresh fade-in-fast"}>
-          <ViewList pathList={pathList}></ViewList>
+          className={classNames([index.pullToRefresh, index.fadeInFast])}>
+          <PostList pathListList={pathListList} />
         </PullToRefresh>
     );
 }

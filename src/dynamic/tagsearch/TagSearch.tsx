@@ -27,9 +27,11 @@ function TagSearch({
   const [isWritten, setIsWritten] = useState(false);
   const [tagList, setTagList] = useState<Tag[]>([]);
 
-  const attachHashtag = (tag: string) => '#' + tag.toLowerCase();
+  function attachHashtag(tag: string) {
+    return '#' + tag.toLowerCase();
+  }
 
-  const changeInput = (e: React.ChangeEvent<HTMLInputElement>) => {
+  function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
     if (e.target.value === EMPTY_STRING) {
       setInput(EMPTY_STRING);
       setIsWritten(false);
@@ -40,20 +42,20 @@ function TagSearch({
       setInput(e.target.value);
       setTagList([...tagList, { name: attachHashtag(e.target.value.toLowerCase()), count: 99 }]);
     }
-  };
+  }
 
-  const assignKeyword = (tag: string) => {
+  function assignKeyword(tag: string) {
     setContent(tag);
     setPredecessor('/tagsearch');
     redirect('/tagsearchresult');
   }
 
-  const submitKeyword = (e: React.KeyboardEvent<HTMLInputElement>) => {
+  function submitKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
     if (e.key === ENTER_KEY && input !== EMPTY_STRING)
       assignKeyword(attachHashtag(input));
   }
 
-  const clearKeyword = () => {
+  function clearKeyword() {
     if (isWritten) {
       setContent(EMPTY_STRING);
       setInput(EMPTY_STRING);
