@@ -4,7 +4,7 @@ import Cropper from 'react-easy-crop';
 
 import { ActiveViewProps } from '../../const/Type';
 
-function ImageView({ path }: ActiveViewProps) {
+function ImageCropper({ path }: ActiveViewProps) {
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
 
@@ -30,4 +30,4 @@ function ImageView({ path }: ActiveViewProps) {
     );
 }
 
-export default ImageView;
+export default ImageCropper;

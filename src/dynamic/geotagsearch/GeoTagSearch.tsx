@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
-import TagViewList from './TagViewList';
+import GeoTagViewList from './GeoTagViewList';
 
 import Matin1 from '../../static/image/matin_1.png';
 import Anthracite1 from '../../static/image/anthracite_1.png';
@@ -26,18 +26,18 @@ function GeoTagSearch({
 
     const [pathList, setPathList] = useState([Matin1, Anthracite1, BrownHands3, PotatoField2, Terarosa1]);
 
-    const getNewData = (): Promise<void> => {
+    function getNewData() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve();
+                resolve(undefined);
             }, 1000);
         });
     };
 
-    const resetData = (): Promise<void> => {
+    function resetData() {
         return new Promise((resolve, reject) => {
             setTimeout(() => {
-                resolve();
+                resolve(undefined);
             }, 1000);
         });
     }
@@ -52,7 +52,7 @@ function GeoTagSearch({
             pullDownThreshold={67}
             maxPullDownDistance={95}
             className={classNames([index.pullToRefresh, index.fadeInFast])}>
-            <TagViewList 
+            <GeoTagViewList 
                 pathList={pathList}
                 redirect={redirect}
                 setContent={setContent}

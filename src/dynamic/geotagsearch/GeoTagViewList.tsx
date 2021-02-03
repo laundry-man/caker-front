@@ -1,26 +1,26 @@
 import React from 'react';
 
-import TagView from './TagView';
+import GeoTagView from './GeoTagView';
 
-import tagViewList from '../../static/css/geotagsearch/tagViewList.module.css';
+import geoTagViewList from '../../static/css/geotagsearch/geoTagSearchViewList.module.css';
 
-type TagViewListProps = {
+type GeoTagViewListProps = {
     pathList: string[],
     redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
-function TagViewList({ 
+function GeoTagViewList({ 
     pathList, 
     redirect, 
     setContent, 
-    setPredecessor }: TagViewListProps) {
+    setPredecessor }: GeoTagViewListProps) {
         
     return (
-        <div className={tagViewList.container}>
+        <div className={geoTagViewList.container}>
             {pathList.map((path, index) => {
-                return (<TagView 
+                return (<GeoTagView 
                             key={index}
                             path={path}
                             redirect={redirect} 
@@ -32,4 +32,4 @@ function TagViewList({
     );
 }
 
-export default TagViewList;
+export default GeoTagViewList;

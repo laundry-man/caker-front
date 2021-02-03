@@ -1,20 +1,20 @@
 import React, { useState } from 'react';
 
 import index from '../../static/css/index.module.css';
-import tagView from '../../static/css/geotagsearch/tagView.module.css';
+import geoTagView from '../../static/css/geotagsearch/geoTagView.module.css';
 
-type TagViewProps = {
+type GeoTagViewProps = {
     path: string,
     redirect: (path: string) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
-function TagView({
+function GeoTagView({
     path,
     redirect,
     setContent,
-    setPredecessor }: TagViewProps) {
+    setPredecessor }: GeoTagViewProps) {
 
     const [width, setWidth] = useState(0);
     const [height, setHeight] = useState(0);
@@ -23,7 +23,7 @@ function TagView({
     const [toggle, setToggle] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
-    const getNextView = () => {
+    function getNextView() {
         if (toggle) {
             if (timer !== undefined)
                 clearInterval(timer);
@@ -41,7 +41,7 @@ function TagView({
         }
     }
 
-    const getImageSize = (width: number, height: number) => {
+    function getImageSize(width: number, height: number) {
         setWidth(width);
         setHeight(height);
         setIsLoaded(true);
@@ -54,10 +54,10 @@ function TagView({
                     width: isLoaded ? width : 'auto', 
                     height: isLoaded ? height : 'auto'
                 }}>
-                <div className={tagView.dotWrapper}>
-                    <div className={tagView.dot}>●</div>
+                <div className={geoTagView.dotWrapper}>
+                    <div className={geoTagView.dot}>●</div>
                 </div>
-                <img className={tagView.image} alt="" src={path}
+                <img className={geoTagView.image} alt="" src={path}
                     onLoad={(e) => { 
                         if (!isLoaded) 
                             getImageSize(e.currentTarget.width, e.currentTarget.height); 
@@ -71,15 +71,15 @@ function TagView({
     function Secondary() {
         return (
             <div className={index.fadeInFast}>
-                <div className={tagView.dotWrapper}>
-                    <div className={tagView.dot}>●</div>
+                <div className={geoTagView.dotWrapper}>
+                    <div className={geoTagView.dot}>●</div>
                 </div>
-                <div className={tagView.detailWrapper} 
+                <div className={geoTagView.detailWrapper} 
                     style={{ width: width, height: height, backgroundImage: 'url(' + path + ')' }}>
-                    <div className={tagView.detail} 
+                    <div className={geoTagView.detail} 
                         style={{ width: width, height: height }}>
-                        <div className={tagView.tag}>#고래상점</div>
-                        <div className={tagView.distance}>1.2KM 44K</div>
+                        <div className={geoTagView.tag}>#고래상점</div>
+                        <div className={geoTagView.distance}>1.2KM 44K</div>
                     </div>
                 </div>
             </div>
@@ -87,10 +87,10 @@ function TagView({
     }
 
     return (
-        <div className={tagView.wrapper} onClick={getNextView}>
+        <div className={geoTagView.wrapper} onClick={getNextView}>
             {toggle ? <Secondary /> : <Primary />}
         </div>
     );
 }
 
-export default TagView;
+export default GeoTagView;

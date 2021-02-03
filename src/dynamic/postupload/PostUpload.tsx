@@ -2,15 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
-import ImageView from './ImageView';
+import ImageCropper from './ImageCropper';
 import ImageList from './ImageList';
-import TagList from '../common/TagList';
+import TagList from './TagList';
 
-import { ActiveImageViewProps, UploadProps, Tag } from '../../const/Type';
 import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../../const/Constant';
 
 import '../../static/css/upload.css';
 import Tux from '../../static/image/Tux.png';
+
+type Tag = {
+    name: string,
+    count: number
+};
+  
+type ActiveImageViewProps = {
+    getNextView: () => void,
+    innerElement: JSX.Element
+}
+
+type UploadProps = {
+    contentRef: React.RefObject<HTMLDivElement>,
+    redirect: (path: string) => void,
+    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+}
 
 function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     const [toggle, setToggle] = useState(false);
@@ -22,7 +37,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     const [preIndex, setPreIndex] = useState(0);
     const [pathIndex, setPathIndex] = useState(0);
 
-    const getNextView = () => {
+    function getNextView() {
         setPreIndex(pathIndex);
         setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
     };
@@ -36,7 +51,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 
             for (let i = 0; _length && i < _length; i++) {
                 const path = (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
-                _imageViewList.push(<ImageView path={path}></ImageView>);
+                _imageViewList.push(<ImageCropper path={path}></ImageCropper>);
             }
 
             _imageViewList.push(<BackUpload></BackUpload>);
@@ -143,7 +158,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
                 </div>
 
                 { toggle ?
-                    <TagList tags={tagList} inverse={true} writing={writing} assign={assign}></TagList> :
+                    <TagList tagListProp={tagList} isWritten={writing} assignKeyword={assign}></TagList> :
                     <>
                         <div className="temp fade-in-fast">
                         </div>
