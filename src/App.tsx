@@ -174,16 +174,16 @@ function Primary({
                   <div className={primary.footerBar}>&nbsp;</div>
                   <div className={primary.footerWrapper}>
                       <Link to={isTagSearch ? "/geotagsearch" : "/tagsearch"} className={primary.footerButtonWrapper} onClick={() => pageDidMount(!isTagSearch)}>
-                          <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([primary.primaryColor, primary.footerButton])} />
+                          <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([index.primaryColor, primary.footerButton])} />
                       </Link>
                       <Link to="/postupload" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true, true)}>
-                          <img alt="" src={Notes} className={classNames([primary.primaryColor, primary.footerButton])} />
+                          <img alt="" src={Notes} className={classNames([index.primaryColor, primary.footerButton])} />
                       </Link>
                       <Link to="/mypostlist" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
-                          <img alt="" src={Books} className={classNames([primary.primaryColor, primary.footerButton])} />
+                          <img alt="" src={Books} className={classNames([index.primaryColor, primary.footerButton])} />
                       </Link>
                       <Link to="/config" className={primary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
-                          <img alt="" src={Cogs} className={classNames([primary.primaryColor, primary.footerButton])} />
+                          <img alt="" src={Cogs} className={classNames([index.primaryColor, primary.footerButton])} />
                       </Link>
                   </div>
               </div>
@@ -280,16 +280,16 @@ function Secondary({
                   <div className={secondary.footerBar}>&nbsp;</div>
                   <div className={secondary.footerWrapper}>
                       <Link to={isTagSearch ? "/geotagsearch" : "/tagsearch"} className={secondary.footerButtonWrapper} onClick={() => pageDidMount(!isTagSearch)}>
-                          <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
+                          <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([index.secondaryColor, secondary.footerButton])} />
                       </Link>
                       <Link to="/postupload" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true, true)}>
-                          <img alt="" src={Notes} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
+                          <img alt="" src={Notes} className={classNames([index.secondaryColor, secondary.footerButton])} />
                       </Link>
                       <Link to="/mypostlist" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
-                          <img alt="" src={Books} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
+                          <img alt="" src={Books} className={classNames([index.secondaryColor, secondary.footerButton])} />
                       </Link>
                       <Link to="/config" className={secondary.footerButtonWrapper} onClick={() => pageDidMount(true)}>
-                          <img alt="" src={Cogs} className={classNames([secondary.secondaryColor, secondary.footerButton])} />
+                          <img alt="" src={Cogs} className={classNames([index.secondaryColor, secondary.footerButton])} />
                       </Link>
                   </div>
               </div>

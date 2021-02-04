@@ -50,12 +50,12 @@ function GeoTagView({
     return (
         <div className={geoTagView.wrapper} onClick={getNextView}>
             {toggle ? 
-                <Secondary 
+                <BackView 
                     path={path} 
                     width={width} 
                     height={height}
                 /> : 
-                <Primary 
+                <FrontView 
                     path={path}
                     width={width}
                     height={height}
@@ -67,7 +67,7 @@ function GeoTagView({
     );
 }
 
-type PrimaryProps = {
+type FrontViewProps = {
     path: string,
     width: number,
     height: number,
@@ -75,12 +75,12 @@ type PrimaryProps = {
     getImageSize: (width: number, height: number) => void
 };
 
-function Primary({ 
+function FrontView({ 
     path, 
     width, 
     height, 
     isLoaded,
-    getImageSize}: PrimaryProps) {
+    getImageSize}: FrontViewProps) {
 
     return (
         <div className={index.fadeInFast} 
@@ -101,16 +101,16 @@ function Primary({
     );
 }
 
-type SecondaryProps = {
+type BackViewProps = {
     path: string,
     width: number,
     height: number
 };
 
-function Secondary({ 
+function BackView({ 
     path, 
     width, 
-    height }: SecondaryProps) {
+    height }: BackViewProps) {
 
     return (
         <div className={index.fadeInFast}>
