@@ -1,12 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 
-import PullToRefresh from 'react-simple-pull-to-refresh';
-
 import ImageCropper from './ImageCropper';
-import ImageList from './ImageList';
-import TagList from './TagList';
-
-import { EMPTY_STRING, RESET_ICON, ENTER_KEY } from '../../const/Constant';
+import ImageUploader from './ImageUploader';
 
 import Tux from '../../static/image/Tux.png';
 
@@ -14,13 +9,13 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import postUpload from '../../static/css/postupload/postUpload.module.css';
 
-type UploadProps = {
+type PostUploadProps = {
     contentRef: React.RefObject<HTMLDivElement>,
     redirect: (path: string) => void,
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
-function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
+function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
     const [toggle, setToggle] = useState(false);
 
     const [imageCropperList, setImageCropperList] = useState<JSX.Element[]>();
@@ -36,7 +31,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     };
 
     useEffect(() => {
-        setPredecessor('/upload');
+        setPredecessor('/postupload');
     }, []);
 
     useEffect(() => {
@@ -49,9 +44,9 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
     return (
         <div className={postUpload.wrapper}>
             {toggle && imageCropperList ?
-                <ActiveView 
-                    getNextView={getNextView} 
+                <ActiveView
                     component={imageCropperList[pathIndex]} 
+                    getNextView={getNextView}
                 /> :
                 <FrontView 
                     contentRef={contentRef}
@@ -65,7 +60,7 @@ function Upload({ contentRef, redirect, setPredecessor }: UploadProps) {
 }
 
 type ActiveViewProps = {
-    component: JSX.Element
+    component: JSX.Element,
     getNextView: () => void
 }
 
@@ -98,10 +93,11 @@ function FrontView({
 
         for (let i = 0; _length && i < _length; i++) {
             const path = (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
-            _imageCropperList.push(<ImageCropper imagePath={path}></ImageCropper>);
+            const elem = <ImageCropper imagePath={path} />;
+            _imageCropperList.push(elem);
         }
         
-        _imageCropperList.push(<Uploader />);
+        _imageCropperList.push(<ImageUploader />);
 
         setImageCropperList(_imageCropperList);
         setLength(_length + 1);
@@ -130,114 +126,4 @@ function FrontView({
     );
 }
 
-type Tag = {
-    name: string,
-    count: number
-};
-
-function Uploader() {
-    const [toggle, setToggle] = useState(false);
-    
-    const [input, setInput] = useState(EMPTY_STRING);
-    const [isWritten, setIsWritten] = useState(false);
-    const [tagList, setTagList] = useState<Tag[]>([]);
-
-    function attachHashtag(tag: string) {
-        return '#' + tag.toLowerCase();
-    }
-
-    function startSearch() {
-        setInput(EMPTY_STRING);
-        setTagList([]);
-        setIsWritten(false);
-        setToggle(true);
-    }
-
-    function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
-        if (e.target.value === EMPTY_STRING) {
-            setInput(EMPTY_STRING);
-            setIsWritten(false);
-        }
-        else {
-            setInput(e.target.value);
-            setIsWritten(true);
-            setTagList([...tagList, { name: attachHashtag(e.target.value.toLowerCase()), count: 99 }]);
-        }
-    };
-
-    function selectKeyword() {
-        setToggle(false);
-    }
-
-    function submitKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
-        if (e.key === ENTER_KEY)
-            selectKeyword();
-    }
-
-    function clearKeyword() {
-        if (isWritten) {
-            setInput(EMPTY_STRING);
-            setTagList([]);
-            setIsWritten(false);
-            setToggle(false);
-        }
-    }
-
-    function getNewData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(undefined);
-            }, 1000);
-        });
-    };
-
-    function resetData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(undefined);
-            }, 1000);
-        });
-    }
-
-    return (
-        <div className={postUpload.uploader}>
-            <div className={postUpload.searchWrapper}>
-                <input className={postUpload.searchPrepend} value="#" readOnly />
-                <input className={postUpload.searchInput} 
-                    placeholder="태그"
-                    value={input}
-                    onClick={startSearch}
-                    onChange={(e) => changeInput(e)}
-                    onKeyUp={(e) => submitKeyword(e)} />
-                <input className={postUpload.searchAppend}
-                    value={isWritten ? RESET_ICON : EMPTY_STRING}
-                    onClick={() => clearKeyword()}
-                    readOnly />
-            </div>
-            { toggle ?
-                <TagList 
-                    tagListProp={tagList} 
-                    isWritten={isWritten} 
-                    selectKeyword={selectKeyword} 
-                /> :
-                <>
-                    <div className={classNames([postUpload.temp, index.fadeInFast])}>
-                    </div>
-                    <PullToRefresh
-                        onRefresh={resetData}
-                        canFetchMore={true}
-                        isPullable={true}
-                        onFetchMore={getNewData}
-                        fetchMoreThreshold={0}
-                        pullDownThreshold={67}
-                        maxPullDownDistance={95}
-                        className={classNames([index.pullToRefresh, index.fadeInFast])}>
-                        <ImageList />
-                    </PullToRefresh>
-                </>
-            }
-        </div>
-    );
-}
-
-export default Upload;
+export default PostUpload;

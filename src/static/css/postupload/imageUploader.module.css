@@ -1,0 +1,75 @@
+.image-uploader {
+    width: 80vw;
+    height: 86vh;
+}
+
+.search-wrapper {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 0.5vh;
+}
+
+.search-input {
+    width: 66vw;
+    height: 4vh;
+
+    text-transform: lowercase;
+    font-family: San Francisco;
+
+    background: #333333;
+    border-radius: 0px;
+    border: none;
+    color: #F2F1ED;
+    caret-color: #F2F1ED;
+    outline: none;
+    box-shadow: none;
+
+    padding: 0;
+}
+
+.search-prepend {
+    width: 6vw;
+    height: 4vh;
+
+    text-align: center;
+
+    font-family: San Francisco;
+
+    background: #333333;
+    border: none;
+    color: #F2F1ED;
+    outline: none;
+    box-shadow: none;
+
+    padding: 0;
+}
+
+.search-append {
+    width: 8vw;
+    height: 4vh;
+
+    text-align: center;
+
+    font-family: San Francisco;
+    font-weight: bold;
+
+    background: #333333;
+    border: none;
+    color: #F2F1ED;
+    outline: none;
+    box-shadow: none;
+
+    padding: 0;
+}
+
+.temp {
+    width: 80vw;
+    height: 4vh;
+
+    background: #F2F1ED;
+    border: 1px solid rgba(51,51,51, 0.1);
+    border-radius: 5px;
+
+    margin-bottom: 1.5vh;
+}
