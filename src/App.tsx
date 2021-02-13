@@ -202,7 +202,7 @@ type SecondaryProps = {
   redirect: (path: string) => void,
   clearContent: () => void,
   pageDidMount: (isTagSearch: boolean, isPostUpload?: boolean) => void
-}
+};
 
 function Secondary({
   content,

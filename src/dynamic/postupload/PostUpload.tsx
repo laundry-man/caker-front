@@ -15,10 +15,15 @@ type PostUploadProps = {
     setPredecessor: React.Dispatch<React.SetStateAction<string>>
 }
 
-function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
+function PostUpload({
+    contentRef,
+    redirect,
+    setPredecessor }: PostUploadProps) {
+
     const [toggle, setToggle] = useState(false);
 
-    const [imageSetterList, setImageSetterList] = useState<JSX.Element[]>();
+    const [croppedImageList, setCroppedImageList] = useState<string[]>([]);
+    const [imageSetterList, setImageSetterList] = useState<JSX.Element[]>([]);
 
     const [length, setLength] = useState(0);
 
@@ -31,7 +36,8 @@ function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
             setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
         }
         else {
-            
+            setPreIndex(pathIndex);
+            setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
         }
     };
 
@@ -52,10 +58,12 @@ function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
                 <div onClick={() => getNextView()}>
                     {imageSetterList[pathIndex]}
                 </div> :
-                <FrontView 
+                <FrontView
                     contentRef={contentRef}
+                    croppedImageList={croppedImageList}
                     setToggle={setToggle}
                     setLength={setLength}
+                    setCroppedImageList={setCroppedImageList}
                     setImageSetterList={setImageSetterList}
                 />
             }
@@ -64,34 +72,55 @@ function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
 }
 
 type FrontViewProps = {
-    contentRef: React.RefObject<HTMLDivElement>
-    setToggle: React.Dispatch<React.SetStateAction<boolean>>
-    setLength: React.Dispatch<React.SetStateAction<number>>
-    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>
+    contentRef: React.RefObject<HTMLDivElement>,
+    croppedImageList: string[],
+    setToggle: React.Dispatch<React.SetStateAction<boolean>>,
+    setLength: React.Dispatch<React.SetStateAction<number>>,
+    setCroppedImageList: React.Dispatch<React.SetStateAction<string[]>>,
+    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[]>>
 };
 
 function FrontView({
     contentRef,
+    croppedImageList,
     setLength,
     setToggle,
-    setImageSetterList}: FrontViewProps) {
+    setCroppedImageList,
+    setImageSetterList }: FrontViewProps) {
 
+    const [preCroppedImageList, setPreCroppedImageList] = useState<string[]>(croppedImageList);
     const fileRef = useRef<HTMLInputElement>(null);
 
     function onChange(e: React.ChangeEvent<HTMLInputElement>) {
         let _length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
+        let _croppedImageList: string[] = [];
+
+        for (let i = 0; _length && i < _length; i++) {
+            const imagePath =
+                (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
+            _croppedImageList.push(imagePath);
+        }
+
+        setCroppedImageList(_croppedImageList);
+    };
+
+    useEffect(() => {
+        if (preCroppedImageList.length !== croppedImageList.length) {
+        let _length: number = croppedImageList.length;
         let _imageSetterList: JSX.Element[] = [];
 
         for (let i = 0; _length && i < _length; i++) {
             _imageSetterList.push(
                 <ImageCropper
-                    key={i} 
-                    imagePath={(window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i))}
+                    key={i}
+                    imageIndex={i}
+                    croppedImageList={croppedImageList}
+                    setCroppedImageList={setCroppedImageList}
                 />
             );
         }
-        
-        _imageSetterList.push(<ImageUploader />);
+
+        _imageSetterList.push(<ImageUploader key={_length} />);
 
         setImageSetterList(_imageSetterList);
         setLength(_length + 1);
@@ -99,16 +128,17 @@ function FrontView({
         contentRef.current?.append(`1/${_length + 1}`);
 
         setToggle(true);
-    };
+    }
+    }, [croppedImageList])
 
     return (
         <div className={classNames([postUpload.frontView, index.fadeInSlow])}>
             <div className={postUpload.frontViewContent1}>please</div>
             <div className={postUpload.frontViewContent2}>touch</div>
             <div className={postUpload.frontViewContent3}>me.</div>
-            <img alt="" 
-                className={postUpload.frontViewContent4} 
-                src={Tux} 
+            <img alt=""
+                className={postUpload.frontViewContent4}
+                src={Tux}
                 onClick={() => fileRef.current?.click()} />
             <input ref={fileRef}
                 type="file"

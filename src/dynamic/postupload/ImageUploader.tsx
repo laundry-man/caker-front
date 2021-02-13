@@ -102,7 +102,7 @@ function ImageUploader() {
                 /> :
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
-                        <input className={imageUploader.textPrepend} value="T" readOnly />
+                        <input className={imageUploader.textPrepend} readOnly />
                         <input className={imageUploader.textInput} />
                         <input className={imageUploader.textAppend} readOnly />
                     </div>
