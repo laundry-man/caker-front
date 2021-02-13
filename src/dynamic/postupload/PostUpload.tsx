@@ -18,7 +18,7 @@ type PostUploadProps = {
 function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
     const [toggle, setToggle] = useState(false);
 
-    const [imageCropperList, setImageCropperList] = useState<JSX.Element[]>();
+    const [imageSetterList, setImageSetterList] = useState<JSX.Element[]>();
 
     const [length, setLength] = useState(0);
 
@@ -26,8 +26,13 @@ function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
     const [pathIndex, setPathIndex] = useState(0);
 
     function getNextView() {
-        setPreIndex(pathIndex);
-        setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
+        if (pathIndex < length - 1) {
+            setPreIndex(pathIndex);
+            setPathIndex(pathIndex + 1 == length ? 0 : pathIndex + 1);
+        }
+        else {
+            
+        }
     };
 
     useEffect(() => {
@@ -43,31 +48,17 @@ function PostUpload({ contentRef, redirect, setPredecessor }: PostUploadProps) {
 
     return (
         <div className={postUpload.wrapper}>
-            {toggle && imageCropperList ?
-                <ActiveView
-                    component={imageCropperList[pathIndex]} 
-                    getNextView={getNextView}
-                /> :
+            {toggle && imageSetterList ?
+                <div onClick={() => getNextView()}>
+                    {imageSetterList[pathIndex]}
+                </div> :
                 <FrontView 
                     contentRef={contentRef}
                     setToggle={setToggle}
                     setLength={setLength}
-                    setImageCropperList={setImageCropperList}
+                    setImageSetterList={setImageSetterList}
                 />
             }
-        </div>
-    );
-}
-
-type ActiveViewProps = {
-    component: JSX.Element,
-    getNextView: () => void
-}
-
-function ActiveView({ component, getNextView }: ActiveViewProps) {
-    return (
-        <div onClick={() => getNextView()} className={index.fadeInSlow}>
-            {component}
         </div>
     );
 }
@@ -76,30 +67,33 @@ type FrontViewProps = {
     contentRef: React.RefObject<HTMLDivElement>
     setToggle: React.Dispatch<React.SetStateAction<boolean>>
     setLength: React.Dispatch<React.SetStateAction<number>>
-    setImageCropperList: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>
-}
+    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[] | undefined>>
+};
 
 function FrontView({
     contentRef,
     setLength,
     setToggle,
-    setImageCropperList}: FrontViewProps) {
+    setImageSetterList}: FrontViewProps) {
 
     const fileRef = useRef<HTMLInputElement>(null);
 
     function onChange(e: React.ChangeEvent<HTMLInputElement>) {
         let _length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
-        let _imageCropperList: JSX.Element[] = [];
+        let _imageSetterList: JSX.Element[] = [];
 
         for (let i = 0; _length && i < _length; i++) {
-            const path = (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
-            const elem = <ImageCropper imagePath={path} />;
-            _imageCropperList.push(elem);
+            _imageSetterList.push(
+                <ImageCropper
+                    key={i} 
+                    imagePath={(window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i))}
+                />
+            );
         }
         
-        _imageCropperList.push(<ImageUploader />);
+        _imageSetterList.push(<ImageUploader />);
 
-        setImageCropperList(_imageCropperList);
+        setImageSetterList(_imageSetterList);
         setLength(_length + 1);
 
         contentRef.current?.append(`1/${_length + 1}`);

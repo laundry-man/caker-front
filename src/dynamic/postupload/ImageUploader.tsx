@@ -100,8 +100,11 @@ function ImageUploader() {
                     isWritten={isWritten} 
                     selectKeyword={selectKeyword} 
                 /> :
-                <>
-                    <div className={classNames([imageUploader.temp, index.fadeInFast])}>
+                <div className={index.fadeInSlow}>
+                    <div className={imageUploader.textWrapper}>
+                        <input className={imageUploader.textPrepend} value="T" readOnly />
+                        <input className={imageUploader.textInput} />
+                        <input className={imageUploader.textAppend} readOnly />
                     </div>
                     <PullToRefresh
                         onRefresh={resetData}
@@ -111,10 +114,10 @@ function ImageUploader() {
                         fetchMoreThreshold={0}
                         pullDownThreshold={67}
                         maxPullDownDistance={95}
-                        className={classNames([index.pullToRefresh, index.fadeInFast])}>
+                        className={classNames([index.pullToRefresh])}>
                         <ImageList />
                     </PullToRefresh>
-                </>
+                </div>
             }
         </div>
     );
