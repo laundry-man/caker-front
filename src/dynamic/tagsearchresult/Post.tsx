@@ -38,15 +38,16 @@ function Post({ pathList }: PostProps) {
         <div className={post.wrapper} onClick={getNextView}>
             {active.map((active, key) => { 
                 if (active) {
-                    return <ActiveView 
+                    return (<ActiveView 
                                 key={key}
                                 path={pathList[key]}
                                 width={width}
                                 height={height}
                                 isLoaded={isLoaded}
                                 getImageSize={getImageSize}
-                            />
+                            />);
                 }
+                return <></>;
             })}
         </div>
     );

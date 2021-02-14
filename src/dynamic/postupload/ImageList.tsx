@@ -6,7 +6,7 @@ import imageList from '../../static/css/postupload/imageList.module.css';
 
 function ImageList() {
     return (
-        <img src={Matin3} className={imageList.image} />
+        <img alt="" src={Matin3} className={imageList.image} />
     );
 }
 

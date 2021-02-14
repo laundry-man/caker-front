@@ -8,53 +8,36 @@ import index from '../../static/css/index.module.css';
 import imageCropper from '../../static/css/postupload/imageCropper.module.css';
 
 type Area = {
-    width: number;
-    height: number;
-    x: number;
-    y: number;
+    width: number,
+    height: number,
+    x: number,
+    y: number,
 };
 
 type ImageCropperProps = {
-    imageIndex: number;
-    croppedImageList: string[];
-    setCroppedImageList: React.Dispatch<React.SetStateAction<string[]>>;
+    imageIndex: number,
+    rawImageList: string[],
+    croppedImageList: string[]
 };
 
-function sleep(ms: number) {
-    const wakeUpTime = Date.now() + ms
-    while (Date.now() < wakeUpTime) {}
-}
+function ImageCropper({ imageIndex, rawImageList, croppedImageList }: ImageCropperProps) {
 
-function ImageCropper({ 
-    imageIndex, 
-    croppedImageList, 
-    setCroppedImageList }: ImageCropperProps) {
-
+    const imagePath: string = rawImageList[imageIndex];
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
-    let croppedAreaPixels: Area = {width: 0, height: 0, x: 0, y: 0};
-    let count: number = 1;
 
-    function OnCropComplete(croppedArea: Area, _croppedAreaPixels: Area) {
-        croppedAreaPixels = _croppedAreaPixels;
-        console.log(croppedAreaPixels);
+    async function OnCropComplete(croppedArea: Area, croppedAreaPixels: Area) {
+        await ShowCroppedImage(croppedAreaPixels);
     };
 
-    async function ShowCroppedImage() {
+    async function ShowCroppedImage(croppedAreaPixels: Area) {
         try {
-            console.log(count++);
-            console.log(croppedAreaPixels);
-            let _length: number = croppedImageList.length;
-            let _croppedImageList: string[] = [];
             let _croppedImage: string = await getCroppedImg(
-                croppedImageList[imageIndex],
+                imagePath,
                 croppedAreaPixels,
                 0
             );
-            console.log(_croppedImage);
-            for (let i = 0; i < _length; i++)
-                _croppedImageList.push(imageIndex === i ? _croppedImage : croppedImageList[i]);
-            setCroppedImageList(_croppedImageList);
+            croppedImageList[imageIndex] = _croppedImage;
         } catch (e) {
             console.error(e);
         }
@@ -62,17 +45,16 @@ function ImageCropper({
 
     useEffect(() => {
         return () => {
-            ShowCroppedImage();
-            sleep(10000);
-        };
-    }, []);
+            console.log(croppedImageList);
+        }
+    }, [])
 
     return (
         <div className={classNames([imageCropper.imageCropper, index.fadeInSlow])}>
             <div className={imageCropper.dotWrapper}>
                 <div className={imageCropper.dot}>●</div>
             </div>
-            <Cropper image={croppedImageList[imageIndex]}
+            <Cropper image={imagePath}
                 crop={crop}
                 zoom={zoom}
                 aspect={1}
