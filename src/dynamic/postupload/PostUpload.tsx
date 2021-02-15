@@ -70,6 +70,8 @@ function PostUpload({
                 <div onClick={() => getNextView()}>
                     {imageSetterList[setterIndex]}
                 </div> :
+                <ImageUploader rawImageList={[]} croppedAreaPixelsList={[]}></ImageUploader>
+                /*
                 <FrontView
                     toggle={toggle}
                     contentRef={contentRef}
@@ -79,7 +81,7 @@ function PostUpload({
                     setLength={setLength}
                     setImageSetterList={setImageSetterList}
                     setCroppedAreaPixels={setCroppedAreaPixels}
-                />
+                />*/
             }
         </div>
     );

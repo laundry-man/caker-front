@@ -5,10 +5,11 @@
 
 .input {
     width: 66vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-transform: lowercase;
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #333333;
     border-radius: 0px;
@@ -23,11 +24,12 @@
 
 .prepend {
     width: 6vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #333333;
     border-radius: 5px 0px 0px 5px;
@@ -41,12 +43,13 @@
 
 .append {
     width: 8vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
     font-family: San Francisco;
     font-weight: bold;
+    font-size: 13px;
 
     background: #333333;
     border-radius: 0px 5px 5px 0px;

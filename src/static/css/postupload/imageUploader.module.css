@@ -12,10 +12,11 @@
 
 .search-input {
     width: 66vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-transform: lowercase;
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #333333;
     border-radius: 0px;
@@ -34,11 +35,12 @@
 
 .search-prepend {
     width: 6vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #333333;
     border: none;
@@ -51,12 +53,13 @@
 
 .search-append {
     width: 8vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
     font-family: San Francisco;
     font-weight: bold;
+    font-size: 13px;
 
     background: #333333;
     border: none;
@@ -76,10 +79,11 @@
 
 .text-input {
     width: 66vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-transform: lowercase;
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #F2F1ED;
     border-radius: 0px;
@@ -98,13 +102,12 @@
 
 .text-prepend {
     width: 6vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
-    font-size: 11px;
-    font-weight: bold;
     font-family: San Francisco;
+    font-size: 13px;
 
     background: #F2F1ED;
     border-radius: 5px 0 0 5px;
@@ -118,12 +121,12 @@
 
 .text-append {
     width: 8vw;
-    height: 4vh;
+    height: 3.5vh;
 
     text-align: center;
 
     font-family: San Francisco;
-    font-weight: bold;
+    font-size: 13px;
 
     background: #F2F1ED;
     border-radius: 0 5px 5px 0;
@@ -135,19 +138,27 @@
     padding: 0;
 }
 
-.preview-wrapper {
+.preview-list-wrapper {
     display: flex;
 
     margin-top: 1.5vh;
 }
 
-.preview {
+.preview-wrapper {
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
     
-    border: 1px solid rgba(255,255,255, 0.1);
     border-radius: 5px; 
     
     background: #393939;
     background-size: cover;
+}
+
+.preview {
+    width: calc((80vw - 3vh) / 3);
+    height: calc((80vw - 3vh) / 3);
+
+    border-radius: 5px;
+
+    backdrop-filter: brightness(50%);
 }

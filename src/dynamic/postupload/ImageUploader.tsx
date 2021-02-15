@@ -5,6 +5,9 @@ import TagList from './TagList';
 import ImageList from './ImageList';
 
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
+import Matin3 from '../../static/image/matin_3.png';
+import Matin1 from '../../static/image/matin_1.png';
+import Matin2 from '../../static/image/matin_2.png';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -37,9 +40,9 @@ function ImageUploader({
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
 
-    const [imagePath1, setImagePath1] = useState('');
-    const [imagePath2, setImagepath2] = useState('');
-    const [imagePath3, setImagePath3] = useState('');
+    const [imagePath1, setImagePath1] = useState(Matin3);
+    const [imagePath2, setImagepath2] = useState(Matin1);
+    const [imagePath3, setImagePath3] = useState(Matin2);
 
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
@@ -132,14 +135,23 @@ function ImageUploader({
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
                         <input className={imageUploader.textPrepend} readOnly />
-                        <input className={imageUploader.textInput} placeholder="평가" />
+                        <input className={imageUploader.textInput} placeholder="" />
                         <input className={imageUploader.textAppend} readOnly />
                     </div>
                     <ImageList />
-                    <div className={imageUploader.previewWrapper}>
-                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath1 + ')', marginRight: '1.5vh' }} />
-                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath2 + ')', marginRight: '1.5vh' }} />
-                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath3 + ')' }} />
+                    <div className={imageUploader.previewListWrapper}>
+                        <div className={imageUploader.previewWrapper} 
+                            style={{ backgroundImage: 'url(' + imagePath1 + ')', marginRight: '1.5vh' }}>
+                            <div className={imageUploader.preview} />
+                        </div>
+                        <div className={imageUploader.previewWrapper} 
+                            style={{ backgroundImage: 'url(' + imagePath2 + ')', marginRight: '1.5vh' }}>
+                            <div className={imageUploader.preview} />
+                        </div>
+                        <div className={imageUploader.previewWrapper} 
+                            style={{ backgroundImage: 'url(' + imagePath3 + ')' }}>
+                            <div className={imageUploader.preview} />
+                        </div>
                     </div>
                 </div>
             }
