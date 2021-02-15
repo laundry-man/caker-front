@@ -17,37 +17,34 @@ type Area = {
 type ImageCropperProps = {
     imageIndex: number,
     rawImageList: string[],
-    croppedImageList: string[]
+    setCroppedAreaPixels: (imageIndex: number, croppedAreaPixels: Area) => void
 };
 
-function ImageCropper({ imageIndex, rawImageList, croppedImageList }: ImageCropperProps) {
+function ImageCropper({ 
+    imageIndex, 
+    rawImageList, 
+    setCroppedAreaPixels }: ImageCropperProps) {
 
     const imagePath: string = rawImageList[imageIndex];
+
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
 
-    async function OnCropComplete(croppedArea: Area, croppedAreaPixels: Area) {
-        await ShowCroppedImage(croppedAreaPixels);
+    function OnCropComplete(croppedArea: Area, croppedAreaPixels: Area) {
+        setCroppedAreaPixels(imageIndex, croppedAreaPixels);
     };
 
     async function ShowCroppedImage(croppedAreaPixels: Area) {
         try {
-            let _croppedImage: string = await getCroppedImg(
+            let croppedImage: string = await getCroppedImg(
                 imagePath,
                 croppedAreaPixels,
                 0
             );
-            croppedImageList[imageIndex] = _croppedImage;
         } catch (e) {
             console.error(e);
         }
     };
-
-    useEffect(() => {
-        return () => {
-            console.log(croppedImageList);
-        }
-    }, [])
 
     return (
         <div className={classNames([imageCropper.imageCropper, index.fadeInSlow])}>
@@ -71,4 +68,4 @@ function ImageCropper({ imageIndex, rawImageList, croppedImageList }: ImageCropp
     );
 }
 
-export default React.memo(ImageCropper);
+export default ImageCropper;

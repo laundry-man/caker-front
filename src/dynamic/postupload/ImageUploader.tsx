@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import TagList from './TagList';
@@ -15,9 +15,20 @@ type Tag = {
     count: number
 };
 
-function ImageUploader() {
+type Area = {
+    width: number,
+    height: number,
+    x: number,
+    y: number
+};
+
+type ImageUploaderProps = {
+    croppedAreaPixelsList: Area[]
+};
+
+function ImageUploader({ croppedAreaPixelsList }: ImageUploaderProps) {
     const [toggle, setToggle] = useState(false);
-    
+
     const [input, setInput] = useState(EMPTY_STRING);
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
@@ -79,11 +90,15 @@ function ImageUploader() {
         });
     }
 
+    useEffect(() => {
+        console.log(croppedAreaPixelsList);
+    }, [])
+
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
             <div className={imageUploader.searchWrapper}>
                 <input className={imageUploader.searchPrepend} value="#" readOnly />
-                <input className={imageUploader.searchInput} 
+                <input className={imageUploader.searchInput}
                     placeholder="태그"
                     value={input}
                     onClick={startSearch}
@@ -95,10 +110,10 @@ function ImageUploader() {
                     readOnly />
             </div>
             { toggle ?
-                <TagList 
-                    tagListProp={tagList} 
-                    isWritten={isWritten} 
-                    selectKeyword={selectKeyword} 
+                <TagList
+                    tagListProp={tagList}
+                    isWritten={isWritten}
+                    selectKeyword={selectKeyword}
                 /> :
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>

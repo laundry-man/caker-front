@@ -9,6 +9,13 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import postUpload from '../../static/css/postupload/postUpload.module.css';
 
+type Area = {
+    width: number,
+    height: number,
+    x: number,
+    y: number,
+};
+
 type PostUploadProps = {
     contentRef: React.RefObject<HTMLDivElement>,
     redirect: (path: string) => void,
@@ -30,7 +37,7 @@ function PostUpload({
     const [setterIndex, setSetterIndex] = useState(0);
 
     let rawImageList: string[] = [];
-    let croppedImageList: string[] = [];
+    let croppedAreaPixelsList: Area[] = [];
 
     function getNextView() {
         if (setterIndex < length - 1) {
@@ -42,6 +49,13 @@ function PostUpload({
             setSetterIndex(setterIndex + 1 === length ? 0 : setterIndex + 1);
         }
     };
+
+    function setCroppedAreaPixels(imageIndex: number, croppedAreaPixels: Area) {
+        if (croppedAreaPixelsList.length - 1 < imageIndex)
+            croppedAreaPixelsList.push(croppedAreaPixels);
+        else
+            croppedAreaPixelsList[imageIndex] = croppedAreaPixels;
+    }
 
     useEffect(() => {
         setPredecessor('/postupload');
@@ -61,12 +75,14 @@ function PostUpload({
                     {imageSetterList[setterIndex]}
                 </div> :
                 <FrontView
+                    toggle={toggle}
                     contentRef={contentRef}
                     rawImageList={rawImageList}
-                    croppedImageList={croppedImageList}
+                    croppedAreaPixelsList={croppedAreaPixelsList}
                     setToggle={setToggle}
                     setLength={setLength}
                     setImageSetterList={setImageSetterList}
+                    setCroppedAreaPixels={setCroppedAreaPixels}
                 />
             }
         </div>
@@ -74,33 +90,36 @@ function PostUpload({
 }
 
 type FrontViewProps = {
+    toggle: boolean,
     contentRef: React.RefObject<HTMLDivElement>,
     rawImageList: string[],
-    croppedImageList: string[],
+    croppedAreaPixelsList: Area[],
     setToggle: React.Dispatch<React.SetStateAction<boolean>>,
     setLength: React.Dispatch<React.SetStateAction<number>>,
-    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[]>>
+    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[]>>,
+    setCroppedAreaPixels: (imageIndex: number, croppedAreaPixels: Area) => void
 };
 
 function FrontView({
+    toggle,
     contentRef,
     rawImageList,
-    croppedImageList,
+    croppedAreaPixelsList,
     setLength,
     setToggle,
-    setImageSetterList }: FrontViewProps) {
+    setImageSetterList,
+    setCroppedAreaPixels }: FrontViewProps) {
 
     const fileRef = useRef<HTMLInputElement>(null);
 
     function onChange(e: React.ChangeEvent<HTMLInputElement>) {
-        let _length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
+        const length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
 
-        for (let i = 0; _length && i < _length; i++) {
+        for (let i = 0; i < length; i++) {
             const imagePath =
                 (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
 
             rawImageList.push(imagePath);
-            croppedImageList.push(imagePath);
         }
 
         setToggle(true);
@@ -108,26 +127,33 @@ function FrontView({
 
     useEffect(() => {
         return () => {
-            let _length: number = rawImageList.length;
-            let _imageSetterList: JSX.Element[] = [];
+            if (toggle) {
+                let length: number = rawImageList.length;
+                let imageSetterList: JSX.Element[] = [];
 
-            for (let i = 0; _length && i < _length; i++) {
-                _imageSetterList.push(
-                    <ImageCropper
-                        key={i}
-                        imageIndex={i}
-                        rawImageList={rawImageList}
-                        croppedImageList={croppedImageList}
+                for (let i = 0; i < length; i++) {
+                    imageSetterList.push(
+                        <ImageCropper
+                            key={i}
+                            imageIndex={i}
+                            rawImageList={rawImageList}
+                            setCroppedAreaPixels={setCroppedAreaPixels}
+                        />
+                    );
+                }
+
+                imageSetterList.push(
+                    <ImageUploader
+                        key={length}
+                        croppedAreaPixelsList={croppedAreaPixelsList}
                     />
                 );
+
+                setImageSetterList(imageSetterList);
+                setLength(length + 1);
+
+                contentRef.current?.append(`1/${length + 1}`);
             }
-
-            _imageSetterList.push(<ImageUploader key={_length} />);
-
-            setImageSetterList(_imageSetterList);
-            setLength(_length + 1);
-
-            contentRef.current?.append(`1/${_length + 1}`);
         }
     }, [])
 
