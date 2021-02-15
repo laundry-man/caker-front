@@ -44,10 +44,6 @@ function PostUpload({
             setPreIndex(setterIndex);
             setSetterIndex(setterIndex + 1 === length ? 0 : setterIndex + 1);
         }
-        else {
-            setPreIndex(setterIndex);
-            setSetterIndex(setterIndex + 1 === length ? 0 : setterIndex + 1);
-        }
     };
 
     function setCroppedAreaPixels(imageIndex: number, croppedAreaPixels: Area) {
@@ -122,40 +118,34 @@ function FrontView({
             rawImageList.push(imagePath);
         }
 
+        let imageSetterList: JSX.Element[] = [];
+
+        for (let i = 0; i < length; i++) {
+            imageSetterList.push(
+                <ImageCropper
+                    key={i}
+                    imageIndex={i}
+                    rawImageList={rawImageList}
+                    setCroppedAreaPixels={setCroppedAreaPixels}
+                />
+            );
+        }
+
+        imageSetterList.push(
+            <ImageUploader
+                key={length}
+                rawImageList={rawImageList}
+                croppedAreaPixelsList={croppedAreaPixelsList}
+            />
+        );
+
+        setImageSetterList(imageSetterList);
+        setLength(length + 1);
+
+        contentRef.current?.append(`1/${length + 1}`);
+
         setToggle(true);
     };
-
-    useEffect(() => {
-        return () => {
-            if (toggle) {
-                let length: number = rawImageList.length;
-                let imageSetterList: JSX.Element[] = [];
-
-                for (let i = 0; i < length; i++) {
-                    imageSetterList.push(
-                        <ImageCropper
-                            key={i}
-                            imageIndex={i}
-                            rawImageList={rawImageList}
-                            setCroppedAreaPixels={setCroppedAreaPixels}
-                        />
-                    );
-                }
-
-                imageSetterList.push(
-                    <ImageUploader
-                        key={length}
-                        croppedAreaPixelsList={croppedAreaPixelsList}
-                    />
-                );
-
-                setImageSetterList(imageSetterList);
-                setLength(length + 1);
-
-                contentRef.current?.append(`1/${length + 1}`);
-            }
-        }
-    }, [])
 
     return (
         <div className={classNames([postUpload.frontView, index.fadeInSlow])}>

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import PullToRefresh from 'react-simple-pull-to-refresh';
+import getCroppedImg from './CropImage';
 
 import TagList from './TagList';
 import ImageList from './ImageList';
@@ -23,15 +23,27 @@ type Area = {
 };
 
 type ImageUploaderProps = {
+    rawImageList: string[],
     croppedAreaPixelsList: Area[]
 };
 
-function ImageUploader({ croppedAreaPixelsList }: ImageUploaderProps) {
+function ImageUploader({
+    rawImageList,
+    croppedAreaPixelsList }: ImageUploaderProps) {
+
     const [toggle, setToggle] = useState(false);
 
     const [input, setInput] = useState(EMPTY_STRING);
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
+
+    const [imagePath1, setImagePath1] = useState('');
+    const [imagePath2, setImagepath2] = useState('');
+    const [imagePath3, setImagePath3] = useState('');
+
+    const imagePathSetterList:
+        React.Dispatch<React.SetStateAction<string>>[] =
+            [setImagePath1, setImagepath2, setImagePath3];
 
     function attachHashtag(tag: string) {
         return '#' + tag.toLowerCase();
@@ -74,24 +86,26 @@ function ImageUploader({ croppedAreaPixelsList }: ImageUploaderProps) {
         }
     }
 
-    function getNewData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(undefined);
-            }, 1000);
-        });
+    async function ShowCroppedImage(
+        imageIndex: number, 
+        imagePath: string, 
+        croppedAreaPixels: Area) {
+        try {
+            let croppedImage: string = await getCroppedImg(
+                imagePath,
+                croppedAreaPixels,
+                0
+            );
+            imagePathSetterList[imageIndex](croppedImage);
+        } catch (e) {
+            console.error(e);
+        }
     };
 
-    function resetData() {
-        return new Promise((resolve, reject) => {
-            setTimeout(() => {
-                resolve(undefined);
-            }, 1000);
-        });
-    }
-
     useEffect(() => {
-        console.log(croppedAreaPixelsList);
+        croppedAreaPixelsList.map((croppedAreaPixels, imageIndex) => {
+            ShowCroppedImage(imageIndex, rawImageList[imageIndex], croppedAreaPixels);
+        });
     }, [])
 
     return (
@@ -118,25 +132,19 @@ function ImageUploader({ croppedAreaPixelsList }: ImageUploaderProps) {
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
                         <input className={imageUploader.textPrepend} readOnly />
-                        <input className={imageUploader.textInput} />
+                        <input className={imageUploader.textInput} placeholder="평가" />
                         <input className={imageUploader.textAppend} readOnly />
                     </div>
-                    <PullToRefresh
-                        onRefresh={resetData}
-                        canFetchMore={true}
-                        isPullable={true}
-                        onFetchMore={getNewData}
-                        fetchMoreThreshold={0}
-                        pullDownThreshold={67}
-                        maxPullDownDistance={95}
-                        className={classNames([index.pullToRefresh])}>
-                        <ImageList />
-                    </PullToRefresh>
+                    <ImageList />
+                    <div className={imageUploader.previewWrapper}>
+                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath1 + ')', marginRight: '1.5vh' }} />
+                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath2 + ')', marginRight: '1.5vh' }} />
+                        <div className={imageUploader.preview} style={{ backgroundImage: 'url(' + imagePath3 + ')' }} />
+                    </div>
                 </div>
             }
         </div>
     );
 }
-
 
 export default ImageUploader;

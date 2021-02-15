@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 
 import Cropper from 'react-easy-crop';
-import getCroppedImg from './CropImage';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -32,18 +31,6 @@ function ImageCropper({
 
     function OnCropComplete(croppedArea: Area, croppedAreaPixels: Area) {
         setCroppedAreaPixels(imageIndex, croppedAreaPixels);
-    };
-
-    async function ShowCroppedImage(croppedAreaPixels: Area) {
-        try {
-            let croppedImage: string = await getCroppedImg(
-                imagePath,
-                croppedAreaPixels,
-                0
-            );
-        } catch (e) {
-            console.error(e);
-        }
     };
 
     return (
