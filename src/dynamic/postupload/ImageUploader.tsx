@@ -63,6 +63,8 @@ function ImageUploader({
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
         [setImagePath1, setImagePath2, setImagePath3];
+    
+    const [imagePathList, setImagePathList] = useState<string[]>([]);
 
     const [imageToggle1, setImageToggle1] = useState(false);
     const [imageToggle2, setImageToggle2] = useState(false);
@@ -116,7 +118,7 @@ function ImageUploader({
         }
     }
 
-    function changeImageOrder(imageIndex: number, imageOrder: number) {
+    function changeImageOrder(imageIndex: number) {
         let count = imageCount;
         for (let i = 0; i < imageCount; i++)
             count -= isDisabledList[i] ? 1 : 0;
@@ -172,6 +174,16 @@ function ImageUploader({
         setImageListToggle(count === imageCount);
     }, [imageToggle1, imageToggle2, imageToggle3]);
 
+    useEffect(() => {
+        if (imageListToggle) {
+            let imagePathList: string[] = ['', '', ''];
+            imagePathList[imageOrder1] = imagePath1;
+            imagePathList[imageOrder2] = imagePath2;
+            imagePathList[imageOrder3] = imagePath3;
+            setImagePathList(imagePathList);
+        }
+    }, [imageListToggle, imageOrder1, imageOrder2, imageOrder3]);
+
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
             <div className={imageUploader.searchWrapper}>
@@ -200,7 +212,7 @@ function ImageUploader({
                         <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
                     {imageListToggle ?
-                        <ImageList imagePathList={[imagePath1, imagePath2, imagePath3]} /> :
+                        <ImageList imagePathList={imagePathList} /> :
                         <ImageListSkeleton />
                     }
                     <div className={imageUploader.previewImageList}>
@@ -261,7 +273,7 @@ type PreviewImageProps = {
     imageIndex: number,
     imageOrder: number,
     imagePath: string,
-    changeImageOrder: (imageIndex: number, imageOrder: number) => void
+    changeImageOrder: (imageIndex: number) => void
 };
 
 function PreviewImage({
@@ -274,7 +286,7 @@ function PreviewImage({
     return (
         <div className={classNames([imageUploader.previewImageWrapper, index.fadeInFast])}
             style={{ backgroundImage: 'url(' + imagePath + ')', marginRight: imageIndex < 2 ? '1.5vh' : '0' }}
-            onClick={() => changeImageOrder(imageIndex, imageOrder)}>
+            onClick={() => changeImageOrder(imageIndex)}>
             <div className={imageUploader.previewImage}>
                 <div className={isDisabled ?
                     imageUploader.previewImageDisabled :

@@ -4,6 +4,9 @@ import ImageCropper from './ImageCropper';
 import ImageUploader from './ImageUploader';
 
 import Tux from '../../static/image/Tux.png';
+import Matin1 from '../../static/image/matin_1.png';
+import Matin2 from '../../static/image/matin_2.png';
+import Matin3 from '../../static/image/matin_3.png';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -70,7 +73,7 @@ function PostUpload({
                 <div onClick={() => getNextView()}>
                     {imageSetterList[setterIndex]}
                 </div> :
-                /*<ImageUploader rawImageList={[]} croppedAreaPixelsList={[]}></ImageUploader>*/
+                /*<ImageUploader rawImageList={[Matin1, Matin2, Matin3]} croppedAreaPixelsList={[{width: 1125, height: 1125, x: 0, y: 0}, {width: 1125, height: 1125, x: 0, y: 0}, {width: 1125, height: 1125, x: 0, y: 0}]} />*/
                 <FrontView
                     toggle={toggle}
                     contentRef={contentRef}
