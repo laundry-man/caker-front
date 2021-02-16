@@ -2,12 +2,9 @@ import React, { useState, useEffect } from 'react';
 import getCroppedImg from './CropImage';
 
 import TagList from './TagList';
-import ImageList from './ImageList';
+import { ImageList, ImageListSkeleton } from './ImageList';
 
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
-import Matin3 from '../../static/image/matin_3.png';
-import Matin1 from '../../static/image/matin_1.png';
-import Matin2 from '../../static/image/matin_2.png';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -40,6 +37,8 @@ function ImageUploader({
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
 
+    const imageCount: number = croppedAreaPixelsList.length;
+
     const [imagePath1, setImagePath1] = useState('');
     const [imagePath2, setImagePath2] = useState('');
     const [imagePath3, setImagePath3] = useState('');
@@ -55,6 +54,8 @@ function ImageUploader({
     const imageToggleSetterList:
         React.Dispatch<React.SetStateAction<boolean>>[] =
         [setImageToggle1, setImageToggle2, setImageToggle3];
+
+    const [imageListToggle, setImageListToggle] = useState(false);
 
     function attachHashtag(tag: string) {
         return '#' + tag.toLowerCase();
@@ -118,7 +119,19 @@ function ImageUploader({
         croppedAreaPixelsList.map((croppedAreaPixels, imageIndex) => {
             ShowCroppedImage(imageIndex, rawImageList[imageIndex], croppedAreaPixels);
         });
-    }, [])
+    }, []);
+
+    useEffect(() => {
+        let count = 0;
+        if (imageToggle1)
+            count++;
+        if (imageToggle2)
+            count++;
+        if (imageToggle3)
+            count++;
+        if (count === imageCount)
+            setImageListToggle(true);
+    }, [imageToggle1, imageToggle2, imageToggle3])
 
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
@@ -147,7 +160,10 @@ function ImageUploader({
                         <input className={imageUploader.textInput} placeholder="리뷰" />
                         <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
-                    <ImageList />
+                    {imageListToggle ? 
+                        <ImageList imagePathList={[imagePath1, imagePath2, imagePath3]} /> : 
+                        <ImageListSkeleton /> 
+                    }
                     <div className={imageUploader.previewImageList}>
                         {imageToggle1 ? 
                             <PreviewImage 
@@ -184,9 +200,7 @@ function PreviewImageSkeleton({ imageIndex }: PreviewImageSkeletonProps) {
     return (
         <div className={imageUploader.previewImageWrapper}
             style={{ marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
-            <div className={imageUploader.previewImage}>
-                <div style={{color: '#333333'}}>{imageIndex + 1}</div>
-            </div>
+            <div style={{color: '#333333'}}>{imageIndex + 1}</div>
         </div>
     );
 }

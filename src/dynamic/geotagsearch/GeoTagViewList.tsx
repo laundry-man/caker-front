@@ -19,9 +19,9 @@ function GeoTagViewList({
         
     return (
         <div className={geoTagViewList.container}>
-            {pathList.map((path, index) => {
+            {pathList.map((path, key) => {
                 return (<GeoTagView 
-                            key={index}
+                            key={key}
                             path={path}
                             redirect={redirect} 
                             setContent={setContent} 
