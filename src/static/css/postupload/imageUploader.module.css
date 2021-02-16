@@ -148,13 +148,13 @@
     color: #333333;
 }
 
-.preview-list-wrapper {
+.preview-image-list {
     display: flex;
 
     margin-top: 1.5vh;
 }
 
-.preview-wrapper {
+.preview-image-wrapper {
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
     
@@ -164,7 +164,7 @@
     background-size: cover;
 }
 
-.preview {
+.preview-image {
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
 

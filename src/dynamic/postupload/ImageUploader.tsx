@@ -40,13 +40,21 @@ function ImageUploader({
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
 
-    const [imagePath1, setImagePath1] = useState(Matin3);
-    const [imagePath2, setImagepath2] = useState(Matin1);
+    const [imagePath1, setImagePath1] = useState('');
+    const [imagePath2, setImagePath2] = useState('');
     const [imagePath3, setImagePath3] = useState('');
 
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
-            [setImagePath1, setImagepath2, setImagePath3];
+        [setImagePath1, setImagePath2, setImagePath3];
+
+    const [imageToggle1, setImageToggle1] = useState(false);
+    const [imageToggle2, setImageToggle2] = useState(false);
+    const [imageToggle3, setImageToggle3] = useState(false);
+
+    const imageToggleSetterList:
+        React.Dispatch<React.SetStateAction<boolean>>[] =
+        [setImageToggle1, setImageToggle2, setImageToggle3];
 
     function attachHashtag(tag: string) {
         return '#' + tag.toLowerCase();
@@ -90,8 +98,8 @@ function ImageUploader({
     }
 
     async function ShowCroppedImage(
-        imageIndex: number, 
-        imagePath: string, 
+        imageIndex: number,
+        imagePath: string,
         croppedAreaPixels: Area) {
         try {
             let croppedImage: string = await getCroppedImg(
@@ -100,6 +108,7 @@ function ImageUploader({
                 0
             );
             imagePathSetterList[imageIndex](croppedImage);
+            imageToggleSetterList[imageIndex](true);
         } catch (e) {
             console.error(e);
         }
@@ -139,28 +148,64 @@ function ImageUploader({
                         <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
                     <ImageList />
-                    <div className={imageUploader.previewListWrapper}>
-                        <div className={imageUploader.previewWrapper} 
-                            style={{ backgroundImage: 'url(' + imagePath1 + ')', marginRight: '1.5vh' }}>
-                            <div className={imageUploader.preview}>
-                                <div>1</div>
-                            </div>
-                        </div>
-                        <div className={imageUploader.previewWrapper} 
-                            style={{ backgroundImage: 'url(' + imagePath2 + ')', marginRight: '1.5vh' }}>
-                            <div className={imageUploader.preview}>
-                                <div>2</div>
-                            </div>
-                        </div>
-                        <div className={imageUploader.previewWrapper} 
-                            style={{ backgroundImage: 'url(' + imagePath3 + ')' }}>
-                            <div className={imageUploader.preview}>
-                                <div style={{color: '#333333'}}>3</div>
-                            </div>
-                        </div>
+                    <div className={imageUploader.previewImageList}>
+                        {imageToggle1 ? 
+                            <PreviewImage 
+                                imageIndex={0} 
+                                imagePath={imagePath1} 
+                            /> : 
+                            <PreviewImageSkeleton imageIndex={0} />
+                        }
+                        {imageToggle2 ? 
+                            <PreviewImage 
+                                imageIndex={1} 
+                                imagePath={imagePath2} 
+                            /> : 
+                            <PreviewImageSkeleton imageIndex={1} />
+                        }
+                        {imageToggle3 ? 
+                            <PreviewImage 
+                                imageIndex={2} 
+                                imagePath={imagePath3} /> :
+                            <PreviewImageSkeleton imageIndex={2} />
+                        }
                     </div>
                 </div>
             }
+        </div>
+    );
+}
+
+type PreviewImageSkeletonProps = {
+    imageIndex: number
+}
+
+function PreviewImageSkeleton({ imageIndex }: PreviewImageSkeletonProps) {
+    return (
+        <div className={imageUploader.previewImageWrapper}
+            style={{ marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
+            <div className={imageUploader.previewImage}>
+                <div style={{color: '#333333'}}>{imageIndex + 1}</div>
+            </div>
+        </div>
+    );
+}
+
+type PreviewImageProps = {
+    imageIndex: number,
+    imagePath: string
+};
+
+function PreviewImage({
+    imageIndex,
+    imagePath }: PreviewImageProps) {
+
+    return (
+        <div className={classNames([imageUploader.previewImageWrapper, index.fadeInFast])}
+            style={{ backgroundImage: 'url(' + imagePath + ')', marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
+            <div className={imageUploader.previewImage}>
+                <div>{imageIndex + 1}</div>
+            </div>
         </div>
     );
 }
