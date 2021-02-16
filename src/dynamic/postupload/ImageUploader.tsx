@@ -31,13 +31,30 @@ function ImageUploader({
     rawImageList,
     croppedAreaPixelsList }: ImageUploaderProps) {
 
+    const imageCount: number = croppedAreaPixelsList.length;
+
     const [toggle, setToggle] = useState(false);
 
     const [input, setInput] = useState(EMPTY_STRING);
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
 
-    const imageCount: number = croppedAreaPixelsList.length;
+    const [imageOrder1, setImageOrder1] = useState(0);
+    const [imageOrder2, setImageOrder2] = useState(1);
+    const [imageOrder3, setImageOrder3] = useState(2);
+
+    const imageOrderSetterList:
+        React.Dispatch<React.SetStateAction<number>>[] =
+        [setImageOrder1, setImageOrder2, setImageOrder3];
+
+    const [isDisabled1, setIsDisabled1] = useState(true);
+    const [isDisabled2, setIsDisabled2] = useState(true);
+    const [isDisabled3, setIsDisabled3] = useState(true);
+
+    const isDisabledList: boolean[] = [isDisabled1, isDisabled2, isDisabled3];
+    const isDisabledSetterList:
+        React.Dispatch<React.SetStateAction<boolean>>[] =
+        [setIsDisabled1, setIsDisabled2, setIsDisabled3];
 
     const [imagePath1, setImagePath1] = useState('');
     const [imagePath2, setImagePath2] = useState('');
@@ -51,6 +68,7 @@ function ImageUploader({
     const [imageToggle2, setImageToggle2] = useState(false);
     const [imageToggle3, setImageToggle3] = useState(false);
 
+    const imageToggleList: boolean[] = [imageToggle1, imageToggle2, imageToggle3];
     const imageToggleSetterList:
         React.Dispatch<React.SetStateAction<boolean>>[] =
         [setImageToggle1, setImageToggle2, setImageToggle3];
@@ -98,6 +116,31 @@ function ImageUploader({
         }
     }
 
+    function changeImageOrder(imageIndex: number, imageOrder: number) {
+        let count = imageCount;
+        for (let i = 0; i < imageCount; i++)
+            count -= isDisabledList[i] ? 1 : 0;
+        if (count === 3) {
+            for (let i = 0, j = 0; i < 3; i++) {
+                imageOrderSetterList[i](imageIndex === i ? 0 : ++j);
+                isDisabledSetterList[i](imageIndex === i ? false : true);
+            }
+        }
+        else if (count === 2) {
+            for (let i = 0; i < 2; i++) {
+                imageOrderSetterList[i](imageIndex === i ? 0 : 1);
+            }
+        }
+        else if (count === 1 && isDisabledList[imageIndex]) {
+            for (let i = 0; i < 3; i++) {
+                if (isDisabledList[i]) {
+                    imageOrderSetterList[i](imageIndex === i ? 1 : 2);
+                    isDisabledSetterList[i](false);
+                }
+            }
+        }
+    }
+
     async function ShowCroppedImage(
         imageIndex: number,
         imagePath: string,
@@ -110,6 +153,7 @@ function ImageUploader({
             );
             imagePathSetterList[imageIndex](croppedImage);
             imageToggleSetterList[imageIndex](true);
+            isDisabledSetterList[imageIndex](false);
         } catch (e) {
             console.error(e);
         }
@@ -123,15 +167,10 @@ function ImageUploader({
 
     useEffect(() => {
         let count = 0;
-        if (imageToggle1)
-            count++;
-        if (imageToggle2)
-            count++;
-        if (imageToggle3)
-            count++;
-        if (count === imageCount)
-            setImageListToggle(true);
-    }, [imageToggle1, imageToggle2, imageToggle3])
+        for (let i = 0; i < imageCount; i++)
+            count += imageToggleList[i] ? 1 : 0;
+        setImageListToggle(count === imageCount);
+    }, [imageToggle1, imageToggle2, imageToggle3]);
 
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
@@ -160,29 +199,39 @@ function ImageUploader({
                         <input className={imageUploader.textInput} placeholder="리뷰" />
                         <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
-                    {imageListToggle ? 
-                        <ImageList imagePathList={[imagePath1, imagePath2, imagePath3]} /> : 
-                        <ImageListSkeleton /> 
+                    {imageListToggle ?
+                        <ImageList imagePathList={[imagePath1, imagePath2, imagePath3]} /> :
+                        <ImageListSkeleton />
                     }
                     <div className={imageUploader.previewImageList}>
-                        {imageToggle1 ? 
-                            <PreviewImage 
-                                imageIndex={0} 
-                                imagePath={imagePath1} 
-                            /> : 
+                        {imageToggle1 ?
+                            <PreviewImage
+                                isDisabled={isDisabled1}
+                                imageIndex={0}
+                                imageOrder={imageOrder1}
+                                imagePath={imagePath1}
+                                changeImageOrder={changeImageOrder}
+                            /> :
                             <PreviewImageSkeleton imageIndex={0} />
                         }
-                        {imageToggle2 ? 
-                            <PreviewImage 
-                                imageIndex={1} 
-                                imagePath={imagePath2} 
-                            /> : 
+                        {imageToggle2 ?
+                            <PreviewImage
+                                isDisabled={isDisabled2}
+                                imageIndex={1}
+                                imageOrder={imageOrder2}
+                                imagePath={imagePath2}
+                                changeImageOrder={changeImageOrder}
+                            /> :
                             <PreviewImageSkeleton imageIndex={1} />
                         }
-                        {imageToggle3 ? 
-                            <PreviewImage 
-                                imageIndex={2} 
-                                imagePath={imagePath3} /> :
+                        {imageToggle3 ?
+                            <PreviewImage
+                                isDisabled={isDisabled3}
+                                imageIndex={2}
+                                imageOrder={imageOrder3}
+                                imagePath={imagePath3}
+                                changeImageOrder={changeImageOrder}
+                            /> :
                             <PreviewImageSkeleton imageIndex={2} />
                         }
                     </div>
@@ -200,25 +249,38 @@ function PreviewImageSkeleton({ imageIndex }: PreviewImageSkeletonProps) {
     return (
         <div className={imageUploader.previewImageWrapper}
             style={{ marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
-            <div style={{color: '#333333'}}>{imageIndex + 1}</div>
+            <div className={imageUploader.previewImage}>
+                <div style={{ color: '#333333' }}>{imageIndex + 1}</div>
+            </div>
         </div>
     );
 }
 
 type PreviewImageProps = {
+    isDisabled: boolean,
     imageIndex: number,
-    imagePath: string
+    imageOrder: number,
+    imagePath: string,
+    changeImageOrder: (imageIndex: number, imageOrder: number) => void
 };
 
 function PreviewImage({
+    isDisabled,
     imageIndex,
-    imagePath }: PreviewImageProps) {
+    imageOrder,
+    imagePath,
+    changeImageOrder }: PreviewImageProps) {
 
     return (
         <div className={classNames([imageUploader.previewImageWrapper, index.fadeInFast])}
-            style={{ backgroundImage: 'url(' + imagePath + ')', marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
+            style={{ backgroundImage: 'url(' + imagePath + ')', marginRight: imageIndex < 2 ? '1.5vh' : '0' }}
+            onClick={() => changeImageOrder(imageIndex, imageOrder)}>
             <div className={imageUploader.previewImage}>
-                <div>{imageIndex + 1}</div>
+                <div className={isDisabled ?
+                    imageUploader.previewImageDisabled :
+                    imageUploader.previewImageEnabled}>
+                    {imageOrder + 1}
+                </div>
             </div>
         </div>
     );
