@@ -42,7 +42,7 @@ function ImageUploader({
 
     const [imagePath1, setImagePath1] = useState(Matin3);
     const [imagePath2, setImagepath2] = useState(Matin1);
-    const [imagePath3, setImagePath3] = useState(Matin2);
+    const [imagePath3, setImagePath3] = useState('');
 
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
@@ -135,22 +135,28 @@ function ImageUploader({
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
                         <input className={imageUploader.textPrepend} readOnly />
-                        <input className={imageUploader.textInput} placeholder="" />
-                        <input className={imageUploader.textAppend} readOnly />
+                        <input className={imageUploader.textInput} placeholder="리뷰" />
+                        <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
                     <ImageList />
                     <div className={imageUploader.previewListWrapper}>
                         <div className={imageUploader.previewWrapper} 
                             style={{ backgroundImage: 'url(' + imagePath1 + ')', marginRight: '1.5vh' }}>
-                            <div className={imageUploader.preview} />
+                            <div className={imageUploader.preview}>
+                                <div>1</div>
+                            </div>
                         </div>
                         <div className={imageUploader.previewWrapper} 
                             style={{ backgroundImage: 'url(' + imagePath2 + ')', marginRight: '1.5vh' }}>
-                            <div className={imageUploader.preview} />
+                            <div className={imageUploader.preview}>
+                                <div>2</div>
+                            </div>
                         </div>
                         <div className={imageUploader.previewWrapper} 
                             style={{ backgroundImage: 'url(' + imagePath3 + ')' }}>
-                            <div className={imageUploader.preview} />
+                            <div className={imageUploader.preview}>
+                                <div style={{color: '#333333'}}>3</div>
+                            </div>
                         </div>
                     </div>
                 </div>

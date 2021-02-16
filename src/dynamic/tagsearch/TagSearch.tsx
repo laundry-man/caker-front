@@ -68,7 +68,7 @@ function TagSearch({
     <div className={index.fadeInFast}>
       <div className={tagSearch.wrapper}>
         <input className={tagSearch.prepend} value="#" readOnly />
-        <input className={tagSearch.input} value={input} placeholder="검색"
+        <input className={tagSearch.input} value={input} placeholder="태그"
           onChange={(e) => changeInput(e)} onKeyUp={(e) => submitKeyword(e)} />
         <input className={tagSearch.append} value={isWritten ? RESET_ICON : EMPTY_STRING}
           onClick={() => clearKeyword()} readOnly />

@@ -26,7 +26,7 @@
     outline: none;
     box-shadow: none;
 
-    padding: 0;
+    padding: 0.5px 0 0 0;
 }
 
 .search-input::placeholder {
@@ -43,6 +43,7 @@
     font-size: 13px;
 
     background: #333333;
+    border-radius: 5px 0 0 5px;
     border: none;
     color: #F2F1ED;
     outline: none;
@@ -59,15 +60,16 @@
 
     font-family: San Francisco;
     font-weight: bold;
-    font-size: 13px;
+    font-size: 12.5px;
 
     background: #333333;
+    border-radius: 0 5px 5px 0;
     border: none;
     color: #F2F1ED;
     outline: none;
     box-shadow: none;
 
-    padding: 0;
+    padding: 0.5px 0 0 0;
 }
 
 .text-wrapper {
@@ -93,11 +95,11 @@
     outline: none;
     box-shadow: none;
 
-    padding: 0;
+    padding: 0.5px 0 0 0;
 }
 
 .text-input::placeholder {
-    color: #333333;
+    color: #858585;
 }
 
 .text-prepend {
@@ -107,6 +109,7 @@
     text-align: center;
 
     font-family: San Francisco;
+    font-weight: bold;
     font-size: 13px;
 
     background: #F2F1ED;
@@ -119,6 +122,10 @@
     padding: 0;
 }
 
+.text-prepend::placeholder {
+    color:#333333;
+}
+
 .text-append {
     width: 8vw;
     height: 3.5vh;
@@ -126,7 +133,8 @@
     text-align: center;
 
     font-family: San Francisco;
-    font-size: 13px;
+    font-weight: bold;
+    font-size: 12.5px;
 
     background: #F2F1ED;
     border-radius: 0 5px 5px 0;
@@ -134,8 +142,10 @@
     color: #333333;
     outline: none;
     box-shadow: none;
+}
 
-    padding: 0;
+.text-append::placeholder {
+    color: #333333;
 }
 
 .preview-list-wrapper {
@@ -150,13 +160,23 @@
     
     border-radius: 5px; 
     
-    background: #393939;
+    background: #454545;
     background-size: cover;
 }
 
 .preview {
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-family: San Francisco;
+    font-weight: bold;
+    font-size: 11px;
+    color: white;
 
     border-radius: 5px;
 
