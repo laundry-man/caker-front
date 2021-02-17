@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import getCroppedImg from './CropImage';
 
 import TagList from './TagList';
-import { ImageList, ImageListSkeleton } from './ImageList';
+import { ImageList1, ImageList2, ImageListSkeleton } from './ImageList';
 
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
 
@@ -43,6 +43,7 @@ function ImageUploader({
     const [imageOrder2, setImageOrder2] = useState(1);
     const [imageOrder3, setImageOrder3] = useState(2);
 
+    const imageOrderList: number[] = [imageOrder1, imageOrder2, imageOrder3];
     const imageOrderSetterList:
         React.Dispatch<React.SetStateAction<number>>[] =
         [setImageOrder1, setImageOrder2, setImageOrder3];
@@ -60,11 +61,12 @@ function ImageUploader({
     const [imagePath2, setImagePath2] = useState('');
     const [imagePath3, setImagePath3] = useState('');
 
+    const imagePathList: string[] = [imagePath1, imagePath2, imagePath3];
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
         [setImagePath1, setImagePath2, setImagePath3];
     
-    const [imagePathList, setImagePathList] = useState<string[]>([]);
+    const [imagePathListParam, setImagePathListParam] = useState<string[]>([]);
 
     const [imageToggle1, setImageToggle1] = useState(false);
     const [imageToggle2, setImageToggle2] = useState(false);
@@ -76,6 +78,15 @@ function ImageUploader({
         [setImageToggle1, setImageToggle2, setImageToggle3];
 
     const [imageListToggle, setImageListToggle] = useState(false);
+    const [renderingToggle, setRenderingToggle] = useState(false);
+
+    function getCurrentImagePathList() {
+        const _imagePathList: string[] = [];
+        for (let i = 0; i < imageCount; i++)
+            if (imageToggleList[i])
+                _imagePathList.push(imagePathList[i]);
+        return _imagePathList;
+    }
 
     function attachHashtag(tag: string) {
         return '#' + tag.toLowerCase();
@@ -171,16 +182,19 @@ function ImageUploader({
         let count = 0;
         for (let i = 0; i < imageCount; i++)
             count += imageToggleList[i] ? 1 : 0;
-        setImageListToggle(count === imageCount);
+        if (count === imageCount) {
+            setImagePathListParam(getCurrentImagePathList());
+            setImageListToggle(true);
+        }
     }, [imageToggle1, imageToggle2, imageToggle3]);
 
     useEffect(() => {
         if (imageListToggle) {
-            let imagePathList: string[] = ['', '', ''];
-            imagePathList[imageOrder1] = imagePath1;
-            imagePathList[imageOrder2] = imagePath2;
-            imagePathList[imageOrder3] = imagePath3;
-            setImagePathList(imagePathList);
+            const _imagePathList = getCurrentImagePathList();
+            for (let i = 0; i < imageCount; i++)
+                _imagePathList[imageOrderList[i]] = imagePathList[i];
+            setImagePathListParam(_imagePathList);
+            setRenderingToggle(!renderingToggle);
         }
     }, [imageListToggle, imageOrder1, imageOrder2, imageOrder3]);
 
@@ -212,7 +226,9 @@ function ImageUploader({
                         <input className={imageUploader.textAppend} value="🍰" readOnly />
                     </div>
                     {imageListToggle ?
-                        <ImageList imagePathList={imagePathList} /> :
+                        renderingToggle ? 
+                            <ImageList1 imagePathList={imagePathListParam} /> : 
+                            <ImageList2 imagePathList={imagePathListParam} /> :
                         <ImageListSkeleton />
                     }
                     <div className={imageUploader.previewImageList}>
