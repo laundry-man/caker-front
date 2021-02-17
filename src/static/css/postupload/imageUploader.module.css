@@ -157,6 +157,11 @@
 .preview-image-wrapper {
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
     
     border-radius: 5px; 
     

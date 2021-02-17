@@ -1,4 +1,18 @@
-.image-list {
+.image {
+    width: 80vw;
+    height: 80vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    border-radius: 5px;
+
+    background-size: cover;
+}
+
+.comment {
     width: 80vw;
     height: 80vw;
     
@@ -7,8 +21,11 @@
     justify-content: center;
     text-align: center;
 
+    font-family: San Francisco;
+    font-weight: bold;
+    font-size: 11px;
+
     border-radius: 5px;
 
-    background: #222222;
-    background-size: cover;
+    backdrop-filter: brightness(50%);
 }

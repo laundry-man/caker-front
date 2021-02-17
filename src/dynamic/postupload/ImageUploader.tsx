@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import getCroppedImg from './CropImage';
 
 import TagList from './TagList';
-import { ImageList1, ImageList2, ImageListSkeleton } from './ImageList';
+import { ImageList, ImageListSkeleton } from './ImageList';
 
 import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
 
@@ -35,7 +35,7 @@ function ImageUploader({
 
     const [toggle, setToggle] = useState(false);
 
-    const [input, setInput] = useState(EMPTY_STRING);
+    const [tagInput, setTagInput] = useState(EMPTY_STRING);
     const [isWritten, setIsWritten] = useState(false);
     const [tagList, setTagList] = useState<Tag[]>([]);
 
@@ -57,9 +57,9 @@ function ImageUploader({
         React.Dispatch<React.SetStateAction<boolean>>[] =
         [setIsDisabled1, setIsDisabled2, setIsDisabled3];
 
-    const [imagePath1, setImagePath1] = useState('');
-    const [imagePath2, setImagePath2] = useState('');
-    const [imagePath3, setImagePath3] = useState('');
+    const [imagePath1, setImagePath1] = useState(EMPTY_STRING);
+    const [imagePath2, setImagePath2] = useState(EMPTY_STRING);
+    const [imagePath3, setImagePath3] = useState(EMPTY_STRING);
 
     const imagePathList: string[] = [imagePath1, imagePath2, imagePath3];
     const imagePathSetterList:
@@ -80,6 +80,9 @@ function ImageUploader({
     const [imageListToggle, setImageListToggle] = useState(false);
     const [renderingToggle, setRenderingToggle] = useState(false);
 
+    const [commentInput, setCommentInput] = useState(EMPTY_STRING);
+    const [rearrange, setRearrange] = useState(0);
+
     function getCurrentImagePathList() {
         const _imagePathList: string[] = [];
         for (let i = 0; i < imageCount; i++)
@@ -92,37 +95,51 @@ function ImageUploader({
         return '#' + tag.toLowerCase();
     }
 
+    function detachHashtag(tag: string) {
+        return tag.replace('#', EMPTY_STRING);
+    }
+
     function startSearch() {
-        setInput(EMPTY_STRING);
+        setTagInput(EMPTY_STRING);
         setTagList([]);
         setIsWritten(false);
         setToggle(true);
     }
 
+    function writeComment() {
+        setRearrange(rearrange === 2 ? 1 : rearrange + 1);
+        setRenderingToggle(!renderingToggle);
+    }
+
+    function assignComment(e: React.ChangeEvent<HTMLInputElement>) {
+        setCommentInput(e.target.value);
+    }
+
     function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.value === EMPTY_STRING) {
-            setInput(EMPTY_STRING);
+            setTagInput(EMPTY_STRING);
             setIsWritten(false);
         }
         else {
-            setInput(e.target.value);
+            setTagInput(e.target.value);
             setIsWritten(true);
             setTagList([...tagList, { name: attachHashtag(e.target.value.toLowerCase()), count: 99 }]);
         }
     };
 
-    function selectKeyword() {
+    function selectKeyword(tag: string) {
+        setTagInput(detachHashtag(tag));
         setToggle(false);
     }
 
     function submitKeyword(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === ENTER_KEY)
-            selectKeyword();
+            setToggle(false);
     }
 
     function clearKeyword() {
         if (isWritten) {
-            setInput(EMPTY_STRING);
+            setTagInput(EMPTY_STRING);
             setTagList([]);
             setIsWritten(false);
             setToggle(false);
@@ -183,7 +200,8 @@ function ImageUploader({
         for (let i = 0; i < imageCount; i++)
             count += imageToggleList[i] ? 1 : 0;
         if (count === imageCount) {
-            setImagePathListParam(getCurrentImagePathList());
+            const _imagePathList = getCurrentImagePathList();
+            setImagePathListParam([_imagePathList[0], ..._imagePathList]);
             setImageListToggle(true);
         }
     }, [imageToggle1, imageToggle2, imageToggle3]);
@@ -193,7 +211,9 @@ function ImageUploader({
             const _imagePathList = getCurrentImagePathList();
             for (let i = 0; i < imageCount; i++)
                 _imagePathList[imageOrderList[i]] = imagePathList[i];
-            setImagePathListParam(_imagePathList);
+            if (rearrange > 0)
+                setRearrange(0);
+            setImagePathListParam([_imagePathList[0], ..._imagePathList]);
             setRenderingToggle(!renderingToggle);
         }
     }, [imageListToggle, imageOrder1, imageOrder2, imageOrder3]);
@@ -204,7 +224,7 @@ function ImageUploader({
                 <input className={imageUploader.searchPrepend} value="#" readOnly />
                 <input className={imageUploader.searchInput}
                     placeholder="태그"
-                    value={input}
+                    value={tagInput}
                     onClick={startSearch}
                     onChange={(e) => changeInput(e)}
                     onKeyUp={(e) => submitKeyword(e)} />
@@ -222,13 +242,23 @@ function ImageUploader({
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
                         <input className={imageUploader.textPrepend} readOnly />
-                        <input className={imageUploader.textInput} placeholder="리뷰" />
-                        <input className={imageUploader.textAppend} value="🍰" readOnly />
+                        <input className={imageUploader.textInput} 
+                            placeholder="리뷰" 
+                            value={commentInput}
+                            onClick={writeComment}
+                            onChange={(e) => assignComment(e)} />
+                        <input className={imageUploader.textAppend} 
+                            value="🍰" 
+                            onClick={() => {}}
+                            readOnly />
                     </div>
                     {imageListToggle ?
-                        renderingToggle ? 
-                            <ImageList1 imagePathList={imagePathListParam} /> : 
-                            <ImageList2 imagePathList={imagePathListParam} /> :
+                        <ImageList 
+                            key={renderingToggle ? 1 : 0} 
+                            rearrange={rearrange} 
+                            comment={commentInput} 
+                            imagePathList={imagePathListParam} 
+                        /> :
                         <ImageListSkeleton />
                     }
                     <div className={imageUploader.previewImageList}>
