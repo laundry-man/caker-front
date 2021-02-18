@@ -4,7 +4,7 @@ import getCroppedImg from './CropImage';
 import TagList from './TagList';
 import { ImageList, ImageListSkeleton } from './ImageList';
 
-import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
+import { EMPTY_STRING, ENTER_KEY, RESET_ICON, COMMENT_MAX_WIDTH } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -99,6 +99,13 @@ function ImageUploader({
         return tag.replace('#', EMPTY_STRING);
     }
 
+    function getApproximateWidth(line: string) {
+        let width = 0;
+        for (let i = 0, j = 0; j = line.charCodeAt(i); i++)
+            width += j >> 11 ? 3 : j >> 7 ? 3 : 1.75;
+        return Math.ceil(width);
+    }
+
     function startSearch() {
         setTagInput(EMPTY_STRING);
         setTagList([]);
@@ -112,7 +119,33 @@ function ImageUploader({
     }
 
     function assignComment(e: React.ChangeEvent<HTMLInputElement>) {
-        setCommentInput(e.target.value);
+        const split: string[] = e.target.value.split('-');
+        if (split.length > 3) {
+            setCommentInput([split[0], split[1], split[2]].join('-'));
+            return;
+        }
+        for (let i = 0; i < split.length; i++)
+            if (getApproximateWidth(split[i]) > COMMENT_MAX_WIDTH) {
+                let limit = split[i].length;
+                let param = EMPTY_STRING;
+                do {
+                    --limit;
+                    param = EMPTY_STRING;
+                    for (let j = 0; j < limit; j++)
+                        param += split[i][j];
+                }
+                while (getApproximateWidth(param) > COMMENT_MAX_WIDTH);
+                split[i] = param;
+            }
+        setCommentInput(split.join('-'));
+    }
+
+    function checkNewline(e: React.KeyboardEvent<HTMLInputElement>) {
+        if (e.key === ENTER_KEY) {
+            const split: string[] = commentInput.split('-');
+            if (split.length === 3)
+                return;
+        }
     }
 
     function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -246,7 +279,8 @@ function ImageUploader({
                             placeholder="리뷰" 
                             value={commentInput}
                             onClick={writeComment}
-                            onChange={(e) => assignComment(e)} />
+                            onChange={(e) => assignComment(e)}
+                            onKeyUp={(e) => checkNewline(e)} />
                         <input className={imageUploader.textAppend} 
                             value="🍰" 
                             onClick={() => {}}

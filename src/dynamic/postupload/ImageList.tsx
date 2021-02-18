@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react'
 
+import { EMPTY_STRING } from '../../const/Constant';
+
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import imageList from '../../static/css/postupload/imageList.module.css';
@@ -16,9 +18,9 @@ type ImageListProps = {
     imagePathList: string[]
 };
 
-export function ImageList({ 
-    rearrange, 
-    comment, 
+export function ImageList({
+    rearrange,
+    comment,
     imagePathList }: ImageListProps) {
 
     const [active, setActive] = useState((() => {
@@ -41,11 +43,11 @@ export function ImageList({
         <div onClick={getNextView}>
             {active.map((active, activeIndex) => {
                 if (active) {
-                    return (<ActiveView 
-                                comment={comment}
-                                imageIndex={activeIndex} 
-                                imagePath={imagePathList[activeIndex]} 
-                            />);
+                    return (<ActiveView
+                        comment={comment}
+                        imageIndex={activeIndex}
+                        imagePath={imagePathList[activeIndex]}
+                    />);
                 }
                 return <></>;
             })}
@@ -59,14 +61,24 @@ type ActiveViewProps = {
     imagePath: string
 };
 
-function ActiveView({ comment, imageIndex, imagePath }: ActiveViewProps) {
+function ActiveView({
+    comment,
+    imageIndex,
+    imagePath }: ActiveViewProps) {
     return (
         <div className={classNames([imageList.image, index.fadeInFast])}
             style={{ backgroundImage: 'url(' + imagePath + ')' }}>
-            {imageIndex === 1 ? 
+            {imageIndex === 1 ?
                 <div className={imageList.comment}>
-                    <div style={{color: 'white'}}>{comment}</div>
-                </div> : 
+                    {comment !== EMPTY_STRING ?
+                        <div style={{ color: 'white' }}>
+                            {comment.split('-').map((line, key) => {
+                                return <div key={key}>{line}</div>
+                            })}
+                        </div> :
+                        <div style={{ color: '#B3B3B3' }}>please write a comments</div>
+                    }
+                </div> :
                 <div />
             }
         </div>
