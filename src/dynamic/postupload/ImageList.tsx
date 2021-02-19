@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { EMPTY_STRING } from '../../const/Constant';
+import { COMMENT_SPLIT_WIDTH, EMPTY_STRING } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -35,19 +35,41 @@ export function ImageList({
         let _f: boolean | undefined = _active.pop();
         _active.unshift(_f === undefined ? false : _f);
         setActive(_active);
-    };
+    }
 
-    useEffect(() => { console.log(rearrange); }, []);
+    function splitCommentByApproximateWidth(comment: string) {
+        let split: string[] = [];
+        let width: number = 0;
+        let line: string = EMPTY_STRING;
+        for (let i = 0, j = 0; j = comment.charCodeAt(i); i++) {
+            const charWidth: number = j >> 11 ? 3 : j >> 7 ? 3 : 1.75;
+            if (Math.ceil(width + charWidth) > COMMENT_SPLIT_WIDTH) {
+                console.log(Math.ceil(width));
+                split.push(line);
+                line = comment[i];
+                width = charWidth;
+            } else {
+                width += charWidth;
+                line += comment[i];
+            }
+        }
+        if (split.length !== 3)
+            split.push(line);
+        return split;
+    }
 
     return (
         <div onClick={getNextView}>
-            {active.map((active, activeIndex) => {
+            {active.map((active, key) => {
                 if (active) {
-                    return (<ActiveView
-                        comment={comment}
-                        imageIndex={activeIndex}
-                        imagePath={imagePathList[activeIndex]}
-                    />);
+                    return (
+                        <ActiveView
+                            key={key}
+                            split={splitCommentByApproximateWidth(comment)}
+                            imageIndex={key}
+                            imagePath={imagePathList[key]}
+                        />
+                    );
                 }
                 return <></>;
             })}
@@ -56,13 +78,13 @@ export function ImageList({
 }
 
 type ActiveViewProps = {
-    comment: string,
+    split: string[],
     imageIndex: number,
     imagePath: string
 };
 
 function ActiveView({
-    comment,
+    split,
     imageIndex,
     imagePath }: ActiveViewProps) {
     return (
@@ -70,9 +92,9 @@ function ActiveView({
             style={{ backgroundImage: 'url(' + imagePath + ')' }}>
             {imageIndex === 1 ?
                 <div className={imageList.comment}>
-                    {comment !== EMPTY_STRING ?
+                    {split.length ?
                         <div style={{ color: 'white' }}>
-                            {comment.split('-').map((line, key) => {
+                            {split.map((line, key) => {
                                 return <div key={key}>{line}</div>
                             })}
                         </div> :
