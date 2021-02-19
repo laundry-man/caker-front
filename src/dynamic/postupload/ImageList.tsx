@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { COMMENT_SPLIT_WIDTH, EMPTY_STRING } from '../../const/Constant';
+import { THREE_PIECES_OF_CAKE, TWO_PIECES_OF_CAKE, A_PIECE_OF_CAKE } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -14,13 +14,15 @@ export function ImageListSkeleton() {
 
 type ImageListProps = {
     rearrange: number,
-    comment: string,
+    cakeRating: number,
+    splitComment: string[],
     imagePathList: string[]
 };
 
 export function ImageList({
     rearrange,
-    comment,
+    cakeRating,
+    splitComment,
     imagePathList }: ImageListProps) {
 
     const [active, setActive] = useState((() => {
@@ -37,27 +39,6 @@ export function ImageList({
         setActive(_active);
     }
 
-    function splitCommentByApproximateWidth(comment: string) {
-        let split: string[] = [];
-        let width: number = 0;
-        let line: string = EMPTY_STRING;
-        for (let i = 0, j = 0; j = comment.charCodeAt(i); i++) {
-            const charWidth: number = j >> 11 ? 3 : j >> 7 ? 3 : 1.75;
-            if (Math.ceil(width + charWidth) > COMMENT_SPLIT_WIDTH) {
-                console.log(Math.ceil(width));
-                split.push(line);
-                line = comment[i];
-                width = charWidth;
-            } else {
-                width += charWidth;
-                line += comment[i];
-            }
-        }
-        if (split.length !== 3)
-            split.push(line);
-        return split;
-    }
-
     return (
         <div onClick={getNextView}>
             {active.map((active, key) => {
@@ -65,8 +46,9 @@ export function ImageList({
                     return (
                         <ActiveView
                             key={key}
-                            split={splitCommentByApproximateWidth(comment)}
-                            imageIndex={key}
+                            cakeRating={cakeRating}
+                            splitComment={splitComment}
+                            isComment={key === 1 ? true : false}
                             imagePath={imagePathList[key]}
                         />
                     );
@@ -78,30 +60,40 @@ export function ImageList({
 }
 
 type ActiveViewProps = {
-    split: string[],
-    imageIndex: number,
+    cakeRating: number,
+    splitComment: string[],
+    isComment: boolean,
     imagePath: string
 };
 
 function ActiveView({
-    split,
-    imageIndex,
+    cakeRating,
+    splitComment,
+    isComment,
     imagePath }: ActiveViewProps) {
     return (
         <div className={classNames([imageList.image, index.fadeInFast])}
             style={{ backgroundImage: 'url(' + imagePath + ')' }}>
-            {imageIndex === 1 ?
+            {isComment ?
                 <div className={imageList.comment}>
-                    {split.length ?
-                        <div style={{ color: 'white' }}>
-                            {split.map((line, key) => {
+                    {splitComment.length ?
+                        <div className={imageList.commentEnabled}>
+                            {splitComment.map((line, key) => {
                                 return <div key={key}>{line}</div>
                             })}
                         </div> :
-                        <div style={{ color: '#B3B3B3' }}>please write a comments</div>
+                        <div className={imageList.commentDisabled}>
+                            please write a comments
+                        </div>
                     }
+                    <div className={imageList.cakeRating}>
+                        {cakeRating === 3 ? 
+                            THREE_PIECES_OF_CAKE : 
+                                cakeRating === 2 ? TWO_PIECES_OF_CAKE : 
+                                    A_PIECE_OF_CAKE}
+                    </div>
                 </div> :
-                <div />
+                <></>
             }
         </div>
     );

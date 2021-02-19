@@ -4,7 +4,7 @@ import getCroppedImg from './CropImage';
 import TagList from './TagList';
 import { ImageList, ImageListSkeleton } from './ImageList';
 
-import { EMPTY_STRING, ENTER_KEY, RESET_ICON, COMMENT_MAX_WIDTH } from '../../const/Constant';
+import { EMPTY_STRING, ENTER_KEY, RESET_ICON, COMMENT_MAX_WIDTH, A_PIECE_OF_CAKE } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -81,9 +81,10 @@ function ImageUploader({
     const [renderingToggle, setRenderingToggle] = useState(false);
 
     const [commentInput, setCommentInput] = useState(EMPTY_STRING);
+    const [splitComment, setSplitComment] = useState<string[]>([]);
+    const [cakeRating, setCakeRating] = useState(1);
+    
     const [rearrange, setRearrange] = useState(0);
-
-    const [selection, setSelection] = useState<EventTarget & HTMLInputElement>();
 
     function getCurrentImagePathList() {
         const _imagePathList: string[] = [];
@@ -101,13 +102,6 @@ function ImageUploader({
         return tag.replace('#', EMPTY_STRING);
     }
 
-    function getApproximateWidth(line: string) {
-        let width = 0;
-        for (let i = 0, j = 0; j = line.charCodeAt(i); i++)
-            width += j >> 11 ? 3 : j >> 7 ? 3 : 1.75;
-        return Math.ceil(width);
-    }
-
     function startSearch() {
         setTagInput(EMPTY_STRING);
         setTagList([]);
@@ -122,19 +116,29 @@ function ImageUploader({
 
     function assignComment(e: React.ChangeEvent<HTMLInputElement>) {
         let comment: string = e.target.value;
-        if (getApproximateWidth(comment) > COMMENT_MAX_WIDTH) {
-            let limit = comment.length;
-            let param = EMPTY_STRING;
-            do {
-                --limit;
-                param = EMPTY_STRING;
-                for (let j = 0; j < limit; j++)
-                    param += comment[j];
+        let split: string[] = splitCommentByApproximateWidth(comment);
+        setSplitComment(split);
+        setCommentInput(split.join(''));
+    }
+
+    function splitCommentByApproximateWidth(comment: string) {
+        let split: string[] = [];
+        let width: number = 0;
+        let line: string = EMPTY_STRING;
+        for (let i = 0, j = 0; (j = comment.charCodeAt(i)) && split.length < 3; i++) {
+            const charWidth: number = j >> 11 ? 3 : j >> 7 ? 3 : 1.75;
+            if (Math.ceil(width + charWidth) > COMMENT_MAX_WIDTH) {
+                split.push(line);
+                line = comment[i];
+                width = charWidth;
+            } else {
+                width += charWidth;
+                line += comment[i];
             }
-            while (getApproximateWidth(param) > COMMENT_MAX_WIDTH);
-            comment = param;
         }
-        setCommentInput(comment);
+        if (split.length < 3 && line !== EMPTY_STRING)
+            split.push(line);
+        return split;
     }
 
     function changeInput(e: React.ChangeEvent<HTMLInputElement>) {
@@ -240,12 +244,6 @@ function ImageUploader({
         }
     }, [imageListToggle, imageOrder1, imageOrder2, imageOrder3]);
 
-    useEffect(() => {
-        console.log(selection?.selectionStart);
-        console.log(selection?.selectionEnd);
-        console.log(selection?.selectionDirection);
-    }, [selection]);
-
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
             <div className={imageUploader.searchWrapper}>
@@ -276,15 +274,16 @@ function ImageUploader({
                             onClick={writeComment}
                             onChange={(e) => assignComment(e)} />
                         <input className={imageUploader.textAppend} 
-                            value="🍰" 
-                            onClick={() => {}}
+                            value={A_PIECE_OF_CAKE}
+                            onClick={() => setCakeRating(cakeRating === 3 ? 1 : cakeRating + 1)}
                             readOnly />
                     </div>
                     {imageListToggle ?
                         <ImageList 
                             key={renderingToggle ? 1 : 0} 
                             rearrange={rearrange} 
-                            comment={commentInput} 
+                            splitComment={splitComment} 
+                            cakeRating={cakeRating}
                             imagePathList={imagePathListParam} 
                         /> :
                         <ImageListSkeleton />

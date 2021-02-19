@@ -17,15 +17,31 @@
     height: 80vw;
     
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
     text-align: center;
 
     font-family: San Francisco;
-    font-size: 0.7em;
+    font-size: 0.75em;
     letter-spacing: 0.05em;
 
     border-radius: 5px;
 
     backdrop-filter: brightness(50%);
+}
+
+.comment-enabled {
+    color: white;
+}
+
+.comment-disabled {
+    color: #B3B3B3;
+}
+
+.cake-rating {
+    font-size: 1.15em;
+    letter-spacing: 0.2em;
+
+    margin-top: 0.25vh;
 }
