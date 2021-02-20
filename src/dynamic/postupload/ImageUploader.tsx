@@ -34,6 +34,7 @@ function ImageUploader({
     const imageCount: number = croppedAreaPixelsList.length;
 
     const [toggle, setToggle] = useState(false);
+    const [isEnabled, setIsEnabled] = useState(false);
 
     const [tagInput, setTagInput] = useState(EMPTY_STRING);
     const [isWritten, setIsWritten] = useState(false);
@@ -244,6 +245,13 @@ function ImageUploader({
         }
     }, [imageListToggle, imageOrder1, imageOrder2, imageOrder3]);
 
+    useEffect(() => {
+        if (tagInput !== EMPTY_STRING && commentInput !== EMPTY_STRING)
+            setIsEnabled(true);
+        else
+            setIsEnabled(false);
+    }, [tagInput, commentInput]);
+
     return (
         <div className={classNames([imageUploader.uploader, index.fadeInSlow])}>
             <div className={imageUploader.searchWrapper}>
@@ -320,6 +328,15 @@ function ImageUploader({
                             <PreviewImageSkeleton imageIndex={2} />
                         }
                     </div>
+                    <div className={imageUploader.uploadButtonWrapper}>
+                        {isEnabled ? 
+                            <div className={classNames([imageUploader.uploadButton, index.fadeInFast])}
+                                onClick={() => {}}>
+                                commit
+                            </div> : 
+                            <></>
+                        }
+                    </div>
                 </div>
             }
         </div>
@@ -335,7 +352,7 @@ function PreviewImageSkeleton({ imageIndex }: PreviewImageSkeletonProps) {
         <div className={imageUploader.previewImageWrapper}
             style={{ marginRight: imageIndex < 2 ? '1.5vh' : '0' }}>
             <div className={imageUploader.previewImage}>
-                <div style={{ color: '#333333' }}>{imageIndex + 1}</div>
+                <div style={{ color: '#454545' }}>{imageIndex + 1}</div>
             </div>
         </div>
     );

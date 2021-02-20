@@ -195,3 +195,21 @@
     color: #b3b3b3;
 }
 
+.upload-button-wrapper {
+    width: 80vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    margin-top: 3vh;
+}
+
+.upload-button {
+    font-family: WaitingfortheSunrise;
+    font-size: 1.25em;
+    letter-spacing: 0.05em;
+    color: #F2F1ED;
+}
+

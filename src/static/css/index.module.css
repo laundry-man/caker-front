@@ -33,6 +33,13 @@
   font-style: normal;
 }
 
+@font-face {
+  font-family: 'WaitingfortheSunrise';
+  src: url('../font/WaitingfortheSunrise-Regular.otf') format('opentype');
+  font-weight: normal;
+  font-style: normal;
+}
+
 @keyframes fadein {
   from {
       opacity: 0;
