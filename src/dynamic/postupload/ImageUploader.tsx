@@ -66,7 +66,7 @@ function ImageUploader({
     const imagePathSetterList:
         React.Dispatch<React.SetStateAction<string>>[] =
         [setImagePath1, setImagePath2, setImagePath3];
-    
+
     const [imagePathListParam, setImagePathListParam] = useState<string[]>([]);
 
     const [imageToggle1, setImageToggle1] = useState(false);
@@ -84,7 +84,7 @@ function ImageUploader({
     const [commentInput, setCommentInput] = useState(EMPTY_STRING);
     const [splitComment, setSplitComment] = useState<string[]>([]);
     const [cakeRating, setCakeRating] = useState(1);
-    
+
     const [rearrange, setRearrange] = useState(0);
 
     function getCurrentImagePathList() {
@@ -104,10 +104,12 @@ function ImageUploader({
     }
 
     function startSearch() {
-        setTagInput(EMPTY_STRING);
-        setTagList([]);
-        setIsWritten(false);
-        setToggle(true);
+        if (!toggle) {
+            setTagInput(EMPTY_STRING);
+            setTagList([]);
+            setIsWritten(false);
+            setToggle(true);
+        }
     }
 
     function writeComment() {
@@ -149,8 +151,8 @@ function ImageUploader({
         }
         else {
             setTagInput(e.target.value);
+            findTagByKeyword(e.target.value, setTagList);
             setIsWritten(true);
-            setTagList([...tagList, { name: attachHashtag(e.target.value.toLowerCase()), count: 99 }]);
         }
     };
 
@@ -169,7 +171,6 @@ function ImageUploader({
             setTagInput(EMPTY_STRING);
             setTagList([]);
             setIsWritten(false);
-            setToggle(false);
         }
     }
 
@@ -215,6 +216,25 @@ function ImageUploader({
             console.error(e);
         }
     };
+
+    async function findTagByKeyword(keyword: string, callback: React.Dispatch<React.SetStateAction<Tag[]>>) {
+        const array: Tag[] = [];
+        const response = await fetch(
+            `http://localhost:9100/api/tag/${encodeURIComponent(keyword)}?lang=ko`,
+            {
+                method: 'GET',
+                mode: 'cors',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTYxNDE3NzY4NywiZXhwIjoxNjE0MTgxMjg3fQ.tBLZi1E3FBckeWbz9YXTMAWQlA2q3cYt_sBoi_mHJ8g'
+                }
+            });
+        const { data, errors } = await response.json();
+        if (response.ok)
+            for (let i = 0; i < data.length; i++)
+                array.push({ name: attachHashtag(data[i].name), count: 99 });
+        callback(array);
+    }
 
     useEffect(() => {
         croppedAreaPixelsList.map((croppedAreaPixels, imageIndex) => {
@@ -276,23 +296,23 @@ function ImageUploader({
                 <div className={index.fadeInSlow}>
                     <div className={imageUploader.textWrapper}>
                         <input className={imageUploader.textPrepend} readOnly />
-                        <input className={imageUploader.textInput} 
-                            placeholder="리뷰" 
+                        <input className={imageUploader.textInput}
+                            placeholder="리뷰"
                             value={commentInput}
                             onClick={writeComment}
                             onChange={(e) => assignComment(e)} />
-                        <input className={imageUploader.textAppend} 
+                        <input className={imageUploader.textAppend}
                             value={A_PIECE_OF_CAKE}
                             onClick={() => setCakeRating(cakeRating === 3 ? 1 : cakeRating + 1)}
                             readOnly />
                     </div>
                     {imageListToggle ?
-                        <ImageList 
-                            key={renderingToggle ? 1 : 0} 
-                            rearrange={rearrange} 
-                            splitComment={splitComment} 
+                        <ImageList
+                            key={renderingToggle ? 1 : 0}
+                            rearrange={rearrange}
+                            splitComment={splitComment}
                             cakeRating={cakeRating}
-                            imagePathList={imagePathListParam} 
+                            imagePathList={imagePathListParam}
                         /> :
                         <ImageListSkeleton />
                     }
@@ -329,11 +349,11 @@ function ImageUploader({
                         }
                     </div>
                     <div className={imageUploader.uploadButtonWrapper}>
-                        {isEnabled ? 
+                        {isEnabled ?
                             <div className={classNames([imageUploader.uploadButton, index.fadeInFast])}
-                                onClick={() => {}}>
+                                onClick={() => { }}>
                                 commit
-                            </div> : 
+                            </div> :
                             <></>
                         }
                     </div>
