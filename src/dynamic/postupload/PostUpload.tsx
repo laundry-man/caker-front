@@ -23,12 +23,14 @@ type Area = {
 
 type PostUploadProps = {
     contentRef: React.RefObject<HTMLDivElement>,
+    pageDidMount: (page: Page) => void,
     redirect: (page: Page) => void,
     setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function PostUpload({
     contentRef,
+    pageDidMount,
     redirect,
     setPredecessor }: PostUploadProps) {
 
@@ -59,7 +61,7 @@ function PostUpload({
     }
 
     useEffect(() => {
-        setPredecessor(POST_UPLOAD);
+        pageDidMount(POST_UPLOAD);
     }, []);
 
     useEffect(() => {
@@ -75,14 +77,14 @@ function PostUpload({
                 <div onClick={() => getNextView()}>
                     {imageSetterList[setterIndex]}
                 </div> :
-                <ImageUploader 
-                    rawImageList={[Matin1, Matin2]} 
+                /*<ImageUploader
+                    rawImageList={[Matin1, Matin2]}
                     croppedAreaPixelsList={[
-                        {width: 1125, height: 1125, x: 0, y: 0}, 
-                        {width: 1125, height: 1125, x: 0, y: 0}
-                    ]} 
-                />
-                /*<FrontView
+                        { width: 1125, height: 1125, x: 0, y: 0 },
+                        { width: 1125, height: 1125, x: 0, y: 0 }
+                    ]}
+                />*/
+                <FrontView
                     toggle={toggle}
                     contentRef={contentRef}
                     rawImageList={rawImageList}
@@ -91,7 +93,7 @@ function PostUpload({
                     setLength={setLength}
                     setImageSetterList={setImageSetterList}
                     setCroppedAreaPixels={setCroppedAreaPixels}
-                />*/
+                />
             }
         </div>
     );

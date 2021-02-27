@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import GeoTagViewList from './GeoTagViewList';
 
-import { Page } from '../../const/Constant';
+import { Page, GEO_TAG_SEARCH } from '../../const/Constant';
 
 import Matin1 from '../../static/image/matin_1.png';
 import Anthracite1 from '../../static/image/anthracite_1.png';
@@ -16,12 +16,14 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 
 type GeoTagSearchProps = {
+    pageDidMount: (page: Page) => void,
     redirect: (page: Page) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
     setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function GeoTagSearch({ 
+    pageDidMount,
     redirect, 
     setContent, 
     setPredecessor }: GeoTagSearchProps) {
@@ -43,6 +45,10 @@ function GeoTagSearch({
             }, 1000);
         });
     }
+
+    useEffect(() => {
+        pageDidMount(GEO_TAG_SEARCH);
+    }, []);
 
     return (
         <PullToRefresh

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 import TagList from './TagList';
 
@@ -18,12 +18,14 @@ type Tag = {
 };
 
 type TagSearchProps = {
+  pageDidMount: (page: Page) => void,
   redirect: (page: Page) => void,
   setContent: React.Dispatch<React.SetStateAction<string>>,
   setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 };
 
 function TagSearch({
+  pageDidMount,
   redirect,
   setContent,
   setPredecessor }: TagSearchProps) {
@@ -68,6 +70,10 @@ function TagSearch({
       setIsWritten(false);
     }
   }
+
+  useEffect(() => {
+    pageDidMount(TAG_SEARCH);
+  }, []);
 
   return (
     <div className={index.fadeInFast}>

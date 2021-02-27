@@ -1,9 +1,22 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
-function config() {
+import { Page, CONFIG } from '../../const/Constant';
+
+import config from '../../static/css/config.module.css';
+
+type ConfigProps = {
+    pageDidMount: (page: Page) => void
+}
+
+function Config({ pageDidMount }: ConfigProps) {
+
+    useEffect(() => {
+        pageDidMount(CONFIG);
+    }, []);
+
     return (
         <div />
     );
 }
 
-export default config;
+export default Config;

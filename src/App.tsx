@@ -16,6 +16,7 @@ import {
     CONFIG
 } from './const/Constant';
 
+import Entrance from './dynamic/entrance/Entrance';
 import GeoTagSearch from './dynamic/geotagsearch/GeoTagSearch';
 import TagSearch from './dynamic/tagsearch/TagSearch';
 import TagSearchResult from './dynamic/tagsearchresult/TagSearchResult';
@@ -38,6 +39,7 @@ function App() {
 
     const [predecessor, setPredecessor] = useState<Page>(EMPTY_PAGE);
 
+    const [isEntrance, setIsEntrance] = useState(false);
     const [isTagSearch, setIsTagSearch] = useState(false);
     const [isPostUpload, setIsPostUpload] = useState(false);
 
@@ -59,6 +61,7 @@ function App() {
     function pageDidMount(page: Page) {
         if (content !== EMPTY_STRING)
             setContent(EMPTY_STRING);
+        setIsEntrance(page === ENTRANCE);
         setIsTagSearch(page === POST_UPLOAD || page === TAG_SEARCH);
         setIsPostUpload(page === POST_UPLOAD);
     }
@@ -86,15 +89,22 @@ function App() {
                 <div className={app.bodySide} />
                 <div className={app.bodyCenter}>
                     <Switch>
-                        <Route exact path={"/" + TAG_SEARCH}>
-                            <TagSearch
+                        <Route exact path={"/" + ENTRANCE}>
+                            <Entrance 
+                                pageDidMount={pageDidMount} 
+                            />
+                        </Route>
+                        <Route exact path={"/" + GEO_TAG_SEARCH}>
+                            <GeoTagSearch
+                                pageDidMount={pageDidMount}
                                 redirect={redirect}
                                 setContent={setContent}
                                 setPredecessor={setPredecessor}
                             />
                         </Route>
-                        <Route exact path={"/" + GEO_TAG_SEARCH}>
-                            <GeoTagSearch
+                        <Route exact path={"/" + TAG_SEARCH}>
+                            <TagSearch
+                                pageDidMount={pageDidMount}
                                 redirect={redirect}
                                 setContent={setContent}
                                 setPredecessor={setPredecessor}
@@ -109,15 +119,20 @@ function App() {
                         <Route exact path={"/" + POST_UPLOAD}>
                             <PostUpload
                                 contentRef={contentRef}
+                                pageDidMount={pageDidMount}
                                 redirect={redirect}
                                 setPredecessor={setPredecessor}
                             />
                         </Route>
                         <Route exact path={"/" + MY_POST_LIST}>
-                            <MyPostList />
+                            <MyPostList 
+                                pageDidMount={pageDidMount}
+                            />
                         </Route>
                         <Route exact path={"/" + CONFIG}>
-                            <Config />
+                            <Config 
+                                pageDidMount={pageDidMount} 
+                            />
                         </Route>
                     </Switch>
                 </div>
@@ -128,16 +143,16 @@ function App() {
                 <div className={app.footerCenter}>
                     <div className={!isPostUpload ? app.footerBarPrimary : app.footerBarSecondary}>&nbsp;</div>
                     <div className={app.footerWrapper}>
-                        <Link to={isTagSearch ? GEO_TAG_SEARCH : TAG_SEARCH} className={app.footerButtonWrapper} onClick={() => pageDidMount(isTagSearch ? GEO_TAG_SEARCH : TAG_SEARCH)}>
+                        <Link to={isTagSearch ? GEO_TAG_SEARCH : TAG_SEARCH} className={app.footerButtonWrapper}>
                             <img alt="" src={isTagSearch ? Maps : Glass} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, app.footerButton])} />
                         </Link>
-                        <Link to={POST_UPLOAD} className={app.footerButtonWrapper} onClick={() => pageDidMount(POST_UPLOAD)}>
+                        <Link to={POST_UPLOAD} className={app.footerButtonWrapper}>
                             <img alt="" src={Notes} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, app.footerButton])} />
                         </Link>
-                        <Link to={MY_POST_LIST} className={app.footerButtonWrapper} onClick={() => pageDidMount(MY_POST_LIST)}>
+                        <Link to={MY_POST_LIST} className={app.footerButtonWrapper}>
                             <img alt="" src={Books} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, app.footerButton])} />
                         </Link>
-                        <Link to={CONFIG} className={app.footerButtonWrapper} onClick={() => pageDidMount(CONFIG)}>
+                        <Link to={CONFIG} className={app.footerButtonWrapper}>
                             <img alt="" src={Cogs} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, app.footerButton])} />
                         </Link>
                     </div>

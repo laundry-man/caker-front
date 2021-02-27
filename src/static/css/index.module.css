@@ -150,6 +150,10 @@ body {
   display: none;
 }
 
+.invisible {
+  visibility: hidden;
+}
+
 .pull-to-refresh {
   border-radius: 5px;
   background: inherit;
