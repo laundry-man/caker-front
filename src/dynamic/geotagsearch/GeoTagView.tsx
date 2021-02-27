@@ -1,13 +1,15 @@
 import React, { useState } from 'react';
 
+import { Page, GEO_TAG_SEARCH, TAG_SEARCH_RESULT } from '../../const/Constant';
+
 import index from '../../static/css/index.module.css';
 import geoTagView from '../../static/css/geotagsearch/geoTagView.module.css';
 
 type GeoTagViewProps = {
     path: string,
-    redirect: (path: string) => void,
+    redirect: (page: Page) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+    setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function GeoTagView({
@@ -28,8 +30,8 @@ function GeoTagView({
             if (timer !== undefined)
                 clearInterval(timer);
             setContent('#고래상점');
-            setPredecessor('/geotagsearch');
-            redirect('/tagsearchresult');
+            setPredecessor(GEO_TAG_SEARCH);
+            redirect(TAG_SEARCH_RESULT);
         }
         else if (isLoaded) {
             setToggle(true);

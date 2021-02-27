@@ -3,6 +3,8 @@ import React, { useEffect, useRef, useState } from 'react';
 import ImageCropper from './ImageCropper';
 import ImageUploader from './ImageUploader';
 
+import { Page, POST_UPLOAD } from '../../const/Constant';
+
 import Tux from '../../static/image/Tux.png';
 import Matin1 from '../../static/image/matin_1.png';
 import Matin2 from '../../static/image/matin_2.png';
@@ -21,8 +23,8 @@ type Area = {
 
 type PostUploadProps = {
     contentRef: React.RefObject<HTMLDivElement>,
-    redirect: (path: string) => void,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+    redirect: (page: Page) => void,
+    setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function PostUpload({
@@ -57,7 +59,7 @@ function PostUpload({
     }
 
     useEffect(() => {
-        setPredecessor('/postupload');
+        setPredecessor(POST_UPLOAD);
     }, []);
 
     useEffect(() => {

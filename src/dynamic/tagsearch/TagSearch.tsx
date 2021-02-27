@@ -2,7 +2,12 @@ import React, { useState } from 'react';
 
 import TagList from './TagList';
 
-import { EMPTY_STRING, ENTER_KEY, RESET_ICON } from '../../const/Constant';
+import { EMPTY_STRING, 
+         ENTER_KEY, 
+         RESET_ICON, 
+         Page, 
+         TAG_SEARCH, 
+         TAG_SEARCH_RESULT } from '../../const/Constant';
 
 import index from '../../static/css/index.module.css';
 import tagSearch from '../../static/css/tagsearch/tagSearch.module.css';
@@ -13,9 +18,9 @@ type Tag = {
 };
 
 type TagSearchProps = {
-  redirect: (path: string) => void,
+  redirect: (page: Page) => void,
   setContent: React.Dispatch<React.SetStateAction<string>>,
-  setPredecessor: React.Dispatch<React.SetStateAction<string>>
+  setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 };
 
 function TagSearch({
@@ -46,8 +51,8 @@ function TagSearch({
 
   function assignKeyword(tag: string) {
     setContent(tag);
-    setPredecessor('/tagsearch');
-    redirect('/tagsearchresult');
+    setPredecessor(TAG_SEARCH);
+    redirect(TAG_SEARCH_RESULT);
   }
 
   function submitKeyword(e: React.KeyboardEvent<HTMLInputElement>) {

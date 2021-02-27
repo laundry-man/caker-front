@@ -23,7 +23,7 @@ function TagList({
     return (
         <>
             <div className={tagList.dotWrapper}>
-                <div className={isWritten ? classNames([tagList.dot, index.fadeInFast]) : index.invisible}>
+                <div className={isWritten ? classNames([tagList.dot, index.fadeInFast]) : index.nonDisplay}>
                     ●
                 </div>
             </div>

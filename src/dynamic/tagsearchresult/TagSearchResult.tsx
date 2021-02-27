@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
+
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import PostList from './PostList';
+
+import { Page } from '../../const/Constant';
 
 import Matin1 from '../../static/image/matin_1.png';
 import Matin2 from '../../static/image/matin_2.png';
@@ -29,7 +32,7 @@ import index from '../../static/css/index.module.css';
 
 type TagSearchResultProps = {
     tag: string,
-    redirect: (path: string) => void
+    redirect: (page: Page) => void
 }
 
 function TagSearchResult({ tag }: TagSearchResultProps) {

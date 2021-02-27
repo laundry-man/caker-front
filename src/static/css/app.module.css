@@ -2,6 +2,14 @@
     background: #F2F1ED;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    transition: background 0.9s;
+}
+
+.secondary {
+    background: #333333;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    transition: background 0.9s;
 }
 
 .header {
@@ -35,7 +43,7 @@
     align-items: center;
 }
 
-.header-title {
+.header-title-primary {
     width: 15vw;
     
     text-align: left;
@@ -45,9 +53,25 @@
     font-size: 2.2vh;
     color: #333333;
     letter-spacing: 0.5px;
+
+    transition: color 0.9s;
 }
 
-.header-content {
+.header-title-secondary {
+    width: 15vw;
+    
+    text-align: left;
+
+    font-family: YANGGIN;
+    font-weight: bold;
+    font-size: 2.2vh;
+    color: #F2F1ED;
+    letter-spacing: 0.5px;
+
+    transition: color 0.9s;
+}
+
+.header-content-primary {
     width: 65vw;
 
     text-align: right;
@@ -56,15 +80,43 @@
     font-size: 2.2vh;
     color: #333333;
     letter-spacing: 0.5px;
+
+    transition: color 0.9s;
 }
 
-.header-bar {
+.header-content-secondary {
+    width: 65vw;
+
+    text-align: right;
+
+    font-family: YANGGIN;
+    font-size: 2.2vh;
+    color: #F2F1ED;
+    letter-spacing: 0.5px;
+
+    transition: color 0.9s;
+}
+
+.header-bar-primary {
     border-radius: 5px;
     background: #333333; 
     
     height: 0.3vh;
     
     margin: 1vh 1px 1vh 1px;
+
+    transition: background 0.9s;
+}
+
+.header-bar-secondary {
+    border-radius: 5px;
+    background: #F2F1ED; 
+    
+    height: 0.3vh;
+    
+    margin: 1vh 1px 1vh 1px;
+
+    transition: background 0.9s;
 }
 
 .body {
@@ -122,13 +174,26 @@
     align-items: center;
 }
 
-.footer-bar {
+.footer-bar-primary {
     border-radius: 5px; 
     height: 0.3vh;
 
     background: #333333;
     
     margin: 1vh 1px 1.5vh 1px;
+
+    transition: background 0.9s;
+}
+
+.footer-bar-secondary {
+    border-radius: 5px; 
+    height: 0.3vh;
+
+    background: #F2F1ED;
+    
+    margin: 1vh 1px 1.5vh 1px;
+
+    transition: background 0.9s;
 }
 
 .footer-button-wrapper {

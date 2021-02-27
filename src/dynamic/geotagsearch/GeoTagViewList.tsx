@@ -2,13 +2,15 @@ import React from 'react';
 
 import GeoTagView from './GeoTagView';
 
+import { Page } from '../../const/Constant';
+
 import geoTagViewList from '../../static/css/geotagsearch/geoTagViewList.module.css';
 
 type GeoTagViewListProps = {
     pathList: string[],
-    redirect: (path: string) => void,
+    redirect: (page: Page) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+    setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function GeoTagViewList({ 

@@ -18,7 +18,7 @@
     font-family: San Francisco;
     font-size: 13px;
 
-    background: #333333;
+    background: inherit;
     border-radius: 0px;
     border: none;
     color: #F2F1ED;
@@ -42,7 +42,7 @@
     font-family: San Francisco;
     font-size: 13px;
 
-    background: #333333;
+    background: inherit;
     border-radius: 5px 0 0 5px;
     border: none;
     color: #F2F1ED;
@@ -62,7 +62,7 @@
     font-weight: bold;
     font-size: 12.5px;
 
-    background: #333333;
+    background: inherit;
     border-radius: 0 5px 5px 0;
     border: none;
     color: #F2F1ED;

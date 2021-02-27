@@ -4,6 +4,8 @@ import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import GeoTagViewList from './GeoTagViewList';
 
+import { Page } from '../../const/Constant';
+
 import Matin1 from '../../static/image/matin_1.png';
 import Anthracite1 from '../../static/image/anthracite_1.png';
 import BrownHands3 from '../../static/image/brownhands_3.png';
@@ -14,9 +16,9 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 
 type GeoTagSearchProps = {
-    redirect: (path: string) => void,
+    redirect: (page: Page) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
-    setPredecessor: React.Dispatch<React.SetStateAction<string>>
+    setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function GeoTagSearch({ 
