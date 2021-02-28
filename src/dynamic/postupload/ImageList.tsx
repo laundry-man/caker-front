@@ -8,7 +8,11 @@ import imageList from '../../static/css/postupload/imageList.module.css';
 
 export function ImageListSkeleton() {
     return (
-        <div className={imageList.image} />
+        <div className={imageList.image}>
+            <div className={imageList.comment}>
+                &nbsp;
+            </div>
+        </div>
     );
 }
 

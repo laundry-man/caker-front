@@ -14,7 +14,8 @@ export const THREE_PIECES_OF_CAKE: string = '🍰🍰🍰';
 
 const Page = {
     EMPTY_PAGE: '',
-    ENTRANCE: 'entrance',
+    SIGN_IN: 'signin',
+    SIGN_UP: 'signup',
     GEO_TAG_SEARCH: 'geotagsearch',
     TAG_SEARCH: 'tagsearch',
     TAG_SEARCH_RESULT: 'tagsearchresult',
@@ -27,7 +28,9 @@ export type Page = typeof Page[keyof typeof Page];
 
 export const EMPTY_PAGE: Page = '';
 
-export const ENTRANCE: Page = 'entrance';
+export const SIGN_IN: Page = 'signin';
+
+export const SIGN_UP: Page = 'signup';
 
 export const GEO_TAG_SEARCH: Page = 'geotagsearch';
 
