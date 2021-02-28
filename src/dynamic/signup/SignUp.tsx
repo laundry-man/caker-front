@@ -1,8 +1,12 @@
 import React from 'react';
 
+import signUp from '../../static/css/signup/signup.module.css';
+
 function SignUp() {
     return (
-        <div></div>
+        <div className={signUp.container}>
+            
+        </div>
     );
 }
 
