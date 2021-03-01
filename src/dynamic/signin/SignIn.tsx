@@ -1,10 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 
+import { EMPTY_STRING, RESET_ICON } from '../../const/Constant';
+
+import index from '../../static/css/index.module.css';
 import signIn from '../../static/css/signin/signin.module.css';
 
+import EyeOpen from '../../static/icon/eye-open.svg';
+import EyeClose from '../../static/icon/eye-with-a-diagonal-line-interface-symbol-for-invisibility.svg';
 import KakaoLogin from '../../static/icon/kakao/ko/kakao_login_large_wide.png';
 
 function SignIn() {
+    const [uidInput, setUidInput] = useState(EMPTY_STRING);
+    const [passwordInput, setPasswordInput] = useState(EMPTY_STRING);
+
+    const [isWritten, setIsWritten] = useState(false);
+    const [isVisible, setIsVisible] = useState(false);
+
+    function changeUidInput(e: React.ChangeEvent<HTMLInputElement>) {
+        if (e.target.value === EMPTY_STRING) {
+            setUidInput(EMPTY_STRING);
+            setIsWritten(false);
+        }
+        else {
+            if (!isWritten)
+                setIsWritten(true);
+                setUidInput(e.target.value);
+        }
+    }
+
+    function changePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
+        setPasswordInput(e.target.value);
+    }
+
+    function clearKeyword() {
+        if (isWritten) {
+            setUidInput(EMPTY_STRING);
+            setIsWritten(false);
+        }
+    }
+
     return (
         <div className={signIn.container}>
             <div className={signIn.sign}>
@@ -16,36 +50,41 @@ function SignIn() {
                 </div>
             </div>
             <div className={signIn.signIn}>
-                <div className={signIn.idWrapper}>
-                    <input className={signIn.idPrepend} readOnly />
-                    <input className={signIn.idInput} placeholder="전화번호 또는 이메일" />
-                    <input className={signIn.idAppend} readOnly />
+                <div className={signIn.authWrapper}>
+                    <input className={signIn.authPrepend} readOnly />
+                    <input className={signIn.authInput} value={uidInput} onChange={(e) => changeUidInput(e)} placeholder="전화번호 또는 이메일" />
+                    <input className={signIn.authAppend} value={isWritten ? RESET_ICON : EMPTY_STRING}
+                        onClick={() => clearKeyword()} readOnly />
                 </div>
-                <div style={{height: '3vh'}} />
-                <div className={signIn.idWrapper}>
-                    <input className={signIn.idPrepend} readOnly />
-                    <input type="password" className={signIn.idInput} placeholder="비밀번호" />
-                    <input className={signIn.idAppend} value="a" readOnly />
+                <div style={{ height: '3vh' }} />
+                <div className={signIn.authWrapper}>
+                    <input className={signIn.authPrepend} readOnly />
+                    <input type={isVisible ? "text" : "password"} className={signIn.authInput} onChange={(e) => changePasswordInput(e)} placeholder="비밀번호" />
+                    <div className={signIn.authAppend} onClick={() => setIsVisible(!isVisible)}>
+                        <div className={index.secondaryColor} style={{ content: isVisible ? "url(" + EyeClose + ")" : "url(" + EyeOpen + ")", width: "4.5vw" }} />
+                    </div>
                 </div>
-                <div style={{height: '4vh'}} />
+                <div style={{ height: '4vh' }} />
                 <div className={signIn.forgotPassword}>
                     비밀번호를 잊으셨나요?
                 </div>
-                <div style={{height: '3.25vh'}} />
-                <div style={{color: "#333333", fontSize:"0.45em"}}>
+                <div style={{ height: '3.25vh' }} />
+                <div className={signIn.dot}>
                     ●
                 </div>
-                <div style={{height: '2.25vh'}} />
-                <div style={{fontFamily:"WaitingfortheSunrise", fontSize: "1.95em", fontWeight: "bold"}}>
+                <div style={{ height: '2.25vh' }} />
+                <div className={signIn.signInButton}>
                     ENTER
                 </div>
-                <div style={{height: '8vh'}} />
-                <div style={{display: "flex", flexDirection: "row", alignItems:"center", justifyContent:"center"}}>
-                    <div style={{width: "10vw", fontFamily: "San Francisco", fontSize: "0.8em", color: "#D5D0C4"}}>또는</div>
-                    <div style={{background: "#E8E6DF", width: "70vw", height: "0.2vh", borderRadius: "2px"}} />
+                <div style={{ height: '8vh' }} />
+                <div className={signIn.separator}>
+                    <div className={signIn.separatorComment}>
+                        또는
+                    </div>
+                    <div className={signIn.separatorBar} />
                 </div>
-                <div style={{height: '1vh'}} />
-                <img alt="" src={KakaoLogin} style={{width: "80vw"}} />
+                <div style={{ height: '1vh' }} />
+                <img alt="" src={KakaoLogin} style={{ width: "80vw" }} />
             </div>
         </div>
     );

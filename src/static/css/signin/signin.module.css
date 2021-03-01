@@ -49,12 +49,12 @@
     height: 60vh;
 }
 
-.id-wrapper {
+.auth-wrapper {
     display: flex;
     flex-direction: row;
 }
 
-.id-input {
+.auth-input {
     width: 66vw;
     height: 4.5vh;
 
@@ -73,7 +73,7 @@
     padding: 0.5px 0 0 0;
 }
 
-.id-prepend {
+.auth-prepend {
     width: 6vw;
     height: 4.5vh;
 
@@ -87,9 +87,13 @@
     padding: 0;
 }
 
-.id-append {
+.auth-append {
     width: 8vw;
     height: 4.5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     text-align: center;
 
@@ -107,7 +111,42 @@
     padding: 0.5px 0 0 0;
 }
 
+.dot {
+    font-size: 0.45em;
+    color: #333333;
+}
+
+.sign-in-button {
+    font-family: WaitingfortheSunrise;
+    font-weight: bold;
+    font-size: 1.85em;
+}
+
 .forgot-password {
     font-family: San Francisco;
     font-size: 0.8em;
+}
+
+.separator {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+}
+
+.separator-comment {
+    width: 10vw;
+
+    font-family: San Francisco;
+    font-size: 0.8em;
+    color: #D5D0C4;
+}
+
+.separator-bar {
+    width: 70vw;
+    height: 0.2vh;
+
+    border-radius: 2px;
+
+    background: #E8E6DF;
 }
