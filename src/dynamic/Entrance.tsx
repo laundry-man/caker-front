@@ -42,7 +42,11 @@ function Entrance({ setIsSigned }: EntranceProps) {
                 <div className={entrance.footerSide} />
                 <div className={entrance.footerCenter}>
                     <div className={entrance.footerWrapper}>
-                        <div className={entrance.footerBarTop}>&nbsp;</div>
+                        <div className={entrance.footerBarTop}>
+                            <div className={entrance.footerContent}>
+                                새로 가입하기
+                            </div>
+                        </div>
                         <div className={entrance.footerBarBottom}>&nbsp;</div>
                     </div>
                 </div>
