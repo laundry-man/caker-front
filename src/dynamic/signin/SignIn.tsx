@@ -15,6 +15,7 @@ function SignIn() {
 
     const [isWritten, setIsWritten] = useState(false);
     const [isVisible, setIsVisible] = useState(false);
+    const [isBlurred, setIsBlurred] = useState(false);
 
     function changeUidInput(e: React.ChangeEvent<HTMLInputElement>) {
         if (e.target.value === EMPTY_STRING) {
@@ -29,10 +30,16 @@ function SignIn() {
     }
 
     function changePasswordInput(e: React.ChangeEvent<HTMLInputElement>) {
-        setPasswordInput(e.target.value);
+        if (isBlurred) {
+            setPasswordInput(passwordInput !== EMPTY_STRING ? EMPTY_STRING : e.target.value);
+            setIsBlurred(false);
+        }
+        else {
+            setPasswordInput(e.target.value);
+        }
     }
 
-    function clearKeyword() {
+    function clearUidInput() {
         if (isWritten) {
             setUidInput(EMPTY_STRING);
             setIsWritten(false);
@@ -54,12 +61,17 @@ function SignIn() {
                     <input className={signIn.authPrepend} readOnly />
                     <input className={signIn.authInput} value={uidInput} onChange={(e) => changeUidInput(e)} placeholder="전화번호 또는 이메일" />
                     <input className={signIn.authAppend} value={isWritten ? RESET_ICON : EMPTY_STRING}
-                        onClick={() => clearKeyword()} readOnly />
+                        onClick={() => clearUidInput()} readOnly />
                 </div>
                 <div style={{ height: '3vh' }} />
                 <div className={signIn.authWrapper}>
                     <input className={signIn.authPrepend} readOnly />
-                    <input type={isVisible ? "text" : "password"} className={signIn.authInput} onChange={(e) => changePasswordInput(e)} placeholder="비밀번호" />
+                    <input type={isVisible ? "text" : "password"} 
+                        className={signIn.authInput} 
+                        value={passwordInput} 
+                        onBlur={() => setIsBlurred(true)}
+                        onChange={(e) => changePasswordInput(e)} 
+                        placeholder="비밀번호" />
                     <div className={signIn.authAppend} onClick={() => setIsVisible(!isVisible)}>
                         <div className={index.secondaryColor} style={{ content: isVisible ? "url(" + EyeClose + ")" : "url(" + EyeOpen + ")", width: "4.5vw" }} />
                     </div>
