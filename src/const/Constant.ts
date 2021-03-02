@@ -18,6 +18,7 @@ const Page = {
     EMPTY_PAGE: '',
     SIGN_IN: 'signin',
     SIGN_UP: 'signup',
+    FORGOT_PASSWORD: 'forgotpassword',
     GEO_TAG_SEARCH: 'geotagsearch',
     TAG_SEARCH: 'tagsearch',
     TAG_SEARCH_RESULT: 'tagsearchresult',
@@ -33,6 +34,8 @@ export const EMPTY_PAGE: Page = '';
 export const SIGN_IN: Page = 'signin';
 
 export const SIGN_UP: Page = 'signup';
+
+export const FORGOT_PASSWORD: Page = 'forgotpassword';
 
 export const GEO_TAG_SEARCH: Page = 'geotagsearch';
 

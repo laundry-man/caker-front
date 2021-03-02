@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 
-import { EMPTY_STRING, RESET_ICON } from '../../const/Constant';
+import { EMPTY_STRING, RESET_ICON, Page, FORGOT_PASSWORD } from '../../const/Constant';
 
+import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import signIn from '../../static/css/signin/signin.module.css';
 
@@ -9,7 +10,11 @@ import EyeOpen from '../../static/icon/eye-open.svg';
 import EyeClose from '../../static/icon/eye-with-a-diagonal-line-interface-symbol-for-invisibility.svg';
 import KakaoLogin from '../../static/icon/kakao/ko/kakao_login_large_wide.png';
 
-function SignIn() {
+type SignInProps = {
+    redirect: (page: Page) => void
+}
+
+function SignIn({ redirect }: SignInProps) {
     const [uidInput, setUidInput] = useState(EMPTY_STRING);
     const [passwordInput, setPasswordInput] = useState(EMPTY_STRING);
 
@@ -47,7 +52,7 @@ function SignIn() {
     }
 
     return (
-        <div className={signIn.container}>
+        <div className={classNames([signIn.container, index.fadeInFast])}>
             <div className={signIn.sign}>
                 <div className={signIn.main}>
                     CAKER
@@ -59,7 +64,7 @@ function SignIn() {
             <div className={signIn.signIn}>
                 <div className={signIn.authWrapper}>
                     <input className={signIn.authPrepend} readOnly />
-                    <input className={signIn.authInput} value={uidInput} onChange={(e) => changeUidInput(e)} placeholder="전화번호 또는 이메일" />
+                    <input className={signIn.authInput} value={uidInput} onChange={(e) => changeUidInput(e)} placeholder="사용자 이름 또는 이메일" />
                     <input className={signIn.authAppend} value={isWritten ? RESET_ICON : EMPTY_STRING}
                         onClick={() => clearUidInput()} readOnly />
                 </div>
@@ -77,14 +82,14 @@ function SignIn() {
                     </div>
                 </div>
                 <div style={{ height: '4vh' }} />
-                <div className={signIn.forgotPassword}>
+                <div className={signIn.forgotPassword} onClick={() => redirect(FORGOT_PASSWORD)}>
                     비밀번호를 잊으셨나요?
                 </div>
-                <div style={{ height: '3.25vh' }} />
+                <div style={{ height: '3.15vh' }} />
                 <div className={signIn.dot}>
                     ●
                 </div>
-                <div style={{ height: '2.25vh' }} />
+                <div style={{ height: '2.45vh' }} />
                 <div className={signIn.signInButton}>
                     ENTER
                 </div>

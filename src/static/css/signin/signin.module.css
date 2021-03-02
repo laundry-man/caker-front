@@ -112,7 +112,7 @@
 
 .dot {
     font-size: 0.45em;
-    color: #333333;
+    color: #D5D0C4;
 }
 
 .sign-in-button {
@@ -124,6 +124,7 @@
 .forgot-password {
     font-family: San Francisco;
     font-size: 0.8em;
+    color: #333333;
 }
 
 .separator {
