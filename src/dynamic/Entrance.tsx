@@ -40,7 +40,7 @@ function Entrance({ setIsSigned }: EntranceProps) {
                 <div className={entrance.bodyCenter}>
                     <Switch>
                         <Route exact path={"/" + SIGN_IN}>
-                            <SignIn redirect={redirect} />
+                            <SignIn redirect={redirect} setIsSigned={setIsSigned} />
                         </Route>
                         <Route exact path={"/" + SIGN_UP}>
                             <SignUp redirect={redirect} />
