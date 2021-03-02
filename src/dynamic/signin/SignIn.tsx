@@ -11,10 +11,11 @@ import EyeClose from '../../static/icon/eye-with-a-diagonal-line-interface-symbo
 import KakaoLogin from '../../static/icon/kakao/ko/kakao_login_large_wide.png';
 
 type SignInProps = {
-    redirect: (page: Page) => void
+    redirect: (page: Page) => void,
+    setIsSigned: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-function SignIn({ redirect }: SignInProps) {
+function SignIn({ redirect, setIsSigned }: SignInProps) {
     const [uidInput, setUidInput] = useState(EMPTY_STRING);
     const [passwordInput, setPasswordInput] = useState(EMPTY_STRING);
 
@@ -101,7 +102,7 @@ function SignIn({ redirect }: SignInProps) {
                     <div className={signIn.separatorBar} />
                 </div>
                 <div style={{ height: '1vh' }} />
-                <img alt="" src={KakaoLogin} style={{ width: "80vw" }} />
+                <img alt="" src={KakaoLogin} style={{ width: "80vw" }} onClick={() => setIsSigned(true)} />
             </div>
         </div>
     );
