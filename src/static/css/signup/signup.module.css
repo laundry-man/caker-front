@@ -34,6 +34,12 @@
     margin-bottom: 1.75vh;
 }
 
+.main-content {
+    width: 11vw;
+    
+    content: url("../../icon/hand-pointing-upward.svg");
+}
+
 .sub {
     font-family: San Francisco;
     font-size: 0.95em;
