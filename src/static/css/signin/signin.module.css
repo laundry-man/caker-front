@@ -150,3 +150,7 @@
 
     background: #E8E6DF;
 }
+
+.visibility {
+    content: url("../../icon/eye-open.svg");
+}

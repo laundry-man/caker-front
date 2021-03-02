@@ -79,7 +79,7 @@ function SignIn({ redirect, setIsSigned }: SignInProps) {
                         onChange={(e) => changePasswordInput(e)} 
                         placeholder="비밀번호" />
                     <div className={signIn.authAppend} onClick={() => setIsVisible(!isVisible)}>
-                        <div className={index.secondaryColor} style={{ content: isVisible ? "url(" + EyeClose + ")" : "url(" + EyeOpen + ")", width: "4.5vw" }} />
+                        <div className={classNames([index.secondaryColor, signIn.visibility])} style={{ content: isVisible ? "url(" + EyeClose + ")" : "url(" + EyeOpen + ")", width: "4.5vw" }} />
                     </div>
                 </div>
                 <div style={{ height: '4vh' }} />
