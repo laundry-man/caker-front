@@ -226,7 +226,7 @@ function ImageUploader({
                 mode: 'cors',
                 headers: {
                     'Content-Type': 'application/json',
-                    'X-AUTH-TOKEN': 'eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTYxNDM5MzA2NSwiZXhwIjoxNjE0Mzk2NjY1fQ.MNPMoms9J4yZC-9DWf5XJj1VnunCPfnglKZR84XnZIk'
+                    'Authorization': 'Bearer eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiIxIiwicm9sZXMiOlsiUk9MRV9VU0VSIl0sImlhdCI6MTYxNTAzNzY4NCwiZXhwIjoxNjE1MDQxMjg0fQ.QZgLAUwa2J_FsD4zpJM69AK8Cz92zQjIvhUnCf1PwIs'
                 }
             });
         const { data, errors } = await response.json();
