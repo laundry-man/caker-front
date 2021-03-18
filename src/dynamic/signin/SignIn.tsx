@@ -86,7 +86,7 @@ function SignIn({ redirect, setIsSigned }: SignInProps) {
                 <div className={signIn.forgotPassword} onClick={() => redirect(FORGOT_PASSWORD)}>
                     비밀번호를 잊으셨나요?
                 </div>
-                <div style={{ height: '3.15vh' }} />
+                <div style={{ height: '3.45vh' }} />
                 <div className={signIn.dot}>
                     ●
                 </div>
