@@ -14,6 +14,7 @@ import Terarosa1 from '../../static/image/terarosa_1.png';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
+import geoTagSearch from '../../static/css/geotagsearch/geoTagSearch.module.css';
 
 type GeoTagSearchProps = {
     pageDidMount: (page: Page) => void,
@@ -22,10 +23,10 @@ type GeoTagSearchProps = {
     setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
-function GeoTagSearch({ 
+function GeoTagSearch({
     pageDidMount,
-    redirect, 
-    setContent, 
+    redirect,
+    setContent,
     setPredecessor }: GeoTagSearchProps) {
 
     const [pathList, setPathList] = useState([Matin1, Anthracite1, BrownHands3, PotatoField2, Terarosa1]);
@@ -50,23 +51,37 @@ function GeoTagSearch({
         pageDidMount(GEO_TAG_SEARCH);
     }, []);
 
+    const [heightState, setHeightState] = useState(false);
+
     return (
-        <PullToRefresh
-            onRefresh={resetData}
-            canFetchMore={true}
-            isPullable={true}
-            onFetchMore={getNewData}
-            fetchMoreThreshold={0}
-            pullDownThreshold={67}
-            maxPullDownDistance={95}
-            className={classNames([index.pullToRefresh, index.fadeInFast])}>
-            <GeoTagViewList 
-                pathList={pathList}
-                redirect={redirect}
-                setContent={setContent}
-                setPredecessor={setPredecessor}
-            />
-        </PullToRefresh>
+        <div>
+            <div className={geoTagSearch.category} 
+                style={{height: !heightState ? '3.5vh' : '14vh'}} 
+                onClick={() => setHeightState(!heightState)}>
+                <div className={geoTagSearch.inner}>
+                    데이트하기 좋은
+                </div>
+            </div>
+            <div className={geoTagSearch.container} 
+                style={{ height: !heightState ? '81.5vh' : '71vh', transitionDelay: !heightState ? '0.15s' : '0s' }}>
+                <PullToRefresh 
+                    onRefresh={resetData}
+                    canFetchMore={true}
+                    isPullable={true}
+                    onFetchMore={getNewData}
+                    fetchMoreThreshold={0}
+                    pullDownThreshold={67}
+                    maxPullDownDistance={95}
+                    className={classNames([index.pullToRefresh, index.fadeInFast])}>
+                    <GeoTagViewList
+                        pathList={pathList}
+                        redirect={redirect}
+                        setContent={setContent}
+                        setPredecessor={setPredecessor}
+                    />
+                </PullToRefresh>
+            </div>
+        </div>
     );
 }
 

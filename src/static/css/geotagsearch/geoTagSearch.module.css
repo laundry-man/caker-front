@@ -1,0 +1,25 @@
+.category {
+    width: 80vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 5px;
+    margin-bottom: 1vh;
+
+    transition: height 0.3s;
+
+    background: rgb(191,181,218);
+    background: linear-gradient(0deg, rgba(191,181,218,1) 21%, rgba(165,185,227,1) 45%, rgba(156,186,230,1) 70%, rgba(148,187,233,1) 100%);
+}
+
+.inner {
+    font-family: Sans Francisco;
+    font-size: 0.85em;
+    color: #E2E1ED;
+}
+
+.container {
+    transition: height 0.3;
+}
