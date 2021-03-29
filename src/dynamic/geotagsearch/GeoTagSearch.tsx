@@ -12,6 +12,8 @@ import BrownHands3 from '../../static/image/brownhands_3.png';
 import PotatoField2 from '../../static/image/potatofield_2.png';
 import Terarosa1 from '../../static/image/terarosa_1.png';
 
+import Lemon from '../../static/icon/lemon.svg';
+
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import geoTagSearch from '../../static/css/geotagsearch/geoTagSearch.module.css';
@@ -55,16 +57,37 @@ function GeoTagSearch({
 
     return (
         <div>
-            <div className={geoTagSearch.category} 
-                style={{height: !heightState ? '3.5vh' : '14vh'}} 
+            <div className={classNames([geoTagSearch.categoryWrapper, geoTagSearch.categoryBackground])}
+                style={{ height: !heightState ? '3.5vh' : '14vh' }}
                 onClick={() => setHeightState(!heightState)}>
-                <div className={geoTagSearch.inner}>
-                    데이트하기 좋은
+                <div className={geoTagSearch.prepend}>
+                    <div className={geoTagSearch.distance}>
+                        5km
+                    </div>
+                </div>
+                <div className={geoTagSearch.category}>
+                    <div className={geoTagSearch.summary}>
+                        데이트하기 좋은
+                    </div>
+                    <div className={classNames([geoTagSearch.contentWrapper, heightState ? index.fadeInFast : index.nonDisplay])}>
+                        <div className={geoTagSearch.content}>
+                            분위기 있는 카페 콘하스
+                        </div>
+                        <div className={geoTagSearch.content}>
+                            커피가 맛있는 테일러 커피
+                        </div>
+                        <div className={geoTagSearch.content}>
+                            조용하고 넓은 스타벅스
+                        </div>
+                    </div>
+                </div>
+                <div className={geoTagSearch.append}>
+                    <img alt="" src={Lemon} className={index.secondaryColor} style={{ width: '1.5vh' }} />
                 </div>
             </div>
-            <div className={geoTagSearch.container} 
-                style={{ height: !heightState ? '81.5vh' : '71vh', transitionDelay: !heightState ? '0.15s' : '0s' }}>
-                <PullToRefresh 
+            <div className={geoTagSearch.container}
+                style={{ height: !heightState ? '81.5vh' : '71vh' }}>
+                <PullToRefresh
                     onRefresh={resetData}
                     canFetchMore={true}
                     isPullable={true}
