@@ -17,6 +17,7 @@ import Lemon from '../../static/icon/lemon.svg';
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import geoTagSearch from '../../static/css/geotagsearch/geoTagSearch.module.css';
+import Vibe from './Vibe';
 
 type GeoTagSearchProps = {
     pageDidMount: (page: Page) => void,
@@ -32,6 +33,9 @@ function GeoTagSearch({
     setPredecessor }: GeoTagSearchProps) {
 
     const [pathList, setPathList] = useState([Matin1, Anthracite1, BrownHands3, PotatoField2, Terarosa1]);
+
+    const [distance, setDistance] = useState(1);
+    const [isStretch, setIsStretch] = useState(false);
 
     function getNewData() {
         return new Promise((resolve, reject) => {
@@ -53,40 +57,15 @@ function GeoTagSearch({
         pageDidMount(GEO_TAG_SEARCH);
     }, []);
 
-    const [heightState, setHeightState] = useState(false);
-
     return (
         <div>
-            <div className={classNames([geoTagSearch.categoryWrapper, geoTagSearch.categoryBackground])}
-                style={{ height: !heightState ? '3.5vh' : '14vh' }}
-                onClick={() => setHeightState(!heightState)}>
-                <div className={geoTagSearch.prepend}>
-                    <div className={geoTagSearch.distance}>
-                        5km
-                    </div>
-                </div>
-                <div className={geoTagSearch.category}>
-                    <div className={geoTagSearch.summary}>
-                        데이트하기 좋은
-                    </div>
-                    <div className={classNames([geoTagSearch.contentWrapper, heightState ? index.fadeInFast : index.nonDisplay])}>
-                        <div className={geoTagSearch.content}>
-                            분위기 있는 카페 콘하스
-                        </div>
-                        <div className={geoTagSearch.content}>
-                            커피가 맛있는 테일러 커피
-                        </div>
-                        <div className={geoTagSearch.content}>
-                            조용하고 넓은 스타벅스
-                        </div>
-                    </div>
-                </div>
-                <div className={geoTagSearch.append}>
-                    <img alt="" src={Lemon} className={index.secondaryColor} style={{ width: '1.5vh' }} />
-                </div>
-            </div>
+            <Vibe
+                distance={distance}
+                isStretch={isStretch}
+                setIsStretch={setIsStretch}
+            />
             <div className={geoTagSearch.container}
-                style={{ height: !heightState ? '81.5vh' : '71vh' }}>
+                style={{ height: !isStretch ? '81.5vh' : '71vh' }}>
                 <PullToRefresh
                     onRefresh={resetData}
                     canFetchMore={true}
