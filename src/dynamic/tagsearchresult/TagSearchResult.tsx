@@ -37,14 +37,14 @@ type TagSearchResultProps = {
 
 function TagSearchResult({ tag }: TagSearchResultProps) {
     const base: string[][] = [
-        [Matin1, Matin2, Matin3, Matin4],
-        [Anthracite1, Anthracite2, Anthracite3, Anthracite4],
-        [BrownHands1, BrownHands2, BrownHands3, BrownHands4],
-        [PotatoField1, PotatoField2, PotatoField3, PotatoField4],
-        [Terarosa1, Terarosa2, Terarosa3, Terarosa4]
+        [Matin1, Matin1, Matin3, Matin4],
+        [Anthracite1, Anthracite1, Anthracite3, Anthracite4],
+        [BrownHands1, BrownHands1, BrownHands3, BrownHands4],
+        [PotatoField1, PotatoField1, PotatoField3, PotatoField4],
+        [Terarosa1, Terarosa1, Terarosa3, Terarosa4]
     ];
 
-    const [pathListList, setPathListList] = useState(base);
+    const [imagePathListList, setImagePathListList] = useState(base);
 
     function getNewData() {
         return new Promise((resolve, reject) => {
@@ -80,7 +80,7 @@ function TagSearchResult({ tag }: TagSearchResultProps) {
           pullDownThreshold={67}
           maxPullDownDistance={95}
           className={classNames([index.pullToRefresh, index.fadeInFast])}>
-          <PostList pathListList={pathListList} />
+          <PostList imagePathListList={imagePathListList} />
         </PullToRefresh>
     );
 }

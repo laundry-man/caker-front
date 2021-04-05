@@ -69,7 +69,7 @@
     outline: none;
     box-shadow: none;
 
-    padding: 0.5px 0 0 0;
+    padding: 0.1rem 0 0 0;
 }
 
 .auth-prepend {
@@ -107,7 +107,7 @@
     outline: none;
     box-shadow: none;
 
-    padding: 0.5px 0 0 0;
+    padding: 0.1rem 0 0 0;
 }
 
 .dot {
