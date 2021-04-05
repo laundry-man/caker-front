@@ -40,24 +40,24 @@ function Vibe({
         <div className={classNames([vibe.vibeWrapper, index.fadeInFast])}
             style={{ height: !isStretch ? '3.5vh' : '14vh' }}>
             <div className={vibe.prepend} onClick={() => setIsStretch(!isStretch)}>
-                <div className={vibe.distance}>
-                    {distance}km
-                    </div>
+                <div className={vibe.distance}>{distance}km</div>
             </div>
             <div className={vibe.vibe} onClick={() => setIsStretch(!isStretch)}>
-                <div className={vibe.summary}>
-                    {vibeList[vibeId]}
+                <div className={vibe.nameWrapper}>
+                    <div className={vibe.name}>
+                        {vibeList[vibeId]}
+                    </div>
                 </div>
                 <div className={classNames([vibe.contentWrapper, isStretch ? index.fadeInFast : index.nonDisplay])}>
                     <div className={vibe.content}>
                         분위기 있는 카페 콘하스
-                        </div>
+                    </div>
                     <div className={vibe.content}>
                         커피가 맛있는 테일러 커피
-                        </div>
+                    </div>
                     <div className={vibe.content}>
                         조용하고 넓은 스타벅스
-                        </div>
+                    </div>
                 </div>
             </div>
             <div className={vibe.append} 
@@ -68,11 +68,11 @@ function Vibe({
                         setIsStretch(!isStretch); 
                     }
                 }>
-                <img alt=""
-                    src={Lemon}
-                    className={classNames([index.secondaryColor, isStretch ? index.nonDisplay : index.fadeInFast])}
-                    style={{ width: '1.5vh' }}
-                />
+                <div className={isStretch ? index.nonDisplay : index.fadeInFast}>
+                    <div className={vibe.change}>
+                        ●
+                    </div>
+                </div>
             </div>
         </div>
     );
