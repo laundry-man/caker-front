@@ -91,7 +91,7 @@
     padding-bottom: 0.5vh;
 }
 
-.change {
+.dot {
     font-size: 1em;
     color: rgb(191,181,218);
     color: linear-gradient(45deg, rgba(191,181,218,1) 21%, rgba(165,185,227,1) 43%, rgba(156,186,230,1) 79%, rgba(148,187,233,1) 100%);

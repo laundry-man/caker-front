@@ -69,7 +69,7 @@ function Vibe({
                     }
                 }>
                 <div className={isStretch ? index.nonDisplay : index.fadeInFast}>
-                    <div className={vibe.change}>
+                    <div className={vibe.dot}>
                         ●
                     </div>
                 </div>
