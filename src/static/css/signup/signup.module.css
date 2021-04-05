@@ -42,7 +42,7 @@
 
 .sub {
     font-family: San Francisco;
-    font-size: 0.95em;
+    font-size: 0.95rem;
     color: #333333;
 
     margin-bottom: 0.75vh;
@@ -50,7 +50,7 @@
 
 .description {
     font-family: San Francisco;
-    font-size: 0.75em;
+    font-size: 0.75rem;
     color: #333333;
 }
 
@@ -69,7 +69,7 @@
     height: 4.5vh;
 
     font-family: San Francisco;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 
     background: #333333;
     border-radius: 0px;
@@ -102,7 +102,7 @@
 
     font-family: San Francisco;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 
     background: #333333;
     border-radius: 0px 5px 5px 0px;
@@ -115,13 +115,13 @@
 }
 
 .dot {
-    font-size: 0.35em;
+    font-size: 0.35rem;
     color: #D5D0C4;
 }
 
 .request-button {
     font-family: WaitingfortheSunrise;
     font-weight: bold;
-    font-size: 1.65em;
+    font-size: 1.65rem;
     color: #333333;
 }

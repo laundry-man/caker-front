@@ -23,8 +23,8 @@
 .main {
     font-family: YANGGIN;
     font-weight: bold;
-    font-size: 2em;
-    letter-spacing: 0.05em;
+    font-size: 2rem;
+    letter-spacing: 0.05rem;
 
     margin-bottom: -0.9vh;
 }
@@ -33,9 +33,9 @@
     width: 32vw;
 
     font-family: YANGGIN;
-    font-size: 0.85em;
+    font-size: 0.85rem;
     color: #F2F1ED;
-    letter-spacing: 0.1em;
+    letter-spacing: 0.1rem;
 
     border-radius: 4px;
 
@@ -59,7 +59,7 @@
     height: 4.5vh;
 
     font-family: San Francisco;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 
     background: #333333;
     border-radius: 0px;
@@ -98,7 +98,7 @@
 
     font-family: San Francisco;
     font-weight: bold;
-    font-size: 0.9em;
+    font-size: 0.9rem;
 
     background: #333333;
     border-radius: 0px 5px 5px 0px;
@@ -111,19 +111,19 @@
 }
 
 .dot {
-    font-size: 0.45em;
+    font-size: 0.45rem;
     color: #D5D0C4;
 }
 
 .sign-in-button {
     font-family: WaitingfortheSunrise;
     font-weight: bold;
-    font-size: 1.85em;
+    font-size: 1.85rem;
 }
 
 .forgot-password {
     font-family: San Francisco;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: #333333;
 }
 
@@ -138,7 +138,7 @@
     width: 10vw;
 
     font-family: San Francisco;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: #D5D0C4;
 }
 
