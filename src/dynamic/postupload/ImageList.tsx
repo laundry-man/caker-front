@@ -87,7 +87,7 @@ function ActiveView({
                             })}
                         </div> :
                         <div className={imageList.commentDisabled}>
-                            please write a comments
+                            please write a comment
                         </div>
                     }
                     <div className={imageList.cakeRating}>

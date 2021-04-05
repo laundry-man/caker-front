@@ -31,15 +31,17 @@
     align-items: center;
     justify-content: center;
     text-align: center;
+
+    padding-left: 1vw;
 }
 
 .dot-1 {
-    font-size: 1em;
+    font-size: 0.5rem;
     color: #F2F1ED;
 }
 
 .dot-2 {
-    font-size: 1em;
+    font-size: 0.5rem;
     color: rgb(191,181,218);
     color: linear-gradient(45deg, rgba(191,181,218,1) 21%, rgba(165,185,227,1) 43%, rgba(156,186,230,1) 79%, rgba(148,187,233,1) 100%);
 }
@@ -69,16 +71,16 @@
 
 .tag {
     font-family: San Francisco;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: #FFFFFF;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05rem;
 
     margin-bottom: 0.6vh;
 }
 
 .measured {
     font-family: San Francisco;
-    font-size: 0.8em;
+    font-size: 0.8rem;
     color: #FFFFFF;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.05rem;
 }
