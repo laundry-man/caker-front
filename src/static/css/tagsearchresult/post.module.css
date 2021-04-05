@@ -1,13 +1,49 @@
-.wrapper {
-    width: 100%;
+.image {
+    width: 80vw;
+    height: 80vw;
 
-    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    border-radius: 5px;
+
+    background-size: cover;
 
     margin-bottom: 1vh;
 }
 
-.image {
-    width: 100%;
+.comment {
+    width: 80vw;
+    height: 80vw;
+    
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-family: San Francisco;
+    font-size: 0.75rem;
+    letter-spacing: 0.05rem;
 
     border-radius: 5px;
+
+    backdrop-filter: brightness(50%);
+}
+
+.comment-enabled {
+    color: white;
+}
+
+.comment-disabled {
+    color: #B3B3B3;
+}
+
+.cake-rating {
+    font-size: 0.9rem;
+    letter-spacing: 0.3rem;
+
+    margin-top: 0.5vh;
 }
