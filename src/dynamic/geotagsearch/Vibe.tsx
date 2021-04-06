@@ -68,11 +68,11 @@ function Vibe({
                         setIsStretch(!isStretch); 
                     }
                 }>
-                <div className={isStretch ? index.nonDisplay : index.fadeInFast}>
-                    <div className={vibe.dot}>
-                        ●
-                    </div>
-                </div>
+                {!isStretch ?
+                    <div className={index.fadeInFast}>
+                        <div className={vibe.dot}>●</div>
+                    </div> :
+                    <></>}
             </div>
         </div>
     );

@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from 'react';
 
 import ImageCropper from './ImageCropper';
 import ImageUploader from './ImageUploader';
+import { blobToURL, fromURL } from 'image-resize-compress';
 
 import { Page, POST_UPLOAD } from '../../const/Constant';
 
@@ -77,13 +78,13 @@ function PostUpload({
                 <div onClick={() => getNextView()}>
                     {imageSetterList[setterIndex]}
                 </div> :
-                <ImageUploader
+                /*<ImageUploader
                     rawImageList={[Matin1, Matin2]}
                     croppedAreaPixelsList={[
                         { width: 1125, height: 1125, x: 0, y: 0 },
                         { width: 1125, height: 1125, x: 0, y: 0 }
                     ]}
-                />/*
+                />*/
                 <FrontView
                     toggle={toggle}
                     contentRef={contentRef}
@@ -93,7 +94,7 @@ function PostUpload({
                     setLength={setLength}
                     setImageSetterList={setImageSetterList}
                     setCroppedAreaPixels={setCroppedAreaPixels}
-                />*/
+                />
             }
         </div>
     );
@@ -122,12 +123,16 @@ function FrontView({
 
     const fileRef = useRef<HTMLInputElement>(null);
 
-    function onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
         const length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
 
         for (let i = 0; i < length; i++) {
-            const imagePath =
+            const rawImagePath =
                 (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
+
+            const resized = await fromURL(rawImagePath, 100, 2048, 'auto', 'jpeg');
+
+            const imagePath = await blobToURL(resized);
 
             rawImageList.push(imagePath);
         }
