@@ -44,6 +44,7 @@
     "history": "^5.0.0",
     "html-webpack-plugin": "4.5.0",
     "identity-obj-proxy": "3.0.0",
+    "image-resize-compress": "^1.0.8",
     "jest": "26.6.0",
     "jest-circus": "26.6.0",
     "jest-resolve": "26.6.0",
