@@ -39,7 +39,6 @@ function Frame() {
     const [isTagSearch, setIsTagSearch] = useState(false);
     const [isPostUpload, setIsPostUpload] = useState(false);
 
-    const contentRef = useRef<HTMLDivElement>(null);
     const pageHistory = useHistory<Page>();
 
     const redirect = (page: Page) => pageHistory.push(page);
@@ -69,7 +68,7 @@ function Frame() {
                             <div>CAKER</div>
                         </div>
                         <div className={!isPostUpload ? frame.headerContentPrimary : frame.headerContentSecondary}>
-                            <div id="content" ref={contentRef} onClick={() => clearContent()}>
+                            <div onClick={() => clearContent()}>
                                 {content}
                             </div>
                         </div>
@@ -106,7 +105,6 @@ function Frame() {
                         </Route>
                         <Route exact path={"/" + POST_UPLOAD}>
                             <PostUpload
-                                contentRef={contentRef}
                                 pageDidMount={pageDidMount}
                                 redirect={redirect}
                                 setPredecessor={setPredecessor}

@@ -14,6 +14,8 @@ export const TWO_PIECES_OF_CAKE: string = '🍰🍰';
 
 export const THREE_PIECES_OF_CAKE: string = '🍰🍰🍰';
 
+export const CANVAS_MAX_SIZE: number = 2048;
+
 const Page = {
     EMPTY_PAGE: '',
     SIGN_IN: 'signin',
