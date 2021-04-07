@@ -1,15 +1,11 @@
 import React, { useEffect, useRef, useState } from 'react';
 
+import Vibe from './Vibe';
 import ImageCropper from './ImageCropper';
 import ImageUploader from './ImageUploader';
 import { blobToURL, fromURL } from 'image-resize-compress';
 
-import { Page, POST_UPLOAD } from '../../const/Constant';
-
-import Tux from '../../static/image/Tux.png';
-import Matin1 from '../../static/image/matin_1.png';
-import Matin2 from '../../static/image/matin_2.png';
-import Matin3 from '../../static/image/matin_3.png';
+import { Page, POST_UPLOAD, CANVAS_MAX_SIZE } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -23,14 +19,12 @@ type Area = {
 };
 
 type PostUploadProps = {
-    contentRef: React.RefObject<HTMLDivElement>,
     pageDidMount: (page: Page) => void,
     redirect: (page: Page) => void,
     setPredecessor: React.Dispatch<React.SetStateAction<Page>>
 }
 
 function PostUpload({
-    contentRef,
     pageDidMount,
     redirect,
     setPredecessor }: PostUploadProps) {
@@ -41,7 +35,6 @@ function PostUpload({
 
     const [length, setLength] = useState(0);
 
-    const [preIndex, setPreIndex] = useState(0);
     const [setterIndex, setSetterIndex] = useState(0);
 
     let rawImageList: string[] = [];
@@ -49,7 +42,6 @@ function PostUpload({
 
     function getNextView() {
         if (setterIndex < length - 1) {
-            setPreIndex(setterIndex);
             setSetterIndex(setterIndex + 1 === length ? 0 : setterIndex + 1);
         }
     };
@@ -64,13 +56,6 @@ function PostUpload({
     useEffect(() => {
         pageDidMount(POST_UPLOAD);
     }, []);
-
-    useEffect(() => {
-        if (preIndex !== setterIndex) {
-            contentRef.current?.removeChild(contentRef.current?.childNodes[0]);
-            contentRef.current?.append(`${setterIndex + 1}/${length}`);
-        }
-    }, [setterIndex]);
 
     return (
         <div className={postUpload.wrapper}>
@@ -87,11 +72,10 @@ function PostUpload({
                 />*/
                 <FrontView
                     toggle={toggle}
-                    contentRef={contentRef}
                     rawImageList={rawImageList}
                     croppedAreaPixelsList={croppedAreaPixelsList}
-                    setToggle={setToggle}
                     setLength={setLength}
+                    setToggle={setToggle}
                     setImageSetterList={setImageSetterList}
                     setCroppedAreaPixels={setCroppedAreaPixels}
                 />
@@ -100,20 +84,25 @@ function PostUpload({
     );
 }
 
+type ImageSize = {
+    width: number,
+    height: number
+};
+
+type GetImageSize = (rawImagePath: string) => Promise<ImageSize>;
+
 type FrontViewProps = {
     toggle: boolean,
-    contentRef: React.RefObject<HTMLDivElement>,
     rawImageList: string[],
     croppedAreaPixelsList: Area[],
-    setToggle: React.Dispatch<React.SetStateAction<boolean>>,
     setLength: React.Dispatch<React.SetStateAction<number>>,
+    setToggle: React.Dispatch<React.SetStateAction<boolean>>,
     setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[]>>,
     setCroppedAreaPixels: (imageIndex: number, croppedAreaPixels: Area) => void
 };
 
 function FrontView({
     toggle,
-    contentRef,
     rawImageList,
     croppedAreaPixelsList,
     setLength,
@@ -123,18 +112,46 @@ function FrontView({
 
     const fileRef = useRef<HTMLInputElement>(null);
 
+    const getImageSize: GetImageSize = async (rawImagePath: string) => {
+        return new Promise((resolve) => {
+            let rawImage = new Image();
+            rawImage.onload = () => {
+                const width: number = rawImage.width;
+                const height: number = rawImage.height;
+                const imageSize: ImageSize = { width, height };
+                resolve(imageSize);
+            };
+            rawImage.src = rawImagePath;
+        });
+    };
+
     async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
         const length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
 
-        for (let i = 0; i < length; i++) {
+        for (let i = 0; i < length; i++) { 
             const rawImagePath =
                 (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
+            
+            const rawImageSize: ImageSize = await getImageSize(rawImagePath);
 
-            const resized = await fromURL(rawImagePath, 100, 2048, 'auto', 'jpeg');
+            const width: number = rawImageSize.width;
+            const height: number = rawImageSize.height;
 
-            const imagePath = await blobToURL(resized);
+            if (width > CANVAS_MAX_SIZE || height > CANVAS_MAX_SIZE) {
+                let resized: Blob = new Blob();
 
-            rawImageList.push(imagePath);
+                if (width > height)
+                    resized = await fromURL(rawImagePath, 100, CANVAS_MAX_SIZE, 'auto', 'jpeg');
+                else 
+                    resized = await fromURL(rawImagePath, 100, 'auto', CANVAS_MAX_SIZE, 'jpeg');
+
+                const resizedImagePath = await blobToURL(resized);
+
+                rawImageList.push(resizedImagePath);
+            }
+            else {
+                rawImageList.push(rawImagePath);
+            }
         }
 
         let imageSetterList: JSX.Element[] = [];
@@ -159,28 +176,27 @@ function FrontView({
         );
 
         setImageSetterList(imageSetterList);
-        setLength(length + 1);
 
-        contentRef.current?.append(`1/${length + 1}`);
+        setLength(length + 1);
 
         setToggle(true);
     };
 
     return (
         <div className={classNames([postUpload.frontView, index.fadeInSlow])}>
-            <div className={postUpload.frontViewContent1}>please</div>
-            <div className={postUpload.frontViewContent2}>touch</div>
-            <div className={postUpload.frontViewContent3}>me.</div>
-            <img alt=""
-                className={postUpload.frontViewContent4}
-                src={Tux}
-                onClick={() => fileRef.current?.click()} />
-            <input ref={fileRef}
-                type="file"
-                accept="image/*"
-                style={{ display: 'none' }}
-                multiple={true}
-                onChange={(e) => onChange(e)} />
+            <Vibe />
+            <div className={postUpload.separator}/>
+            <div className={postUpload.previewImageList}>
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh'}}>
+                    <div className={postUpload.previewImage} />
+                </div>
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh'}}>
+                    <div className={postUpload.previewImage} />
+                </div>
+                <div className={postUpload.previewImageWrapper}>
+                    <div className={postUpload.previewImage} />
+                </div>
+            </div>
         </div>
     );
 }

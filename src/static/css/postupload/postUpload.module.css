@@ -13,31 +13,54 @@
 .front-view {
     width: 80vw;
     height: 86vh;
+}
+
+.separator {
+    width: 80vw;
+    height: 3.5vh;
+
+    border-radius: 5px;
     
-    text-align: left;
+    background: #F2F1ED;
+
+    margin-bottom: 1.5vh;
+}
+
+.preview-image-list {
+    display: flex;
+
+    margin-top: 1.5vh;
+}
+
+.preview-image-wrapper {
+    width: calc((80vw - 3vh) / 3);
+    height: 3.5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    
+    border-radius: 5px; 
+    
+    background: #454545;
+    background-size: cover;
+}
+
+.preview-image {
+    width: calc((80vw - 3vh) / 3);
+    height: 3.5vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
 
     font-family: San Francisco;
-    font-size: 3.5rem;
-    color: #F2F1ED;
-    letter-spacing: 1.5px;
-}
+    font-weight: bold;
+    font-size: 0.7rem;
 
-.front-view-content-1 {
-    margin-top: 0.5vh;
-    margin-bottom: -1vh;
-}
+    border-radius: 5px;
 
-.front-view-content-2 {
-    margin-bottom: -1vh;
-}
-
-.front-view-content-3 {
-    margin-bottom: -0.8vh;
-}
-
-.front-view-content-4 {
-    height: 6.5vh;
-    width: 6.5vh;
-
-    margin-left: -0.2vw;
+    backdrop-filter: brightness(50%);
 }
