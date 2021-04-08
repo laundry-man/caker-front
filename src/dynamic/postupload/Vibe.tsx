@@ -4,8 +4,12 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import vibe from '../../static/css/postupload/vibe.module.css';
 
-function Vibe() {
-    const [isStretch, setIsStretch] = useState(false);
+type VibeProps = {
+    isStretch: boolean,
+    setIsStretch: React.Dispatch<React.SetStateAction<boolean>>
+};
+
+function Vibe({ isStretch, setIsStretch }: VibeProps) {
     const [isLoaded, setIsLoaded] = useState(false);
     const [vibeList, setVibeList] = useState(['가까운']);
     const [vibeCount, setVibeCount] = useState(1);
