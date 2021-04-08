@@ -11,6 +11,9 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import postUpload from '../../static/css/postupload/postUpload.module.css';
 
+import Matin1 from '../../static/image/matin_1.png';
+import Matin2 from '../../static/image/matin_2.png';
+
 type Area = {
     width: number,
     height: number,
@@ -112,6 +115,8 @@ function FrontView({
 
     const fileRef = useRef<HTMLInputElement>(null);
 
+    const [isStretch, setIsStretch] = useState(false);
+
     const getImageSize: GetImageSize = async (rawImagePath: string) => {
         return new Promise((resolve) => {
             let rawImage = new Image();
@@ -184,17 +189,23 @@ function FrontView({
 
     return (
         <div className={classNames([postUpload.frontView, index.fadeInSlow])}>
-            <Vibe />
-            <div className={postUpload.separator}/>
+            <Vibe isStretch={isStretch} setIsStretch={setIsStretch} />
+            <div className={postUpload.separator} style={{height : isStretch ? '0.3vh' : '3.5vh'}}/>
             <div className={postUpload.previewImageList}>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh'}}>
-                    <div className={postUpload.previewImage} />
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', backgroundImage: 'url(' + Matin1 + ')'}}>
                 </div>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh'}}>
-                    <div className={postUpload.previewImage} />
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', border: '0.3vh solid #454545'}}>
                 </div>
-                <div className={postUpload.previewImageWrapper}>
-                    <div className={postUpload.previewImage} />
+                <div className={postUpload.previewImageWrapper} style={{border: '0.3vh solid #f2f1ed', fontFamily: 'WaitingfortheSunrise', color: '#F2F1ED'}}>
+                    add
+                </div>
+            </div>
+            <div className={postUpload.previewImageList}>
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', height: '1.5vh', border: '0.3vh solid #454545'}}>
+                </div>
+                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', height: '1.5vh', border: '0.3vh solid #454545'}}>
+                </div>
+                <div className={postUpload.previewImageWrapper} style={{border: '0.3vh solid #454545',  height: '1.5vh'}}>
                 </div>
             </div>
         </div>

@@ -24,6 +24,8 @@
     background: #F2F1ED;
 
     margin-bottom: 1.5vh;
+
+    transition: height 0.3s;
 }
 
 .preview-image-list {
@@ -34,22 +36,21 @@
 
 .preview-image-wrapper {
     width: calc((80vw - 3vh) / 3);
-    height: 3.5vh;
-
+    height: calc((80vw - 3vh) / 3);
+    
     display: flex;
     align-items: center;
     justify-content: center;
     text-align: center;
     
-    border-radius: 5px; 
+    border-radius: 5px;
     
-    background: #454545;
     background-size: cover;
 }
 
 .preview-image {
     width: calc((80vw - 3vh) / 3);
-    height: 3.5vh;
+    height: calc((80vw - 3vh) / 3);
 
     display: flex;
     align-items: center;
@@ -63,4 +64,10 @@
     border-radius: 5px;
 
     backdrop-filter: brightness(50%);
+}
+
+.dot {
+    font-size: 0.5rem;
+    color: rgb(191,181,218);
+    color: linear-gradient(45deg, rgba(191,181,218,1) 21%, rgba(165,185,227,1) 43%, rgba(156,186,230,1) 79%, rgba(148,187,233,1) 100%);
 }
