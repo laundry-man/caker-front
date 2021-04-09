@@ -41,7 +41,7 @@ function Vibe({ isStretch, setIsStretch }: VibeProps) {
                         {vibeList[vibeId]}
                     </div>
                 </div>
-                <div className={classNames([vibe.contentWrapper, isStretch ? index.fadeInFast : index.nonDisplay])}>
+                <div>
                     <div className={vibe.content}>
                         분위기 있는 카페 콘하스
                     </div>
