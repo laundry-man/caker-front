@@ -13,6 +13,8 @@ import postUpload from '../../static/css/postupload/postUpload.module.css';
 
 import Matin1 from '../../static/image/matin_1.png';
 import Matin2 from '../../static/image/matin_2.png';
+import Test from '../../static/image/test.jpeg';
+import ImageGroup from './ImageGroup';
 
 type Area = {
     width: number,
@@ -188,26 +190,10 @@ function FrontView({
     };
 
     return (
-        <div className={classNames([postUpload.frontView, index.fadeInSlow])}>
+        <div className={index.fadeInSlow}>
             <Vibe isStretch={isStretch} setIsStretch={setIsStretch} />
-            <div className={postUpload.separator} style={{height : isStretch ? '0.3vh' : '3.5vh'}}/>
-            <div className={postUpload.previewImageList}>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', backgroundImage: 'url(' + Matin1 + ')'}}>
-                </div>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', border: '0.3vh solid #454545'}}>
-                </div>
-                <div className={postUpload.previewImageWrapper} style={{border: '0.3vh solid #f2f1ed', fontFamily: 'WaitingfortheSunrise', color: '#F2F1ED'}}>
-                    add
-                </div>
-            </div>
-            <div className={postUpload.previewImageList}>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', height: '1.5vh', border: '0.3vh solid #454545'}}>
-                </div>
-                <div className={postUpload.previewImageWrapper} style={{marginRight: '1.5vh', height: '1.5vh', border: '0.3vh solid #454545'}}>
-                </div>
-                <div className={postUpload.previewImageWrapper} style={{border: '0.3vh solid #454545',  height: '1.5vh'}}>
-                </div>
-            </div>
+            <div className={postUpload.separator} style={{height: isStretch ? '0.3vh' : '3.5vh'}}/>
+            <ImageGroup />
         </div>
     );
 }

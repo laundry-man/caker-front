@@ -1,0 +1,36 @@
+.block-list {
+    display: flex;
+
+    margin-top: 1.5vh;
+}
+
+.empty-block {
+    width: calc((80vw - 3vh) / 3);
+
+    border: 0.3vh solid #454545;
+    border-radius: 5px;
+}
+
+.add-block {
+    width: calc((80vw - 3vh) / 3);
+    height: calc((80vw - 3vh) / 3);
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    font-family: WaitingfortheSunrise;
+    font-size: 1.1rem;
+    color: #F2F1ED;
+
+    border: 0.3vh solid #F2F1ED;
+    border-radius: 5px;
+}
+
+.filled-block {
+    width: calc((80vw - 3vh) / 3);
+    height: calc((80vw - 3vh) / 3);
+
+    border-radius: 5px;
+}
