@@ -1,0 +1,12 @@
+.separator {
+    width: 80vw;
+    height: 3.5vh;
+
+    border-radius: 5px;
+    
+    background: #F2F1ED;
+
+    margin-bottom: 1.5vh;
+
+    transition: height 0.3s;
+}

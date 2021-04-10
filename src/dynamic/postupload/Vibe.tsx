@@ -5,29 +5,14 @@ import index from '../../static/css/index.module.css';
 import vibe from '../../static/css/postupload/vibe.module.css';
 
 type VibeProps = {
+    vibeIndex: number,
+    vibeList: string[],
     isStretch: boolean,
-    setIsStretch: React.Dispatch<React.SetStateAction<boolean>>
+    setIsStretch: React.Dispatch<React.SetStateAction<boolean>>,
+    setVibeIndex: React.Dispatch<React.SetStateAction<number>>
 };
 
-function Vibe({ isStretch, setIsStretch }: VibeProps) {
-    const [isLoaded, setIsLoaded] = useState(false);
-    const [vibeList, setVibeList] = useState(['가까운']);
-    const [vibeCount, setVibeCount] = useState(1);
-    const [vibeId, setVibeId] = useState(0);
-
-    useEffect(() => {
-        // 컴포넌트 로드와 동시에 DB를 참조, 추가 VIBE 정보를 가져온다.
-        if (!isLoaded) {
-            const additional = ['데이트하기 좋은', '공부하기 좋은'];
-            setVibeList([...vibeList, ...additional]);
-            setVibeCount(vibeCount + additional.length);
-            setIsLoaded(true);
-        }
-    }, []);
-
-    /*useEffect(() => {
-        사용자의 현재 좌표와 id를 이용해 인접 특별 게시글을 호출한다.
-    }, []);*/
+function Vibe({ vibeIndex, vibeList, isStretch, setIsStretch, setVibeIndex }: VibeProps) {
 
     return (
         <div className={classNames([vibe.vibeWrapper, index.fadeInFast])}
@@ -38,7 +23,7 @@ function Vibe({ isStretch, setIsStretch }: VibeProps) {
             <div className={vibe.vibe} onClick={() => setIsStretch(!isStretch)}>
                 <div className={vibe.nameWrapper}>
                     <div className={vibe.name}>
-                        {vibeList[vibeId]}
+                        {vibeList[vibeIndex]}
                     </div>
                 </div>
                 <div>
@@ -56,7 +41,7 @@ function Vibe({ isStretch, setIsStretch }: VibeProps) {
             <div className={vibe.append} 
                 onClick={() => { 
                     if (!isStretch)
-                        setVibeId(vibeId == vibeCount - 1 ? 0 : vibeId + 1) 
+                        setVibeIndex(vibeIndex == vibeList.length - 1 ? 0 : vibeIndex + 1);
                     else 
                         setIsStretch(!isStretch); 
                     }

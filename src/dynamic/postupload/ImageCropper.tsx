@@ -14,27 +14,25 @@ type Area = {
 };
 
 type ImageCropperProps = {
-    imageIndex: number,
-    rawImageList: string[],
-    setCroppedAreaPixels: (imageIndex: number, croppedAreaPixels: Area) => void
+    viewIndex: number,
+    imagePath: string,
+    setCroppedAreaPixels: (croppedAreaPixels: Area) => void
 };
 
 function ImageCropper({ 
-    imageIndex, 
-    rawImageList, 
+    viewIndex,
+    imagePath, 
     setCroppedAreaPixels }: ImageCropperProps) {
-
-    const imagePath: string = rawImageList[imageIndex];
 
     const [crop, setCrop] = useState({ x: 0, y: 0 });
     const [zoom, setZoom] = useState(1);
 
     function OnCropComplete(croppedArea: Area, croppedAreaPixels: Area) {
-        setCroppedAreaPixels(imageIndex, croppedAreaPixels);
+        setCroppedAreaPixels(croppedAreaPixels);
     };
 
     return (
-        <div className={classNames([imageCropper.imageCropper, index.fadeInSlow])}>
+        <div className={viewIndex === 1 ? classNames([imageCropper.imageCropper, index.fadeInSlow]) : index.nonDisplay}>
             <div className={imageCropper.dotWrapper}>
                 <div className={imageCropper.dot}>●</div>
             </div>

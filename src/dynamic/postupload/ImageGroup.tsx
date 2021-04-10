@@ -8,75 +8,65 @@ import imageGroup from '../../static/css/postupload/imageGroup.module.css';
 
 import Matin1 from '../../static/image/matin_1.png';
 
-function ImageGroup() {
-    const [filledBlockCount, setFilledBlockCount] = useState(0);
-    const [shrunkFloor, setShrunkFloor] = useState(0);
+type ImageGroupProps = { 
+    shrinkFloor: number,
+    blockList: number[],
+    blockTouchEvent: (blockIndex: number, blockType: number) => void
+};
 
-    const [block1, setBlock1] = useState(EMPTY_BLOCK);
-    const [block2, setBlock2] = useState(EMPTY_BLOCK);
-    const [block3, setBlock3] = useState(EMPTY_BLOCK);
-    const [block4, setBlock4] = useState(FILLED_BLOCK);
-    const [block5, setBlock5] = useState(EMPTY_BLOCK);
-    const [block6, setBlock6] = useState(ADD_BLOCK);
-
-    const blockList: number[] = [block1, block2, block3, block4, block5, block6];
-    const blockSetterList: 
-        React.Dispatch<React.SetStateAction<number>>[] = 
-        [setBlock1, setBlock2, setBlock3, setBlock4, setBlock5, setBlock6];
-
-    function makeRandom(min: number, max: number) {
-        return Math.floor(Math.random() * (max - min + 1)) + min;
-    }
-
-    function assignAddBlock() {
-        if (filledBlockCount >= 3)
-            return;
-        let blockIndex: number;
-        while (blockList[(blockIndex = makeRandom(0, 5))] == FILLED_BLOCK);
-        blockSetterList[blockIndex](ADD_BLOCK);
-    }
-
+function ImageGroup({shrinkFloor, blockList, blockTouchEvent}: ImageGroupProps) {
     return (
         <div>
             <div className={imageGroup.blockList}>
-                {block1 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 0} /> :
-                        block1 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[0] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 0} /> :
+                        blockList[0] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={0} blockTouchEvent={blockTouchEvent} /> :
+                            <FilledBlock blockIndex={0} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
                 <div style={{width: '1.5vh'}} />
-                {block2 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 0} /> :
-                        block2 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[1] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 0} /> :
+                        blockList[1] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={1} blockTouchEvent={blockTouchEvent} /> : 
+                            <FilledBlock blockIndex={1} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
                 <div style={{width: '1.5vh'}} />
-                {block3 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 0} /> :
-                        block3 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[2] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 0} /> :
+                        blockList[2] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={2} blockTouchEvent={blockTouchEvent} /> : 
+                            <FilledBlock blockIndex={2} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
             </div>
             <div className={imageGroup.blockList}>
-                {block4 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 1} /> :
-                        block4 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[3] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 1} /> :
+                        blockList[3] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={3} blockTouchEvent={blockTouchEvent} /> :
+                            <FilledBlock blockIndex={3} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
                 <div style={{width: '1.5vh'}} />
-                {block5 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 1} /> :
-                        block5 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[4] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 1} /> :
+                        blockList[4] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={4} blockTouchEvent={blockTouchEvent} /> : 
+                            <FilledBlock blockIndex={4} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
                 <div style={{width: '1.5vh'}} />
-                {block6 === EMPTY_BLOCK ? 
-                    <EmptyBlock isShrunk={shrunkFloor === 1} /> :
-                        block6 === ADD_BLOCK ? 
-                            <AddBlock /> : <FilledBlock imagePath={Matin1} />}
+                {blockList[5] === EMPTY_BLOCK ? 
+                    <EmptyBlock isShrunk={shrinkFloor === 1} /> :
+                        blockList[5] === ADD_BLOCK ? 
+                            <AddBlock blockIndex={5} blockTouchEvent={blockTouchEvent} /> : 
+                            <FilledBlock blockIndex={5} imagePath={Matin1} blockTouchEvent={blockTouchEvent} />}
             </div>
         </div>
     );
 }
 
-function AddBlock() {
+type AddBlockProps = {
+    blockIndex: number,
+    blockTouchEvent: (blockIndex: number, blockType: number) => void
+}
+
+function AddBlock({ blockIndex, blockTouchEvent }: AddBlockProps) {
     return (
-        <div className={imageGroup.addBlock}>
+        <div className={imageGroup.addBlock} onClick={() => blockTouchEvent(blockIndex, ADD_BLOCK)}>
             add
         </div>
     );
@@ -93,12 +83,16 @@ function EmptyBlock({ isShrunk }: EmptyBlockProps) {
 }
 
 type FilledBlockProps = {
-    imagePath: string
+    blockIndex: number,
+    imagePath: string,
+    blockTouchEvent: (blockIndex: number, blockType: number) => void
 }
 
-function FilledBlock({ imagePath }: FilledBlockProps) {
+function FilledBlock({ blockIndex, imagePath, blockTouchEvent }: FilledBlockProps) {
     return (
-        <div className={imageGroup.filledBlock} style={{backgroundImage: 'url(' + imagePath + ')'}} />
+        <div className={imageGroup.filledBlock} 
+             style={{backgroundImage: 'url(' + imagePath + ')'}} 
+             onClick={() => blockTouchEvent(blockIndex, FILLED_BLOCK)}/>
     );
 }
 

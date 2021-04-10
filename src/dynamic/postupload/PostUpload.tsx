@@ -1,20 +1,30 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 
-import Vibe from './Vibe';
+import {
+    Page,
+    POST_UPLOAD,
+    EMPTY_STRING,
+    EMPTY_BLOCK,
+    ADD_BLOCK,
+    FILLED_BLOCK,
+    CANVAS_MAX_SIZE
+} from '../../const/Constant';
+
+import FrontView from './FrontView';
 import ImageCropper from './ImageCropper';
-import ImageUploader from './ImageUploader';
-import { blobToURL, fromURL } from 'image-resize-compress';
 
-import { Page, POST_UPLOAD, CANVAS_MAX_SIZE } from '../../const/Constant';
+import { blobToURL, fromURL } from 'image-resize-compress';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import postUpload from '../../static/css/postupload/postUpload.module.css';
 
-import Matin1 from '../../static/image/matin_1.png';
-import Matin2 from '../../static/image/matin_2.png';
-import Test from '../../static/image/test.jpeg';
-import ImageGroup from './ImageGroup';
+type ImageSize = {
+    width: number,
+    height: number
+};
+
+type GetImageSize = (rawImagePath: string) => Promise<ImageSize>;
 
 type Area = {
     width: number,
@@ -24,100 +34,63 @@ type Area = {
 };
 
 type PostUploadProps = {
-    pageDidMount: (page: Page) => void,
-    redirect: (page: Page) => void,
-    setPredecessor: React.Dispatch<React.SetStateAction<Page>>
-}
-
-function PostUpload({
-    pageDidMount,
-    redirect,
-    setPredecessor }: PostUploadProps) {
-
-    const [toggle, setToggle] = useState(false);
-
-    const [imageSetterList, setImageSetterList] = useState<JSX.Element[]>([]);
-
-    const [length, setLength] = useState(0);
-
-    const [setterIndex, setSetterIndex] = useState(0);
-
-    let rawImageList: string[] = [];
-    let croppedAreaPixelsList: Area[] = [];
-
-    function getNextView() {
-        if (setterIndex < length - 1) {
-            setSetterIndex(setterIndex + 1 === length ? 0 : setterIndex + 1);
-        }
-    };
-
-    function setCroppedAreaPixels(imageIndex: number, croppedAreaPixels: Area) {
-        if (croppedAreaPixelsList.length - 1 < imageIndex)
-            croppedAreaPixelsList.push(croppedAreaPixels);
-        else
-            croppedAreaPixelsList[imageIndex] = croppedAreaPixels;
-    }
-
-    useEffect(() => {
-        pageDidMount(POST_UPLOAD);
-    }, []);
-
-    return (
-        <div className={postUpload.wrapper}>
-            {toggle && imageSetterList ?
-                <div onClick={() => getNextView()}>
-                    {imageSetterList[setterIndex]}
-                </div> :
-                /*<ImageUploader
-                    rawImageList={[Matin1, Matin2]}
-                    croppedAreaPixelsList={[
-                        { width: 1125, height: 1125, x: 0, y: 0 },
-                        { width: 1125, height: 1125, x: 0, y: 0 }
-                    ]}
-                />*/
-                <FrontView
-                    toggle={toggle}
-                    rawImageList={rawImageList}
-                    croppedAreaPixelsList={croppedAreaPixelsList}
-                    setLength={setLength}
-                    setToggle={setToggle}
-                    setImageSetterList={setImageSetterList}
-                    setCroppedAreaPixels={setCroppedAreaPixels}
-                />
-            }
-        </div>
-    );
-}
-
-type ImageSize = {
-    width: number,
-    height: number
+    pageDidMount: (page: Page) => void
 };
 
-type GetImageSize = (rawImagePath: string) => Promise<ImageSize>;
-
-type FrontViewProps = {
-    toggle: boolean,
-    rawImageList: string[],
-    croppedAreaPixelsList: Area[],
-    setLength: React.Dispatch<React.SetStateAction<number>>,
-    setToggle: React.Dispatch<React.SetStateAction<boolean>>,
-    setImageSetterList: React.Dispatch<React.SetStateAction<JSX.Element[]>>,
-    setCroppedAreaPixels: (imageIndex: number, croppedAreaPixels: Area) => void
-};
-
-function FrontView({
-    toggle,
-    rawImageList,
-    croppedAreaPixelsList,
-    setLength,
-    setToggle,
-    setImageSetterList,
-    setCroppedAreaPixels }: FrontViewProps) {
+function PostUpload({ pageDidMount }: PostUploadProps) {
+    const [isLoaded, setIsLoaded] = useState(false);
 
     const fileRef = useRef<HTMLInputElement>(null);
 
-    const [isStretch, setIsStretch] = useState(false);
+    const [viewIndex, setViewIndex] = useState(0);
+
+    const [vibeList, setVibeList] = useState(['가까운']);
+    const [vibeIndex, setVibeIndex] = useState(0);
+
+    const [shrinkFloor, setShrinkFloor] = useState(-1);
+
+    const [block1, setBlock1] = useState(EMPTY_BLOCK);
+    const [block2, setBlock2] = useState(EMPTY_BLOCK);
+    const [block3, setBlock3] = useState(EMPTY_BLOCK);
+    const [block4, setBlock4] = useState(EMPTY_BLOCK);
+    const [block5, setBlock5] = useState(EMPTY_BLOCK);
+    const [block6, setBlock6] = useState(EMPTY_BLOCK);
+
+    const blockList: number[] = [
+        block1, block2, block3,
+        block4, block5, block6
+    ];
+
+    const blockSetterList: React.Dispatch<React.SetStateAction<number>>[] = [
+        setBlock1, setBlock2, setBlock3,
+        setBlock4, setBlock5, setBlock6
+    ];
+
+    const [currentImagePath, setCurrentImagePath] = useState(EMPTY_STRING);
+
+    const imagePathList: string[] = [
+        EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
+        EMPTY_STRING, EMPTY_STRING, EMPTY_STRING
+    ];
+
+    const croppedAreaPixelsList: Area[] = [
+        { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 },
+        { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }
+    ];
+
+    let currentIndex: number;
+
+    function blockTouchEvent(blockIndex: number, blockType: number) {
+        currentIndex = blockIndex;
+
+        if (blockType === FILLED_BLOCK) {
+            blockSetterList[blockIndex](EMPTY_BLOCK);
+            assignAddBlock();
+        }
+        else if (blockType === ADD_BLOCK) {
+            fileRef.current?.click();
+        }
+    }
 
     const getImageSize: GetImageSize = async (rawImagePath: string) => {
         return new Promise((resolve) => {
@@ -135,10 +108,10 @@ function FrontView({
     async function onChange(e: React.ChangeEvent<HTMLInputElement>) {
         const length: number = e.currentTarget.files ? e.currentTarget.files.length : 0;
 
-        for (let i = 0; i < length; i++) { 
+        if (length === 1) {
             const rawImagePath =
-                (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(i));
-            
+                (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(0));
+
             const rawImageSize: ImageSize = await getImageSize(rawImagePath);
 
             const width: number = rawImageSize.width;
@@ -149,51 +122,87 @@ function FrontView({
 
                 if (width > height)
                     resized = await fromURL(rawImagePath, 100, CANVAS_MAX_SIZE, 'auto', 'jpeg');
-                else 
+                else
                     resized = await fromURL(rawImagePath, 100, 'auto', CANVAS_MAX_SIZE, 'jpeg');
 
                 const resizedImagePath = await blobToURL(resized);
 
-                rawImageList.push(resizedImagePath);
+                imagePathList[currentIndex] = resizedImagePath;
             }
             else {
-                rawImageList.push(rawImagePath);
+                imagePathList[currentIndex] = rawImagePath;
             }
+
+            setCurrentImagePath(imagePathList[currentIndex]);
+
+            setViewIndex(1);
         }
+    }
 
-        let imageSetterList: JSX.Element[] = [];
+    function setCroppedAreaPixels(croppedAreaPixels: Area) {
+        croppedAreaPixelsList[currentIndex] = croppedAreaPixels;
+    }
 
-        for (let i = 0; i < length; i++) {
-            imageSetterList.push(
-                <ImageCropper
-                    key={i}
-                    imageIndex={i}
-                    rawImageList={rawImageList}
-                    setCroppedAreaPixels={setCroppedAreaPixels}
-                />
-            );
+    function makeRandom(min: number, max: number) {
+        return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // 해당 메서드는 채워진 이미지 수가 3개 미만일 때 호출한다.
+    function assignAddBlock() {
+        let blockIndex: number;
+
+        while (blockList[(blockIndex = makeRandom(0, 5))] === FILLED_BLOCK);
+
+        let count: number[] = [0, 0];
+
+        for (let i = 0; i < 6; i++)
+            if (blockList[i] === FILLED_BLOCK)
+                count[Math.floor(i / 3)]++;
+
+        count[Math.floor(blockIndex / 3)]++;
+
+        setShrinkFloor(count[0] === 0 ? 0 : count[1] === 0 ? 1 : -1);
+
+        blockSetterList[blockIndex](ADD_BLOCK);
+    }
+
+    useEffect(() => {
+        if (!isLoaded) {
+            const additional = ['데이트하기 좋은', '공부하기 좋은'];
+
+            setVibeList([...vibeList, ...additional]);
+
+            assignAddBlock();
+
+            setIsLoaded(true);
+
+            pageDidMount(POST_UPLOAD);
         }
-
-        imageSetterList.push(
-            <ImageUploader
-                key={length}
-                rawImageList={rawImageList}
-                croppedAreaPixelsList={croppedAreaPixelsList}
-            />
-        );
-
-        setImageSetterList(imageSetterList);
-
-        setLength(length + 1);
-
-        setToggle(true);
-    };
+    }, []);
 
     return (
-        <div className={index.fadeInSlow}>
-            <Vibe isStretch={isStretch} setIsStretch={setIsStretch} />
-            <div className={postUpload.separator} style={{height: isStretch ? '0.3vh' : '3.5vh'}}/>
-            <ImageGroup />
+        <div className={classNames([postUpload.wrapper, index.fadeInSlow])}>
+            <input ref={fileRef}
+                type="file"
+                accept="image/*"
+                capture="camera"
+                style={{ display: 'none' }}
+                multiple={true}
+                onChange={(e) => onChange(e)} />
+            <FrontView
+                viewIndex={viewIndex}
+                vibeIndex={vibeIndex}
+                vibeList={vibeList}
+                shrinkFloor={shrinkFloor}
+                blockList={blockList}
+                blockTouchEvent={blockTouchEvent}
+                setVibeIndex={setVibeIndex}
+            />
+            <ImageCropper
+                viewIndex={viewIndex}
+                imagePath={currentImagePath}
+                setCroppedAreaPixels={setCroppedAreaPixels}
+            />
         </div>
     );
 }

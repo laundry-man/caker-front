@@ -16,11 +16,11 @@ export const THREE_PIECES_OF_CAKE: string = '🍰🍰🍰';
 
 export const CANVAS_MAX_SIZE: number = 2048;
 
-export const FILLED_BLOCK: number = 2;
+export const FILLED_BLOCK: number = 1;
 
-export const ADD_BLOCK: number = 1;
+export const ADD_BLOCK: number = 0;
 
-export const EMPTY_BLOCK: number = 0;
+export const EMPTY_BLOCK: number = -1;
 
 const Page = {
     EMPTY_PAGE: '',

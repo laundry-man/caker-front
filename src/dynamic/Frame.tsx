@@ -106,8 +106,6 @@ function Frame() {
                         <Route exact path={"/" + POST_UPLOAD}>
                             <PostUpload
                                 pageDidMount={pageDidMount}
-                                redirect={redirect}
-                                setPredecessor={setPredecessor}
                             />
                         </Route>
                         <Route exact path={"/" + MY_POST_LIST}>
