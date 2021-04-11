@@ -10,32 +10,32 @@ import frontView from '../../static/css/postupload/frontView.module.css';
 type FrontViewProps = {
     blink: boolean,
     isEnabled: boolean,
-    viewIndex: number,
     vibeIndex: number,
     vibeList: string[],
     shrinkFloor: number,
     imagePathList: string[],
     blockList: number[],
     blockTouchEvent: (blockIndex: number, blockType: number) => void,
+    getNextView: () => void,
     setVibeIndex: React.Dispatch<React.SetStateAction<number>>
 };
 
 function FrontView({ 
     blink,
     isEnabled,
-    viewIndex,
     vibeIndex,
     vibeList,
     shrinkFloor,
     imagePathList,
     blockList, 
     blockTouchEvent,
+    getNextView,
     setVibeIndex }: FrontViewProps) {
 
     const [isStretch, setIsStretch] = useState(false);
 
     return (
-        <div className={viewIndex === 0 ? index.fadeInSlow : index.nonDisplay}>
+        <div className={index.fadeInSlow}>
             <Vibe 
                 vibeIndex={vibeIndex} 
                 vibeList={vibeList}
@@ -53,8 +53,8 @@ function FrontView({
             />
             <div className={frontView.nextButtonWrapper}>
                 <div className={classNames([frontView.nextButton, isEnabled ? index.fadeInFast : index.nonDisplay])}
-                    onClick={() => { }}>
-                    NEXT
+                    onClick={() => getNextView()}>
+                    next
                 </div>
             </div>
         </div>
