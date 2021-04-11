@@ -23,12 +23,12 @@ type Area = {
 };
 
 type ImageUploaderProps = {
-    rawImageList: string[],
+    rawImagePathList: string[],
     croppedAreaPixelsList: Area[]
 };
 
 function ImageUploader({
-    rawImageList,
+    rawImagePathList,
     croppedAreaPixelsList }: ImageUploaderProps) {
 
     const imageCount: number = croppedAreaPixelsList.length;
@@ -238,7 +238,7 @@ function ImageUploader({
 
     useEffect(() => {
         croppedAreaPixelsList.map((croppedAreaPixels, imageIndex) => {
-            ShowCroppedImage(imageIndex, rawImageList[imageIndex], croppedAreaPixels);
+            ShowCroppedImage(imageIndex, rawImagePathList[imageIndex], croppedAreaPixels);
         });
     }, []);
 
@@ -351,7 +351,7 @@ function ImageUploader({
                     <div className={imageUploader.uploadButtonWrapper}>
                         <div className={isEnabled ? classNames([imageUploader.uploadButton, index.fadeInFast]) : index.nonDisplay}
                             onClick={() => { }}>
-                            COMMIT
+                            commit
                         </div>
                     </div>
                 </div>

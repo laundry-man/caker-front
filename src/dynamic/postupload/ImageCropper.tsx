@@ -14,14 +14,12 @@ type Area = {
 };
 
 type ImageCropperProps = {
-    viewIndex: number,
     imagePath: string,
     captureCroppedAreaPixels: () => void,
     setCroppedAreaPixels: (croppedAreaPixels: Area) => void
 };
 
 function ImageCropper({ 
-    viewIndex,
     imagePath, 
     captureCroppedAreaPixels,
     setCroppedAreaPixels }: ImageCropperProps) {
@@ -34,7 +32,7 @@ function ImageCropper({
     };
 
     return (
-        <div className={viewIndex === 1 ? classNames([imageCropper.imageCropper, index.fadeInSlow]) : index.nonDisplay}
+        <div className={classNames([imageCropper.imageCropper, index.fadeInSlow])}
              onClick={() => captureCroppedAreaPixels()}>
             <div className={imageCropper.dotWrapper}>
                 <div className={imageCropper.dot}>●</div>

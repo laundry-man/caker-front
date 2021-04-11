@@ -16,6 +16,7 @@ import ImageCropper from './ImageCropper';
 import { fromURL } from 'image-resize-compress';
 
 import postUpload from '../../static/css/postupload/postUpload.module.css';
+import ImageUploader from './ImageUploader';
 
 type ImageSize = {
     width: number,
@@ -176,6 +177,8 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
 
         if (filledBlockCount + 1 < 3)
             assignAddBlock(currentIndex, -1);
+        
+        setBlink(!blink);
     }
 
     function makeRandom(min: number, max: number) {
@@ -262,6 +265,27 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
         setIsEnabled(filledBlockCount > 0 ? true : false);
     }, [filledBlockCount]);
 
+
+    const [rawCroppedAreaPixels, setRawCroppedAreaPixels] = useState<Area[]>([]);
+    const [rawImagePathList, setRawImagePathList] = useState<string[]>([]);
+
+    function getNextView() {
+        const croppedAreaPixels: Area[] = [];
+        const rawImagePathList: string[] = [];
+
+        for (let i = 0; i < 6; i++) {
+            if (blockList[i] === FILLED_BLOCK) {
+                croppedAreaPixels.push(croppedAreaPixelsList[i]);
+                rawImagePathList.push(imagePathList[i]);
+            }
+        }
+
+        setRawCroppedAreaPixels(croppedAreaPixels);
+        setRawImagePathList(rawImagePathList);
+
+        setViewIndex(2);
+    }
+
     return (
         <div className={postUpload.wrapper}>
             <input ref={fileRef}
@@ -271,24 +295,33 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
                 style={{ display: 'none' }}
                 multiple={true}
                 onChange={(e) => onChange(e)} />
-            <FrontView
-                blink={blink}
-                isEnabled={isEnabled}
-                viewIndex={viewIndex}
-                vibeIndex={vibeIndex}
-                vibeList={vibeList}
-                shrinkFloor={shrinkFloor}
-                imagePathList={imagePathList}
-                blockList={blockList}
-                blockTouchEvent={blockTouchEvent}
-                setVibeIndex={setVibeIndex}
-            />
-            <ImageCropper
-                viewIndex={viewIndex}
-                imagePath={currentImagePath}
-                captureCroppedAreaPixels={captureCroppedAreaPixels}
-                setCroppedAreaPixels={setCroppedAreaPixels}
-            />
+            {viewIndex === 0 ?
+                <FrontView
+                    blink={blink}
+                    isEnabled={isEnabled}
+                    vibeIndex={vibeIndex}
+                    vibeList={vibeList}
+                    shrinkFloor={shrinkFloor}
+                    imagePathList={imagePathList}
+                    blockList={blockList}
+                    blockTouchEvent={blockTouchEvent}
+                    setVibeIndex={setVibeIndex}
+                    getNextView={getNextView}
+                /> :
+                <></>}
+            {viewIndex === 1 ?
+                <ImageCropper
+                    imagePath={currentImagePath}
+                    captureCroppedAreaPixels={captureCroppedAreaPixels}
+                    setCroppedAreaPixels={setCroppedAreaPixels}
+                /> :
+                <></>}
+            {viewIndex === 2 ?
+                <ImageUploader 
+                    rawImagePathList={rawImagePathList} 
+                    croppedAreaPixelsList={rawCroppedAreaPixels} 
+                /> :
+                <></>}
         </div>
     );
 }
