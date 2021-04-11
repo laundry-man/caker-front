@@ -32,5 +32,19 @@
     width: calc((80vw - 3vh) / 3);
     height: calc((80vw - 3vh) / 3);
 
+    border: 0.3vh solid #F2F1ED;
     border-radius: 5px;
+
+    position: relative;
+
+    overflow: hidden;
+}
+
+.image {
+    width: calc((80vw - 3vh) / 3);
+    height: calc((80vw - 3vh) / 3);
+
+    position: absolute;
+
+    filter: blur(10px);
 }

@@ -11,6 +11,7 @@ type FrontViewProps = {
     vibeIndex: number,
     vibeList: string[],
     shrinkFloor: number,
+    imagePathList: string[],
     blockList: number[],
     blockTouchEvent: (blockIndex: number, blockType: number) => void,
     setVibeIndex: React.Dispatch<React.SetStateAction<number>>
@@ -21,6 +22,7 @@ function FrontView({
     vibeIndex,
     vibeList,
     shrinkFloor,
+    imagePathList,
     blockList, 
     blockTouchEvent,
     setVibeIndex }: FrontViewProps) {
@@ -39,6 +41,7 @@ function FrontView({
             <div className={frontView.separator} style={{height: isStretch ? '0.3vh' : '3.5vh'}}/>
             <ImageGroup 
                 shrinkFloor={shrinkFloor}
+                imagePathList={imagePathList}
                 blockList={blockList}
                 blockTouchEvent={blockTouchEvent}
             />
