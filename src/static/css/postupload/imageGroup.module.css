@@ -1,7 +1,11 @@
+.image-group {
+    height: calc((((80vw - 3vh) / 3) * 2) + 3vh);
+}
+
 .block-list {
     display: flex;
 
-    margin-top: 1.5vh;
+    margin-bottom: 1.5vh;
 }
 
 .empty-block {

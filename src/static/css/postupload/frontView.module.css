@@ -10,3 +10,21 @@
 
     transition: height 0.3s;
 }
+
+.next-button-wrapper {
+    width: 80vw;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+
+    margin-top: 1.5vh;
+}
+
+.next-button {
+    font-family: WaitingfortheSunrise;
+    font-size: 1.25rem;
+    letter-spacing: 0.05rem;
+    color: #F2F1ED;
+}

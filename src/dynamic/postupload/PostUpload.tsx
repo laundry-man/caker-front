@@ -13,10 +13,8 @@ import {
 import FrontView from './FrontView';
 import ImageCropper from './ImageCropper';
 
-import { blobToURL, fromURL } from 'image-resize-compress';
+import { fromURL } from 'image-resize-compress';
 
-import classNames from 'classnames';
-import index from '../../static/css/index.module.css';
 import postUpload from '../../static/css/postupload/postUpload.module.css';
 
 type ImageSize = {
@@ -148,7 +146,8 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
                 else
                     resized = await fromURL(rawImagePath, 100, 'auto', CANVAS_MAX_SIZE, 'jpeg');
 
-                const resizedImagePath = await blobToURL(resized);
+                const resizedImagePath = 
+                    (window.URL || window.webkitURL).createObjectURL(resized);
 
                 imagePathSetterList[currentIndex](resizedImagePath);
                 setCurrentImagePath(resizedImagePath);
@@ -177,15 +176,17 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
 
         if (filledBlockCount + 1 < 3)
             assignAddBlock(currentIndex, -1);
-        
-        console.log(croppedAreaPixelsList);
     }
 
     function makeRandom(min: number, max: number) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
+    const [blink, setBlink] = useState(false);
+
     function assignEmptyBlock(emptyBlockIndex: number) {
+        setBlink(!blink);
+
         blockSetterList[emptyBlockIndex](EMPTY_BLOCK);
 
         if (filledBlockCount === 3) {
@@ -217,6 +218,9 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
                 else if (filledBlockIndex !== blockIndex)
                     break;
             }
+            else if (emptyBlockIndex !== -1 && blockIndex === emptyBlockIndex) {
+                break;
+            }
         }
 
         let count: number[] = [0, 0];
@@ -224,7 +228,7 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
         if (filledBlockIndex !== -1)
             count[Math.floor(filledBlockIndex / 3)]++;
 
-        if (blockIndex !== emptyBlockIndex && emptyBlockIndex !== -1)
+        if (emptyBlockIndex !== -1)
             count[Math.floor(emptyBlockIndex / 3)]--;
 
         for (let i = 0; i < 6; i++)
@@ -252,6 +256,11 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
         }
     }, []);
 
+    const [isEnabled, setIsEnabled] = useState(false);
+
+    useEffect(() => {
+        setIsEnabled(filledBlockCount > 0 ? true : false);
+    }, [filledBlockCount]);
 
     return (
         <div className={postUpload.wrapper}>
@@ -263,6 +272,8 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
                 multiple={true}
                 onChange={(e) => onChange(e)} />
             <FrontView
+                blink={blink}
+                isEnabled={isEnabled}
                 viewIndex={viewIndex}
                 vibeIndex={vibeIndex}
                 vibeList={vibeList}

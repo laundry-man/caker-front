@@ -17,7 +17,7 @@ type ImageGroupProps = {
 
 function ImageGroup({shrinkFloor, imagePathList, blockList, blockTouchEvent}: ImageGroupProps) {
     return (
-        <div>
+        <div className={classNames([imageGroup.imageGroup, index.fadeInFast])}>
             <div className={imageGroup.blockList}>
                 {blockList[0] === EMPTY_BLOCK ? 
                     <EmptyBlock isShrunk={shrinkFloor === 0} /> :
