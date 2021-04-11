@@ -20,7 +20,7 @@ function Vibe({
     const [isLoaded, setIsLoaded] = useState(false);
     const [vibeList, setVibeList] = useState(['가까운']);
     const [vibeCount, setVibeCount] = useState(1);
-    const [vibeId, setVibeId] = useState(0);
+    const [vibeIndex, setVibeIndex] = useState(0);
 
     useEffect(() => {
         // 컴포넌트 로드와 동시에 DB를 참조, 추가 VIBE 정보를 가져온다.
@@ -45,7 +45,7 @@ function Vibe({
             <div className={vibe.vibe} onClick={() => setIsStretch(!isStretch)}>
                 <div className={vibe.nameWrapper}>
                     <div className={vibe.name}>
-                        {vibeList[vibeId]}
+                        {vibeList[vibeIndex]}
                     </div>
                 </div>
                 <div>
@@ -63,7 +63,7 @@ function Vibe({
             <div className={vibe.append} 
                 onClick={() => { 
                     if (!isStretch)
-                        setVibeId(vibeId == vibeCount - 1 ? 0 : vibeId + 1) 
+                        setVibeIndex(vibeIndex == vibeCount - 1 ? 0 : vibeIndex + 1);
                     else 
                         setIsStretch(!isStretch); 
                     }

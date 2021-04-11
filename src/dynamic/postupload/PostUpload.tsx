@@ -66,26 +66,49 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
         setBlock4, setBlock5, setBlock6
     ];
 
-    const [currentImagePath, setCurrentImagePath] = useState(EMPTY_STRING);
+    const [imagePath1, setImagePath1] = useState(EMPTY_STRING);
+    const [imagePath2, setImagePath2] = useState(EMPTY_STRING);
+    const [imagePath3, setImagePath3] = useState(EMPTY_STRING);
+    const [imagePath4, setImagePath4] = useState(EMPTY_STRING);
+    const [imagePath5, setImagePath5] = useState(EMPTY_STRING);
+    const [imagePath6, setImagePath6] = useState(EMPTY_STRING);
 
     const imagePathList: string[] = [
-        EMPTY_STRING, EMPTY_STRING, EMPTY_STRING,
-        EMPTY_STRING, EMPTY_STRING, EMPTY_STRING
+        imagePath1, imagePath2, imagePath3,
+        imagePath4, imagePath5, imagePath6
     ];
+
+    const imagePathSetterList: React.Dispatch<React.SetStateAction<string>>[] = [
+        setImagePath1, setImagePath2, setImagePath3,
+        setImagePath4, setImagePath5, setImagePath6
+    ];
+
+    const [currentImagePath, setCurrentImagePath] = useState(EMPTY_STRING);
+
+    const [croppedAreaPixels1, setCroppedAreaPixels1] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
+    const [croppedAreaPixels2, setCroppedAreaPixels2] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
+    const [croppedAreaPixels3, setCroppedAreaPixels3] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
+    const [croppedAreaPixels4, setCroppedAreaPixels4] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
+    const [croppedAreaPixels5, setCroppedAreaPixels5] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
+    const [croppedAreaPixels6, setCroppedAreaPixels6] = useState<Area>({ width: 0, height: 0, x: 0, y: 0 });
 
     const croppedAreaPixelsList: Area[] = [
-        { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 },
-        { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }, { width: 0, height: 0, x: 0, y: 0 }
+        croppedAreaPixels1, croppedAreaPixels2, croppedAreaPixels3,
+        croppedAreaPixels4, croppedAreaPixels5, croppedAreaPixels6
     ];
 
-    let currentIndex: number;
+    const croppedAreaPixelsSetterList: React.Dispatch<React.SetStateAction<Area>>[] = [
+        setCroppedAreaPixels1, setCroppedAreaPixels2, setCroppedAreaPixels3,
+        setCroppedAreaPixels4, setCroppedAreaPixels5, setCroppedAreaPixels6
+    ];
+
+    const [currentIndex, setCurrentIndex] = useState(0);
 
     function blockTouchEvent(blockIndex: number, blockType: number) {
-        currentIndex = blockIndex;
+        setCurrentIndex(blockIndex);
 
         if (blockType === FILLED_BLOCK) {
-            blockSetterList[blockIndex](EMPTY_BLOCK);
-            assignAddBlock();
+            assignEmptyBlock(blockIndex);
         }
         else if (blockType === ADD_BLOCK) {
             fileRef.current?.click();
@@ -127,33 +150,82 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
 
                 const resizedImagePath = await blobToURL(resized);
 
-                imagePathList[currentIndex] = resizedImagePath;
+                imagePathSetterList[currentIndex](resizedImagePath);
+                setCurrentImagePath(resizedImagePath);
             }
             else {
-                imagePathList[currentIndex] = rawImagePath;
+                imagePathSetterList[currentIndex](rawImagePath);
+                setCurrentImagePath(rawImagePath);
             }
-
-            setCurrentImagePath(imagePathList[currentIndex]);
 
             setViewIndex(1);
         }
     }
 
     function setCroppedAreaPixels(croppedAreaPixels: Area) {
-        croppedAreaPixelsList[currentIndex] = croppedAreaPixels;
+        croppedAreaPixelsSetterList[currentIndex](croppedAreaPixels);
+    }
+
+    const [filledBlockCount, setFilledBlockCount] = useState(0);
+
+    function captureCroppedAreaPixels() {
+        setViewIndex(0);
+
+        blockSetterList[currentIndex](FILLED_BLOCK);
+
+        setFilledBlockCount(filledBlockCount + 1);
+
+        if (filledBlockCount + 1 < 3)
+            assignAddBlock(currentIndex, -1);
+        
+        console.log(croppedAreaPixelsList);
     }
 
     function makeRandom(min: number, max: number) {
         return Math.floor(Math.random() * (max - min + 1)) + min;
     }
 
-    // 해당 메서드는 채워진 이미지 수가 3개 미만일 때 호출한다.
-    function assignAddBlock() {
+    function assignEmptyBlock(emptyBlockIndex: number) {
+        blockSetterList[emptyBlockIndex](EMPTY_BLOCK);
+
+        if (filledBlockCount === 3) {
+            assignAddBlock(-1, emptyBlockIndex);
+        }
+        else {
+            let count: number[] = [0, 0];
+
+            for (let i = 0; i < 6; i++)
+                if (blockList[i] === FILLED_BLOCK || blockList[i] === ADD_BLOCK)
+                    count[Math.floor(i / 3)]++;
+
+            count[Math.floor(emptyBlockIndex / 3)]--;
+
+            setShrinkFloor(count[0] === 0 ? 0 : count[1] === 0 ? 1 : -1);
+        }
+
+        setFilledBlockCount(filledBlockCount - 1);
+    }
+
+    function assignAddBlock(filledBlockIndex: number = -1, emptyBlockIndex: number = -1) {
         let blockIndex: number;
 
-        while (blockList[(blockIndex = makeRandom(0, 5))] === FILLED_BLOCK);
+        while (true) {
+            blockIndex = makeRandom(0, 5);
+            if (blockList[blockIndex] !== FILLED_BLOCK) {
+                if (filledBlockIndex === -1)
+                    break;
+                else if (filledBlockIndex !== blockIndex)
+                    break;
+            }
+        }
 
         let count: number[] = [0, 0];
+
+        if (filledBlockIndex !== -1)
+            count[Math.floor(filledBlockIndex / 3)]++;
+
+        if (blockIndex !== emptyBlockIndex && emptyBlockIndex !== -1)
+            count[Math.floor(emptyBlockIndex / 3)]--;
 
         for (let i = 0; i < 6; i++)
             if (blockList[i] === FILLED_BLOCK)
@@ -180,8 +252,9 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
         }
     }, []);
 
+
     return (
-        <div className={classNames([postUpload.wrapper, index.fadeInSlow])}>
+        <div className={postUpload.wrapper}>
             <input ref={fileRef}
                 type="file"
                 accept="image/*"
@@ -194,6 +267,7 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
                 vibeIndex={vibeIndex}
                 vibeList={vibeList}
                 shrinkFloor={shrinkFloor}
+                imagePathList={imagePathList}
                 blockList={blockList}
                 blockTouchEvent={blockTouchEvent}
                 setVibeIndex={setVibeIndex}
@@ -201,6 +275,7 @@ function PostUpload({ pageDidMount }: PostUploadProps) {
             <ImageCropper
                 viewIndex={viewIndex}
                 imagePath={currentImagePath}
+                captureCroppedAreaPixels={captureCroppedAreaPixels}
                 setCroppedAreaPixels={setCroppedAreaPixels}
             />
         </div>
