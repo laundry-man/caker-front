@@ -349,13 +349,10 @@ function ImageUploader({
                         }
                     </div>
                     <div className={imageUploader.uploadButtonWrapper}>
-                        {isEnabled ?
-                            <div className={classNames([imageUploader.uploadButton, index.fadeInFast])}
-                                onClick={() => { }}>
-                                commit
-                            </div> :
-                            <></>
-                        }
+                        <div className={isEnabled ? classNames([imageUploader.uploadButton, index.fadeInFast]) : index.nonDisplay}
+                            onClick={() => { }}>
+                            COMMIT
+                        </div>
                     </div>
                 </div>
             }
