@@ -143,6 +143,7 @@ function Frame() {
                 </div>
                 <div className={frame.footerSide} />
             </div>
+            <div className={frame.bottom} />
         </div>
     );
 }

@@ -1,6 +1,6 @@
 .image-uploader {
     width: 80vw;
-    height: 86vh;
+    height: 83vh;
 }
 
 .search-wrapper {
@@ -208,7 +208,7 @@
 
 .upload-button {
     font-family: WaitingfortheSunrise;
-    font-size: 1.25rem;
+    font-size: 1.4rem;
     letter-spacing: 0.05rem;
     color: #F2F1ED;
 }

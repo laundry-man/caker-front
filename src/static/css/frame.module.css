@@ -13,7 +13,7 @@
 }
 
 .header {
-    height: 7vh;
+    height: 8vh;
   
     display: flex;
     flex-direction: row;
@@ -120,7 +120,7 @@
 }
 
 .body {
-    height: 86vh;
+    height: 83vh;
   
     display: flex;
     flex-direction: row;
@@ -144,7 +144,7 @@
 }
 
 .footer {
-    height: 7vh;
+    height: 8vh;
   
     display: flex;
     flex-direction: row;
@@ -169,6 +169,8 @@
 }
 
 .footer-wrapper {
+    width: 80vw;
+
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -202,5 +204,12 @@
 }
 
 .footer-button {
-    width: 23%;
+    width: 22%;
+}
+
+.bottom {
+    width: 100vw;
+    height: 1vh;
+
+    background: #A7662A;
 }
