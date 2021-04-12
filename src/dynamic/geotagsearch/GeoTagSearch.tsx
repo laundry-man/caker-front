@@ -65,7 +65,7 @@ function GeoTagSearch({
                 setIsStretch={setIsStretch}
             />
             <div className={geoTagSearch.container}
-                style={{ height: !isStretch ? '81.5vh' : '71vh' }}>
+                style={{ height: !isStretch ? '78.5vh' : '68vh' }}>
                 <PullToRefresh
                     onRefresh={resetData}
                     canFetchMore={true}
