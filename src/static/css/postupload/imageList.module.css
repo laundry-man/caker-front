@@ -23,7 +23,7 @@
     text-align: center;
 
     font-family: San Francisco;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.05rem;
 
     border-radius: 5px;
@@ -36,7 +36,7 @@
 }
 
 .comment-disabled {
-    color: #B3B3B3;
+    color: #F2F1ED;
 }
 
 .cake-rating {
