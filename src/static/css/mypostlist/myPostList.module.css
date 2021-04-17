@@ -8,3 +8,89 @@
   
     background: inherit;
 }
+
+.tier {
+    width: 80vw;
+    height: 2.5vh;
+
+    display: flex;
+    flex-direction: column;
+  
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    font-family: YANGGIN;
+    font-weight: bold;
+    font-size: 0.5rem;
+    color: #F2F1ED;
+    letter-spacing: 0.025rem;
+
+    text-transform: uppercase;
+    
+    border-radius: 3px;
+
+    padding-top: 0.3vh;
+
+    background: #333333;
+}
+
+.user-name {
+    width: 80vw;
+    height: 5.5vh;
+
+    display: flex;
+    flex-direction: column;
+  
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    font-family: San Francisco;
+    font-weight: bold;
+    font-size: 1.2rem;
+    color: #333333;
+    letter-spacing: 0.05rem;
+
+    padding-bottom: 0.35vh;
+}
+
+.user-info-wrapper {
+    width: 80vw;
+    height: 61.5vh;
+
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+
+    padding-top: 2.2vh;
+}
+
+.user-info {
+    font-family: San Francisco;
+    font-size: 0.85rem;
+    color: #333333;
+    letter-spacing: 0.5px;
+
+    text-transform: lowercase;
+    
+    margin-bottom: 0.6vh;
+}
+
+.get-my-posts-button {
+    width: 80vw;
+    height: 11vh;
+
+    display: flex;
+    flex-direction: column;
+  
+    text-align: center;
+    align-items: center;
+    justify-content: center;
+
+    font-family: WaitingfortheSunrise;
+    font-weight: bold;
+    font-size: 1.65rem;
+    letter-spacing: 0.05rem;
+    color: #333333;
+}
