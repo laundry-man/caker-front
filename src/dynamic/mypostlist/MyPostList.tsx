@@ -1,7 +1,8 @@
-import React, { useEffect } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import { Page, MY_POST_LIST } from '../../const/Constant';
 
+import index from '../../static/css/index.module.css';
 import myPostList from '../../static/css/mypostlist/myPostList.module.css';
 
 type MyPostListProps = {
@@ -10,30 +11,35 @@ type MyPostListProps = {
 
 function MyPostList({ pageDidMount }: MyPostListProps) {
 
+    const [tier, setTier] = useState("BEGINNER");
+    const [userName, setUserName] = useState("rainmaker");
+
+    const [ranking, setRanking] = useState(10);
+    const [cakeRating, setCakeRating] = useState(9993);
+    const [theNumberOfEmailsReceived, setTheNumberOfEmailsReceived] = useState(102);
+    const [mostFrequentlyUsedVibe, setMostFrequentlyUsedVibe] = useState("데이트하기 좋은");
+    const [mostFrequentlyUsedTag, setMostFrequentlyUsedTag] = useState("고래상점");
+
     useEffect(() => {
         pageDidMount(MY_POST_LIST);
     }, []);
 
     return (
-        <div className={myPostList.container}>
-            <div style={{ fontFamily: 'YANGGIN', fontSize: '0.7rem', fontWeight: 'bold', color: '#F2F1ED', width: '80vw', height: '3.5vh', background: '#333', paddingTop: '0.8vh', borderRadius: '5px' }}>BEGINNER</div>
-            <div style={{ fontFamily: 'WaitingfortheSunrise', color: '#333', fontWeight: 'bold', fontSize: '1.8rem', marginTop: '1.5vh', letterSpacing: '0.5px' }}>rainmaker</div>
-            <div style={{ fontFamily: 'YANGGIN', marginTop: '2.5vh', fontSize: '0.7rem', fontWeight: 'bold', color: '#F2F1ED', width: '80vw', height: '3.5vh', background: '#333', paddingTop: '0.8vh', borderRadius: '5px' }}>BEGINNER</div>
-
-            <div style={{ width: '80vw', display: 'flex', flexDirection: 'column', textAlign: 'left', marginTop: '4vh' }}>
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', letterSpacing: '0.5px' }}>tier : <b>beginner</b></div>
-
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}>ranking : <b>10</b></div>
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}>cake rating : <b>9993</b></div>
-
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}>the number of emails received : <b>102</b></div>
-
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}>most frequently used vibe :</div>
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}><b>데이트하기 좋은</b></div>
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}>most frequently used tag :</div>
-                <div style={{ fontFamily: 'San Francisco', color: '#333', fontSize: '0.85rem', marginTop: '0.6vh', letterSpacing: '0.5px' }}><b>고래상점</b></div>
+        <div className={index.fadeInFast}>
+            <div className={myPostList.tier}>{tier}</div>
+            <div className={myPostList.userName}>{userName}</div>
+            <div className={myPostList.tier}>{tier}</div>
+            <div className={myPostList.userInfoWrapper}>
+                <div className={myPostList.userInfo}>tier : <b>{tier}</b></div>
+                <div className={myPostList.userInfo}>ranking : <b>{ranking}</b></div>
+                <div className={myPostList.userInfo}>cake rating : <b>{cakeRating}</b></div>
+                <div className={myPostList.userInfo}>the number of emails received : <b>{theNumberOfEmailsReceived}</b></div>
+                <div className={myPostList.userInfo}>most frequently used vibe :</div>
+                <div className={myPostList.userInfo}><b>{mostFrequentlyUsedVibe}</b></div>
+                <div className={myPostList.userInfo}>most frequently used tag :</div>
+                <div className={myPostList.userInfo}><b>{mostFrequentlyUsedTag}</b></div>
             </div>
-            <div style={{ fontFamily: 'WaitingfortheSunrise',fontSize: '1.65rem',letterSpacing: '0.05rem',color: '#333', fontWeight: 'bold', marginTop: '31vh'}}>get my posts</div>
+            <div className={myPostList.getMyPostsButton}>get my posts</div>
         </div>
     );
 }
