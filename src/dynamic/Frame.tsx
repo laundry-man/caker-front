@@ -111,6 +111,9 @@ function Frame() {
                         <Route exact path={"/" + MY_POST_LIST}>
                             <MyPostList 
                                 pageDidMount={pageDidMount}
+                                redirect={redirect}
+                                setContent={setContent}
+                                setPredecessor={setPredecessor}
                             />
                         </Route>
                         <Route exact path={"/" + CONFIG}>

@@ -7,16 +7,18 @@ import index from '../../static/css/index.module.css';
 import post from '../../static/css/tagsearchresult/post.module.css';
 
 type PostProps = {
+    isMine: boolean,
     commentInput: string,
     cakeRating: number,
     imagePathList: string[]
 };
 
-function Post({ 
-    commentInput, 
-    cakeRating, 
+function Post({
+    isMine,
+    commentInput,
+    cakeRating,
     imagePathList }: PostProps) {
-        
+
     const [splitComment, setSplitComment] = useState<string[]>([]);
 
     const [active, setActive] = useState((() => {
@@ -69,6 +71,7 @@ function Post({
                     return (
                         <ActiveView
                             key={key}
+                            isMine={isMine}
                             cakeRating={cakeRating}
                             splitComment={splitComment}
                             isComment={key === 1 ? true : false}
@@ -83,6 +86,7 @@ function Post({
 }
 
 type ActiveViewProps = {
+    isMine: boolean,
     cakeRating: number,
     splitComment: string[],
     isComment: boolean,
@@ -90,6 +94,7 @@ type ActiveViewProps = {
 };
 
 function ActiveView({
+    isMine,
     cakeRating,
     splitComment,
     isComment,
@@ -97,8 +102,32 @@ function ActiveView({
     return (
         <div className={classNames([post.image, index.fadeInFast])}
             style={{ backgroundImage: 'url(' + imagePath + ')' }}>
-            {isComment ?
-                <div className={post.comment}>
+            {isComment ? 
+                <CommentView 
+                    isMine={isMine} 
+                    cakeRating={cakeRating} 
+                    splitComment={splitComment} 
+                /> : <></>}
+        </div>
+    );
+}
+
+type CommentProps = {
+    isMine: boolean,
+    cakeRating: number,
+    splitComment: string[]
+}
+
+function CommentView({
+    isMine,
+    cakeRating,
+    splitComment }: CommentProps) {
+
+    return (
+        <div>
+            <div className={post.comment}>
+                <div className={post.commentTop} />
+                <div className={post.commentMiddle}>
                     {splitComment.length ?
                         <div className={post.commentEnabled}>
                             {splitComment.map((line, key) => {
@@ -107,17 +136,23 @@ function ActiveView({
                         </div> :
                         <div className={post.commentDisabled}>
                             please write a comment
-                        </div>
+                            </div>
                     }
                     <div className={post.cakeRating}>
-                        {cakeRating === 3 ? 
-                            THREE_PIECES_OF_CAKE : 
-                                cakeRating === 2 ? TWO_PIECES_OF_CAKE : 
-                                    A_PIECE_OF_CAKE}
+                        {cakeRating === 3 ?
+                            THREE_PIECES_OF_CAKE :
+                            cakeRating === 2 ? TWO_PIECES_OF_CAKE :
+                                A_PIECE_OF_CAKE}
                     </div>
-                </div> :
-                <></>
-            }
+                </div>
+                <div className={post.commentBottom}>
+                    <div className={post.commentSide} />
+                    <div className={post.commentCenter}>
+                        {isMine ? <span>delete / save</span> : <></>}
+                    </div>
+                    <div className={post.commentSide} />
+                </div>
+            </div>
         </div>
     );
 }
