@@ -44,6 +44,9 @@ function TagSearchResult({ tag }: TagSearchResultProps) {
         [Terarosa1, Terarosa1, Terarosa3, Terarosa4]
     ];
 
+    // 검색 태그가 '#myposts' 인 경우 자신의 게시물을 검색한다.
+    const isMine: boolean = tag === '#myposts' ? true : false;
+
     const [imagePathListList, setImagePathListList] = useState(base);
 
     function getNewData() {
@@ -80,7 +83,10 @@ function TagSearchResult({ tag }: TagSearchResultProps) {
           pullDownThreshold={67}
           maxPullDownDistance={95}
           className={classNames([index.pullToRefresh, index.fadeInFast])}>
-          <PostList imagePathListList={imagePathListList} />
+          <PostList 
+            isMine={isMine} 
+            imagePathListList={imagePathListList} 
+          />
         </PullToRefresh>
     );
 }
