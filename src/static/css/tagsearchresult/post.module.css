@@ -1,6 +1,5 @@
 .image {
     width: 80vw;
-    height: 80vw;
 
     display: flex;
     align-items: center;
@@ -11,7 +10,7 @@
 
     background-size: cover;
 
-    margin-bottom: 1vh;
+    transition: height 0.4s;
 }
 
 .comment {
@@ -39,7 +38,7 @@
     text-align: center;
 
     font-family: San Francisco;
-    font-size: 0.75rem;
+    font-size: 0.7rem;
     letter-spacing: 0.05rem;
 }
 
@@ -55,12 +54,12 @@
 }
 
 .comment-side {
-    width: 20vw;
+    width: 30vw;
     height: 20vw;
 }
 
 .comment-center {
-    width: 40vw;
+    width: 20vw;
     height: 20vw;
 
     display: flex;
@@ -69,10 +68,10 @@
     justify-content: center;
     text-align: center;
 
-    font-family: WaitingfortheSunrise;
-    font-size: 1.2rem;
-    color: white;
+    font-family: San Francisco;
+    font-size: 0.7rem;
     letter-spacing: 0.05rem;
+    color: white;
 }
 
 .comment-enabled {
