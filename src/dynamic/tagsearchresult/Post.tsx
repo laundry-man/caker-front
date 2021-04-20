@@ -65,7 +65,7 @@ function Post({
     }, []);
 
     return (
-        <div onClick={getNextView}>
+        <div>
             {active.map((active, key) => {
                 if (active) {
                     return (
@@ -76,6 +76,7 @@ function Post({
                             splitComment={splitComment}
                             isComment={key === 1 ? true : false}
                             imagePath={imagePathList[key]}
+                            getNextView={getNextView}
                         />
                     );
                 }
@@ -90,7 +91,8 @@ type ActiveViewProps = {
     cakeRating: number,
     splitComment: string[],
     isComment: boolean,
-    imagePath: string
+    imagePath: string,
+    getNextView: () => void
 };
 
 function ActiveView({
@@ -98,60 +100,105 @@ function ActiveView({
     cakeRating,
     splitComment,
     isComment,
-    imagePath }: ActiveViewProps) {
+    imagePath,
+    getNextView }: ActiveViewProps) {
+
+    const [isDeleted, setIsDeleted] = useState(false);
+
     return (
         <div className={classNames([post.image, index.fadeInFast])}
-            style={{ backgroundImage: 'url(' + imagePath + ')' }}>
-            {isComment ? 
-                <CommentView 
-                    isMine={isMine} 
-                    cakeRating={cakeRating} 
-                    splitComment={splitComment} 
-                /> : <></>}
+            style={{ 
+                height: isDeleted ? '0' : '80vw', 
+                marginBottom: isDeleted ? '0' : '1vh', 
+                backgroundImage: 'url(' + imagePath + ')' }}>
+            {isComment ?
+                <CommentView
+                    isMine={isMine}
+                    isDeleted={isDeleted}
+                    cakeRating={cakeRating}
+                    splitComment={splitComment}
+                    getNextView={getNextView}
+                    setIsDeleted={setIsDeleted}
+                /> :
+                <div style={{ width: '80vw', height: '80vw', borderRadius: '5px' }}
+                    onClick={() => getNextView()} />
+            }
         </div>
     );
 }
 
-type CommentProps = {
+type CommentViewProps = {
     isMine: boolean,
+    isDeleted: boolean,
     cakeRating: number,
-    splitComment: string[]
+    splitComment: string[],
+    getNextView: () => void,
+    setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function CommentView({
     isMine,
+    isDeleted,
     cakeRating,
-    splitComment }: CommentProps) {
+    splitComment,
+    getNextView,
+    setIsDeleted }: CommentViewProps) {
+
+    const [toggle, setToggle] = useState(false);
+    const [timer, setTimer] = useState<NodeJS.Timeout>();
+
+    function deletePost() {
+        if (toggle) {
+            if (timer !== undefined)
+                clearInterval(timer);
+            setIsDeleted(true);
+        }
+        else {
+            setToggle(true);
+            setTimer(
+                setTimeout(() => {
+                    setToggle(false);
+                }, 5000)
+            );
+        }
+    }
 
     return (
-        <div>
-            <div className={post.comment}>
-                <div className={post.commentTop} />
-                <div className={post.commentMiddle}>
-                    {splitComment.length ?
-                        <div className={post.commentEnabled}>
-                            {splitComment.map((line, key) => {
-                                return <div key={key}>{line}</div>
-                            })}
-                        </div> :
-                        <div className={post.commentDisabled}>
-                            please write a comment
-                            </div>
-                    }
-                    <div className={post.cakeRating}>
-                        {cakeRating === 3 ?
-                            THREE_PIECES_OF_CAKE :
-                            cakeRating === 2 ? TWO_PIECES_OF_CAKE :
-                                A_PIECE_OF_CAKE}
-                    </div>
+        <div className={post.comment} style={{display: isDeleted ? 'none' : 'block'}}>
+            <div className={post.commentTop} onClick={() => getNextView()} />
+            <div className={post.commentMiddle} onClick={() => getNextView()}>
+                {splitComment.length ?
+                    <div className={post.commentEnabled}>
+                        {splitComment.map((line, key) => {
+                            return <div key={key}>{line}</div>
+                        })}
+                    </div> :
+                    <div className={post.commentDisabled}>
+                        please write a comment
+                        </div>
+                }
+                <div className={post.cakeRating}>
+                    {cakeRating === 3 ?
+                        THREE_PIECES_OF_CAKE :
+                        cakeRating === 2 ? TWO_PIECES_OF_CAKE :
+                            A_PIECE_OF_CAKE}
                 </div>
-                <div className={post.commentBottom}>
-                    <div className={post.commentSide} />
-                    <div className={post.commentCenter}>
-                        {isMine ? <span>delete / save</span> : <></>}
-                    </div>
-                    <div className={post.commentSide} />
+            </div>
+            <div className={post.commentBottom}>
+                <div className={post.commentSide} onClick={() => getNextView()} />
+                <div className={post.commentCenter} onClick={isMine ? () => { } : () => getNextView()}>
+                    {isMine ?
+                        !toggle ?
+                            <span key={0} className={index.fadeInFast} onClick={() => deletePost()}>
+                                delete
+                                </span>
+                            :
+                            <span key={1} className={index.fadeInFast} onClick={() => deletePost()}>
+                                sure?
+                                </span>
+                        : <></>}
                 </div>
+                <div className={post.commentSide} onClick={() => getNextView()} />
             </div>
         </div>
     );
