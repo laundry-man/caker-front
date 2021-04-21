@@ -22,12 +22,7 @@
     backdrop-filter: brightness(50%);
 }
 
-.comment-top {
-    width: 80vw;
-    height: 20vw;
-}
-
-.comment-middle {
+.comment-center {
     width: 80vw;
     height: 40vw;
 
@@ -42,7 +37,7 @@
     letter-spacing: 0.05rem;
 }
 
-.comment-bottom {
+.comment-side {
     width: 80vw;
     height: 20vw;
 
@@ -53,25 +48,15 @@
     text-align: center;
 }
 
-.comment-side {
-    width: 30vw;
-    height: 20vw;
-}
-
-.comment-center {
-    width: 20vw;
-    height: 20vw;
+.toggle-button-wrapper {
+    width: 10vw;
+    height: 10vw;
 
     display: flex;
-    flex-direction: column;
+    flex-direction: row;
     align-items: center;
     justify-content: center;
     text-align: center;
-
-    font-family: San Francisco;
-    font-size: 0.7rem;
-    letter-spacing: 0.05rem;
-    color: white;
 }
 
 .toggle-button {
@@ -95,5 +80,5 @@
     font-size: 0.9rem;
     letter-spacing: 0.3rem;
 
-    margin-top: 0.5vh;
+    margin-top: 1vh;
 }

@@ -7,7 +7,8 @@ import index from '../../static/css/index.module.css';
 import post from '../../static/css/tagsearchresult/post.module.css';
 
 import Hammer from '../../static/icon/legal-hammer.svg';
-import FilledHeart from '../../static/icon/heart-shape-outline.svg';
+import FilledHeart from '../../static/icon/heart-shape-silhouette.svg';
+import EmptyHeart from '../../static/icon/heart-shape-outline.svg';
 
 type PostProps = {
     isMine: boolean,
@@ -151,7 +152,8 @@ function CommentView({
     const [deleteToggle, setDeleteToggle] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
-    function deletePost() {
+    function deletePost(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+        e.stopPropagation();
         if (deleteToggle) {
             if (timer !== undefined)
                 clearInterval(timer);
@@ -167,21 +169,17 @@ function CommentView({
         }
     }
 
-    function toggleView() {
+    function toggleView(e: React.MouseEvent<HTMLDivElement, MouseEvent>) {
+        e.stopPropagation();
+
         setDeleteToggle(false);
         setViewToggle(!viewToggle);
     }
 
     return (
-        <div className={post.comment} style={{display: isDeleted ? 'none' : 'block'}}>
-            <div className={post.commentBottom}>
-                <div className={post.commentSide} onClick={() => getNextView()} />
-                <div className={post.commentCenter} onClick={() => getNextView()}>
-                    
-                </div>
-                <div className={post.commentSide} onClick={() => getNextView()} />
-            </div>
-            <div className={post.commentMiddle}>
+        <div className={post.comment} style={{display: isDeleted ? 'none' : 'block'}} onClick={() => getNextView()}>
+            <div className={post.commentSide} />
+            <div className={post.commentCenter}>
                 {viewToggle ? 
                     <BackView 
                         isMine={isMine} 
@@ -194,12 +192,10 @@ function CommentView({
                         splitComment={splitComment} 
                     />}
             </div>
-            <div className={post.commentBottom}>
-                <div className={post.commentSide} onClick={() => getNextView()} />
-                <div className={post.commentCenter}>
-                    <div key={0} className={classNames([post.toggleButton, index.fadeInFast])} onClick={() => toggleView()} />
+            <div className={post.commentSide}>
+                <div className={post.toggleButtonWrapper} onClick={(e) => toggleView(e)}>
+                    <div className={classNames([post.toggleButton, index.fadeInFast])} />
                 </div>
-                <div className={post.commentSide} onClick={() => getNextView()} />
             </div>
         </div>
     );
@@ -239,7 +235,7 @@ function FrontView({
 type BackViewProps = {
     isMine: boolean,
     deleteToggle: boolean,
-    deletePost: () => void
+    deletePost: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
 }
 
 function BackView({ 
@@ -249,21 +245,47 @@ function BackView({
 
     const [isLoaded, setIsLoaded] = useState(false);
 
+    function getUserProfile(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+        e.stopPropagation();
+    }
+
+    function likePost(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+        e.stopPropagation();
+    }
+
+    function report(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+        e.stopPropagation();
+    }
+
+    function sendEmail(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+        e.stopPropagation();
+    }
+
     return (
         <div className={classNames([index.fadeInFast, post.commentEnabled])}>
-            <div style={{fontWeight: 'bold', fontSize: '0.85rem'}}>@rnmkr</div>
+            <span style={{}} onClick={(e) => getUserProfile(e)}>
+                @rnmkr
+            </span>
+            <br />
             <br />
             <div>2021.04.09</div>
             <div>데이트하기 좋은 #고래상점</div>
             <br />
-            <div style={{fontWeight: 'bold', fontSize: '0.85rem'}}>
-                <img alt="" src={Hammer} className={index.secondaryColor} style={{width: '3.5vw'}}/>&nbsp;&nbsp;|&nbsp;&nbsp;<img alt="" src={FilledHeart} className={index.secondaryColor} style={{width: '4vw'}}/> 123</div>
+            <div style={{}}>
+                <span onClick={(e) => report(e)}>
+                    <img alt="" src={Hammer} className={index.secondaryColor} style={{width: '3.5vw'}}/>
+                </span>
+                <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
+                <span onClick={(e) => likePost(e)}>
+                    <img alt="" src={EmptyHeart} className={index.secondaryColor} style={{width: '4vw'}}/> 123
+                </span>
+            </div>
             <br />
             {isMine ? 
                 deleteToggle ? 
-                    <div key={0} className={index.fadeInFast} onClick={() => deletePost()}>sure?</div> : 
-                    <div key={1} onClick={() => deletePost()}>delete</div>
-                : <div>send email @rnmkr</div>}
+                    <span key={0} className={index.fadeInFast} onClick={(e) => deletePost(e)}>sure?</span> : 
+                    <span key={1} onClick={(e) => deletePost(e)}>delete</span>
+                : <span onClick={(e) => sendEmail(e)}>send email @rnmkr</span>}
         </div>
     );
 }
