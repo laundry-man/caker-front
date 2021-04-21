@@ -6,6 +6,9 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import post from '../../static/css/tagsearchresult/post.module.css';
 
+import Hammer from '../../static/icon/legal-hammer.svg';
+import FilledHeart from '../../static/icon/heart-shape-outline.svg';
+
 type PostProps = {
     isMine: boolean,
     commentInput: string,
@@ -144,62 +147,123 @@ function CommentView({
     getNextView,
     setIsDeleted }: CommentViewProps) {
 
-    const [toggle, setToggle] = useState(false);
+    const [viewToggle, setViewToggle] = useState(false);
+    const [deleteToggle, setDeleteToggle] = useState(false);
     const [timer, setTimer] = useState<NodeJS.Timeout>();
 
     function deletePost() {
-        if (toggle) {
+        if (deleteToggle) {
             if (timer !== undefined)
                 clearInterval(timer);
             setIsDeleted(true);
         }
         else {
-            setToggle(true);
+            setDeleteToggle(true);
             setTimer(
                 setTimeout(() => {
-                    setToggle(false);
+                    setDeleteToggle(false);
                 }, 5000)
             );
         }
     }
 
+    function toggleView() {
+        setDeleteToggle(false);
+        setViewToggle(!viewToggle);
+    }
+
     return (
         <div className={post.comment} style={{display: isDeleted ? 'none' : 'block'}}>
-            <div className={post.commentTop} onClick={() => getNextView()} />
-            <div className={post.commentMiddle} onClick={() => getNextView()}>
-                {splitComment.length ?
-                    <div className={post.commentEnabled}>
-                        {splitComment.map((line, key) => {
-                            return <div key={key}>{line}</div>
-                        })}
-                    </div> :
-                    <div className={post.commentDisabled}>
-                        please write a comment
-                        </div>
-                }
-                <div className={post.cakeRating}>
-                    {cakeRating === 3 ?
-                        THREE_PIECES_OF_CAKE :
-                        cakeRating === 2 ? TWO_PIECES_OF_CAKE :
-                            A_PIECE_OF_CAKE}
+            <div className={post.commentBottom}>
+                <div className={post.commentSide} onClick={() => getNextView()} />
+                <div className={post.commentCenter} onClick={() => getNextView()}>
+                    
                 </div>
+                <div className={post.commentSide} onClick={() => getNextView()} />
+            </div>
+            <div className={post.commentMiddle}>
+                {viewToggle ? 
+                    <BackView 
+                        isMine={isMine} 
+                        deleteToggle={deleteToggle}
+                        deletePost={deletePost} 
+                    /> 
+                    : 
+                    <FrontView 
+                        cakeRating={cakeRating} 
+                        splitComment={splitComment} 
+                    />}
             </div>
             <div className={post.commentBottom}>
                 <div className={post.commentSide} onClick={() => getNextView()} />
-                <div className={post.commentCenter} onClick={isMine ? () => { } : () => getNextView()}>
-                    {isMine ?
-                        !toggle ?
-                            <span key={0} className={index.fadeInFast} onClick={() => deletePost()}>
-                                delete
-                                </span>
-                            :
-                            <span key={1} className={index.fadeInFast} onClick={() => deletePost()}>
-                                sure?
-                                </span>
-                        : <></>}
+                <div className={post.commentCenter}>
+                    <div key={0} className={classNames([post.toggleButton, index.fadeInFast])} onClick={() => toggleView()} />
                 </div>
                 <div className={post.commentSide} onClick={() => getNextView()} />
             </div>
+        </div>
+    );
+}
+
+type FrontViewProps = {
+    cakeRating: number,
+    splitComment: string[]
+}
+
+function FrontView({
+    cakeRating,
+    splitComment}: FrontViewProps) {
+
+    return (
+        <div className={index.fadeInFast}>
+            {splitComment.length ?
+                <div className={post.commentEnabled}>
+                    {splitComment.map((line, key) => {
+                        return <div key={key}>{line}</div>
+                    })}
+                </div> :
+                <div className={post.commentDisabled}>
+                    please write a comment
+                    </div>
+            }
+            <div className={post.cakeRating}>
+                {cakeRating === 3 ?
+                    THREE_PIECES_OF_CAKE :
+                    cakeRating === 2 ? TWO_PIECES_OF_CAKE :
+                        A_PIECE_OF_CAKE}
+            </div>
+        </div>
+    );
+}
+
+type BackViewProps = {
+    isMine: boolean,
+    deleteToggle: boolean,
+    deletePost: () => void
+}
+
+function BackView({ 
+    isMine, 
+    deleteToggle, 
+    deletePost }: BackViewProps) {
+
+    const [isLoaded, setIsLoaded] = useState(false);
+
+    return (
+        <div className={classNames([index.fadeInFast, post.commentEnabled])}>
+            <div style={{fontWeight: 'bold', fontSize: '0.85rem'}}>@rnmkr</div>
+            <br />
+            <div>2021.04.09</div>
+            <div>데이트하기 좋은 #고래상점</div>
+            <br />
+            <div style={{fontWeight: 'bold', fontSize: '0.85rem'}}>
+                <img alt="" src={Hammer} className={index.secondaryColor} style={{width: '3.5vw'}}/>&nbsp;&nbsp;|&nbsp;&nbsp;<img alt="" src={FilledHeart} className={index.secondaryColor} style={{width: '4vw'}}/> 123</div>
+            <br />
+            {isMine ? 
+                deleteToggle ? 
+                    <div key={0} className={index.fadeInFast} onClick={() => deletePost()}>sure?</div> : 
+                    <div key={1} onClick={() => deletePost()}>delete</div>
+                : <div>send email @rnmkr</div>}
         </div>
     );
 }

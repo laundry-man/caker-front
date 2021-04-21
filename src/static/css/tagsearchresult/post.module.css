@@ -74,6 +74,15 @@
     color: white;
 }
 
+.toggle-button {
+    width: 6vw;
+    height: 1vh;
+
+    border: 0.3vh solid #414141;
+
+    background: #F2F1ED;
+}
+
 .comment-enabled {
     color: white;
 }
