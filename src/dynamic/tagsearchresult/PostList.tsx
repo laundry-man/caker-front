@@ -4,23 +4,23 @@ import Post from './Post';
 
 import postList from '../../static/css/tagsearchresult/postList.module.css';
 
-type PostListProps = {
+type PostType = {
     isMine: boolean,
-    imagePathListList: string[][]
+    isLiked: boolean,
+    comment: string,
+    cakeRating: number,
+    theNumberOfLike: number,
+    imagePathList: string[]
 };
 
-function PostList({ isMine, imagePathListList }: PostListProps) {
+type PostListProps = {
+    postListProp: PostType[]
+};
+
+function PostList({ postListProp }: PostListProps) {
     return (
         <div className={postList.container}>
-            {imagePathListList.map((imagePathList, key) => 
-                <Post 
-                    key={key} 
-                    isMine={isMine}
-                    commentInput={'서면에 위치한 카페 마틴입니다    제 기억에는 커피가 맛없어요    서면에 위치한 카페 마틴입니다'} 
-                    cakeRating={2} 
-                    imagePathList={imagePathList} 
-                />)
-            }
+            {postListProp.map((post, key) => <Post key={key} postProp={post} />)}
         </div>
     );
 }
