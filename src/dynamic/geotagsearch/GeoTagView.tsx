@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { Page, GEO_TAG_SEARCH, TAG_SEARCH_RESULT } from '../../const/Constant';
+import { Page, GEO_TAG_SEARCH, TAG_SEARCH_RESULT, A_PIECE_OF_CAKE } from '../../const/Constant';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -93,10 +93,13 @@ function BackView({ path }: BackViewProps) {
                 </div>
                 <div className={geoTagView.info}>
                     <div className={geoTagView.tag}>#고래상점</div>
-                    <div className={geoTagView.measured}>
+                    <div className={geoTagView.measured} style={{marginBottom: '0.6vh'}}>
                         <span>1.2km</span>
                         <span>&nbsp;</span>
                         <span>44k</span>
+                    </div>
+                    <div className={geoTagView.measured}>
+                        {A_PIECE_OF_CAKE} 1.3
                     </div>
                 </div>
             </div>

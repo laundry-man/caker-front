@@ -30,24 +30,58 @@ import Terarosa4 from '../../static/image/terarosa_4.png';
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 
+type PostType = {
+    isMine: boolean,
+    isLiked: boolean,
+    comment: string,
+    cakeRating: number,
+    theNumberOfLike: number,
+    imagePathList: string[]
+};
+
 type TagSearchResultProps = {
     tag: string,
     redirect: (page: Page) => void
-}
+};
 
 function TagSearchResult({ tag }: TagSearchResultProps) {
-    const base: string[][] = [
-        [Matin1, Matin1, Matin3, Matin4],
-        [Anthracite1, Anthracite1, Anthracite3, Anthracite4],
-        [BrownHands1, BrownHands1, BrownHands3, BrownHands4],
-        [PotatoField1, PotatoField1, PotatoField3, PotatoField4],
-        [Terarosa1, Terarosa1, Terarosa3, Terarosa4]
+
+    const posts: PostType[] = [
+        {
+            isMine: tag === '#myposts' ? true : false, 
+            isLiked: true, 
+            comment: '서면에 위치한 카페 마틴입니다    제 기억에는 커피가 맛없어요    서면에 위치한 카페 마틴입니다', 
+            cakeRating: 2, 
+            theNumberOfLike: 123,
+            imagePathList: [Matin1, Matin1, Matin3, Matin4]
+        },
+        {
+            isMine: tag === '#myposts' ? true : false, 
+            isLiked: false, 
+            comment: '서면에 위치한 카페 마틴입니다    제 기억에는 커피가 맛없어요    서면에 위치한 카페 마틴입니다', 
+            cakeRating: 2, 
+            theNumberOfLike: 123,
+            imagePathList: [Anthracite1, Anthracite1, Anthracite3, Anthracite4]
+        },
+        {
+            isMine: tag === '#myposts' ? true : false, 
+            isLiked: false, 
+            comment: '서면에 위치한 카페 마틴입니다    제 기억에는 커피가 맛없어요    서면에 위치한 카페 마틴입니다', 
+            cakeRating: 2, 
+            theNumberOfLike: 123,
+            imagePathList: [PotatoField1, PotatoField1, PotatoField3, PotatoField4]
+        },
+        {
+            isMine: tag === '#myposts' ? true : false, 
+            isLiked: false, 
+            comment: '서면에 위치한 카페 마틴입니다    제 기억에는 커피가 맛없어요    서면에 위치한 카페 마틴입니다', 
+            cakeRating: 2, 
+            theNumberOfLike: 123,
+            imagePathList: [Terarosa1, Terarosa1, Terarosa3, Terarosa4]
+        }
     ];
 
-    // 검색 태그가 '#myposts' 인 경우 자신의 게시물을 검색한다.
-    const isMine: boolean = tag === '#myposts' ? true : false;
-
-    const [imagePathListList, setImagePathListList] = useState(base);
+    const [postList, setPostList] = useState<PostType[]>(posts);
 
     function getNewData() {
         return new Promise((resolve, reject) => {
@@ -83,10 +117,7 @@ function TagSearchResult({ tag }: TagSearchResultProps) {
           pullDownThreshold={67}
           maxPullDownDistance={95}
           className={classNames([index.pullToRefresh, index.fadeInFast])}>
-          <PostList 
-            isMine={isMine} 
-            imagePathListList={imagePathListList} 
-          />
+          <PostList postListProp={postList} />
         </PullToRefresh>
     );
 }
