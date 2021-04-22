@@ -10,7 +10,7 @@
 
     background-size: cover;
 
-    transition: height 0.4s;
+    transition: all 0.5s;
 }
 
 .comment {

@@ -146,6 +146,24 @@ body {
   transition: filter 0.9s;
 }
 
+.empty-heart-color {
+  filter: invert(99%) 
+          sepia(0%) 
+          saturate(4121%) 
+          hue-rotate(295deg) 
+          brightness(128%) 
+          contrast(89%);
+}
+
+.filled-heart-color {
+  filter: invert(14%) 
+          sepia(68%) 
+          saturate(7183%) 
+          hue-rotate(342deg) 
+          brightness(96%) 
+          contrast(111%);
+}
+
 .non-display {
   display: none;
 }

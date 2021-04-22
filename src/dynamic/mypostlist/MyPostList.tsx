@@ -25,8 +25,8 @@ function MyPostList({
     const [cakeRating, setCakeRating] = useState(9993);
 
     const [theNumberOfEmailsReceived, setTheNumberOfEmailsReceived] = useState(102);
-    const [mostFrequentlyUsedVibe, setMostFrequentlyUsedVibe] = useState("데이트하기 좋은");
-    const [mostFrequentlyUsedTag, setMostFrequentlyUsedTag] = useState("고래상점");
+    const [mostFrequentlyUsedVibe, setMostFrequentlyUsedVibe] = useState('"데이트하기 좋은"');
+    const [mostFrequentlyUsedTag, setMostFrequentlyUsedTag] = useState('"고래상점"');
 
     function assignKeyword() {
         setContent("#myposts");

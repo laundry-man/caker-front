@@ -23,6 +23,16 @@ function Post({
     cakeRating,
     imagePathList }: PostProps) {
 
+    // Like state of each posts
+    const [isLiked, setIsLiked] = useState(false);
+    const [theNumberOfLike, setTheNumberOfLike] = useState(123);
+
+    // please the request to api server
+    function toggleLikeState() {
+        setTheNumberOfLike(isLiked ? theNumberOfLike - 1 : theNumberOfLike + 1);
+        setIsLiked(!isLiked);
+    }
+
     const [splitComment, setSplitComment] = useState<string[]>([]);
 
     const [active, setActive] = useState((() => {
@@ -76,11 +86,14 @@ function Post({
                         <ActiveView
                             key={key}
                             isMine={isMine}
+                            isLiked={isLiked}
+                            theNumberOfLike={theNumberOfLike}
                             cakeRating={cakeRating}
                             splitComment={splitComment}
                             isComment={key === 1 ? true : false}
                             imagePath={imagePathList[key]}
                             getNextView={getNextView}
+                            toggleLikeState={toggleLikeState}
                         />
                     );
                 }
@@ -92,20 +105,26 @@ function Post({
 
 type ActiveViewProps = {
     isMine: boolean,
+    isLiked: boolean,
+    theNumberOfLike: number,
     cakeRating: number,
     splitComment: string[],
     isComment: boolean,
     imagePath: string,
-    getNextView: () => void
+    getNextView: () => void,
+    toggleLikeState: () => void
 };
 
 function ActiveView({
     isMine,
+    isLiked,
+    theNumberOfLike,
     cakeRating,
     splitComment,
     isComment,
     imagePath,
-    getNextView }: ActiveViewProps) {
+    getNextView,
+    toggleLikeState }: ActiveViewProps) {
 
     const [isDeleted, setIsDeleted] = useState(false);
 
@@ -113,15 +132,19 @@ function ActiveView({
         <div className={classNames([post.image, index.fadeInFast])}
             style={{ 
                 height: isDeleted ? '0' : '80vw', 
+                opacity: isDeleted ? 0 : 1,
                 marginBottom: isDeleted ? '0' : '1vh', 
                 backgroundImage: 'url(' + imagePath + ')' }}>
             {isComment ?
                 <CommentView
                     isMine={isMine}
+                    isLiked={isLiked}
                     isDeleted={isDeleted}
+                    theNumberOfLike={theNumberOfLike}
                     cakeRating={cakeRating}
                     splitComment={splitComment}
                     getNextView={getNextView}
+                    toggleLikeState={toggleLikeState}
                     setIsDeleted={setIsDeleted}
                 /> :
                 <div style={{ width: '80vw', height: '80vw', borderRadius: '5px' }}
@@ -133,19 +156,25 @@ function ActiveView({
 
 type CommentViewProps = {
     isMine: boolean,
+    isLiked: boolean,
     isDeleted: boolean,
+    theNumberOfLike: number,
     cakeRating: number,
     splitComment: string[],
     getNextView: () => void,
-    setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>
+    toggleLikeState: () => void,
+    setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>,
 }
 
 function CommentView({
     isMine,
+    isLiked,
     isDeleted,
+    theNumberOfLike,
     cakeRating,
     splitComment,
     getNextView,
+    toggleLikeState,
     setIsDeleted }: CommentViewProps) {
 
     const [viewToggle, setViewToggle] = useState(false);
@@ -177,13 +206,21 @@ function CommentView({
     }
 
     return (
-        <div className={post.comment} style={{display: isDeleted ? 'none' : 'block'}} onClick={() => getNextView()}>
+        <div className={post.comment} 
+            style={{
+                display: isDeleted ? 'none' : 'block', 
+                opacity: isDeleted ? 0 : 1 }} 
+            onClick={() => getNextView()}>
+
             <div className={post.commentSide} />
             <div className={post.commentCenter}>
                 {viewToggle ? 
                     <BackView 
                         isMine={isMine} 
+                        isLiked={isLiked}
+                        theNumberOfLike={theNumberOfLike}
                         deleteToggle={deleteToggle}
+                        toggleLikeState={toggleLikeState}
                         deletePost={deletePost} 
                     /> 
                     : 
@@ -234,13 +271,19 @@ function FrontView({
 
 type BackViewProps = {
     isMine: boolean,
+    isLiked: boolean,
+    theNumberOfLike: number,
     deleteToggle: boolean,
+    toggleLikeState: () => void,
     deletePost: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void
 }
 
 function BackView({ 
     isMine, 
+    isLiked,
+    theNumberOfLike,
     deleteToggle, 
+    toggleLikeState,
     deletePost }: BackViewProps) {
 
     const [isLoaded, setIsLoaded] = useState(false);
@@ -251,6 +294,7 @@ function BackView({
 
     function likePost(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
         e.stopPropagation();
+        toggleLikeState();
     }
 
     function report(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
@@ -271,13 +315,13 @@ function BackView({
             <div>2021.04.09</div>
             <div>데이트하기 좋은 #고래상점</div>
             <br />
-            <div style={{}}>
+            <div>
                 <span onClick={(e) => report(e)}>
                     <img alt="" src={Hammer} className={index.secondaryColor} style={{width: '3.5vw'}}/>
                 </span>
                 <span>&nbsp;&nbsp;|&nbsp;&nbsp;</span>
                 <span onClick={(e) => likePost(e)}>
-                    <img alt="" src={EmptyHeart} className={index.secondaryColor} style={{width: '4vw'}}/> 123
+                    <img alt="" src={isLiked ? FilledHeart : EmptyHeart} className={isLiked ? index.filledHeartColor : index.emptyHeartColor} style={{width: '4vw'}}/> {theNumberOfLike}
                 </span>
             </div>
             <br />
