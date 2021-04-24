@@ -20,6 +20,8 @@
     border-radius: 5px;
 
     backdrop-filter: brightness(50%);
+
+    transition: all 0.5s;
 }
 
 .comment-center {
@@ -81,4 +83,18 @@
     letter-spacing: 0.3rem;
 
     margin-top: 1vh;
+}
+
+.note {
+    width: 80%;
+    height: 100%;
+    border: none;
+    outline: none;
+    color: white;
+    font-family: San Francisco;
+    background-color: inherit;
+    background-attachment: local;
+    background-image:
+      repeating-linear-gradient(transparent, transparent 30px, #D5D0C4 30px, #D5D0C4 31px, transparent 31px);
+    line-height: 31px;
 }
