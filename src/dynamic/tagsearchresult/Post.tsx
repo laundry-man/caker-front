@@ -167,6 +167,7 @@ function CommentView({
 
     const [viewToggle, setViewToggle] = useState(false);
     const [reportViewToggle, setReportViewToggle] = useState(false);
+    const [emailViewToggle, setEmailViewToggle] = useState(false);
     const [deleteToggle, setDeleteToggle] = useState(false);
     
     const [timer, setTimer] = useState<NodeJS.Timeout>();
@@ -197,6 +198,9 @@ function CommentView({
         if (reportViewToggle) {
             setReportViewToggle(false);
         }
+        else if (emailViewToggle) {
+            setEmailViewToggle(false);
+        }
         else {
             setViewToggle(!viewToggle);
         }
@@ -208,7 +212,13 @@ function CommentView({
                 display: isDeleted ? 'none' : 'block', 
                 opacity: isDeleted ? 0 : 1 }} 
             onClick={() => getNextView()}>
-            <div className={post.commentSide} />
+            <div className={post.commentSide}>
+                {emailViewToggle ? 
+                    <div className={index.fadeInFast} style={{color: 'white', fontFamily: 'San Francisco', fontSize: '0.7rem'}}>
+                        dear @rnmkr.&nbsp;&nbsp;|&nbsp;&nbsp;send
+                    </div> : 
+                    <div />}
+            </div>
             <div className={post.commentCenter}>
                 {viewToggle ? 
                     reportViewToggle ? 
@@ -216,15 +226,18 @@ function CommentView({
                             deleteToggle={deleteToggle}
                             deletePost={deletePost} 
                         /> :
-                        <BackView 
-                            isMine={isMine} 
-                            isLiked={isLiked}
-                            theNumberOfLike={theNumberOfLike}
-                            deleteToggle={deleteToggle}
-                            toggleLikeState={toggleLikeState}
-                            deletePost={deletePost} 
-                            setReportViewToggle={setReportViewToggle}
-                        /> : 
+                        emailViewToggle ?
+                            <EmailView /> :
+                            <BackView 
+                                isMine={isMine} 
+                                isLiked={isLiked}
+                                theNumberOfLike={theNumberOfLike}
+                                deleteToggle={deleteToggle}
+                                toggleLikeState={toggleLikeState}
+                                deletePost={deletePost} 
+                                setReportViewToggle={setReportViewToggle}
+                                setEmailViewToggle={setEmailViewToggle}
+                            /> : 
                     <FrontView 
                         cakeRating={cakeRating} 
                         splitComment={splitComment} 
@@ -277,7 +290,8 @@ type BackViewProps = {
     deleteToggle: boolean,
     toggleLikeState: () => void,
     deletePost: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void,
-    setReportViewToggle: React.Dispatch<React.SetStateAction<boolean>>
+    setReportViewToggle: React.Dispatch<React.SetStateAction<boolean>>,
+    setEmailViewToggle: React.Dispatch<React.SetStateAction<boolean>>
 }
 
 function BackView({ 
@@ -287,7 +301,8 @@ function BackView({
     deleteToggle, 
     toggleLikeState,
     deletePost,
-    setReportViewToggle}: BackViewProps) {
+    setReportViewToggle,
+    setEmailViewToggle}: BackViewProps) {
 
     function getUserProfile(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
         e.stopPropagation();
@@ -303,8 +318,9 @@ function BackView({
         setReportViewToggle(true);
     }
 
-    function sendEmail(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
+    function getEmailView(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
         e.stopPropagation();
+        setEmailViewToggle(true);
     }
 
     return (
@@ -334,9 +350,9 @@ function BackView({
             <br />
             {isMine ? 
                 deleteToggle ? 
-                    <span key={0} className={index.fadeInFast} onClick={(e) => deletePost(e)}>sure?</span> : 
-                    <span key={1} className={index.fadeInFast} onClick={(e) => deletePost(e)}>delete</span>
-                : <span onClick={(e) => sendEmail(e)}>send email @rnmkr</span>}
+                    <span key={0} className={index.fadeInFast} onClick={(e) => deletePost(e)}>are you sure?</span> : 
+                    <span key={1} className={index.fadeInFast} onClick={(e) => deletePost(e)}>delete this post</span>
+                : <span onClick={(e) => getEmailView(e)}>send email @rnmkr</span>}
         </div>
     );
 }
@@ -353,9 +369,19 @@ function ReportView({
     return (
         <div className={post.commentEnabled}>
             {deleteToggle ?
-                <span key={0} className={index.fadeInFast} onClick={(e) => deletePost(e)}>sure?</span> : 
+                <span key={0} className={index.fadeInFast} onClick={(e) => deletePost(e)}>are you sure?</span> : 
                 <span key={1} className={index.fadeInFast} onClick={(e) => deletePost(e)}>report this post</span>}
         </div>
+    );
+}
+
+function EmailView() {
+    function onClick(e: React.MouseEvent<HTMLTextAreaElement, MouseEvent>) {
+        e.stopPropagation();
+    }
+
+    return (
+        <textarea className={classNames([post.note, index.fadeInFast])} spellCheck="false" onClick={(e) => onClick(e)} />
     );
 }
 
