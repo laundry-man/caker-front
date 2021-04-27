@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 
-import { EMPTY_STRING, 
+import { Page,
+         MY_POST_LIST,
+         EMPTY_STRING, 
          COMMENT_MAX_WIDTH, 
          A_PIECE_OF_CAKE, 
          TWO_PIECES_OF_CAKE, 
@@ -24,10 +26,11 @@ type PostType = {
 };
 
 type PostProps = {
-    postProp: PostType
+    postProp: PostType,
+    redirect: (page: Page) => void
 };
 
-function Post({ postProp }: PostProps) {
+function Post({ postProp, redirect }: PostProps) {
 
     const [active, setActive] = useState((() => {
         let _active: boolean[] = [];
@@ -52,6 +55,7 @@ function Post({ postProp }: PostProps) {
                             postIndex={key} 
                             postProp={postProp}
                             getNextView={getNextView}
+                            redirect={redirect}
                         />
                     );
                 }
@@ -64,13 +68,15 @@ function Post({ postProp }: PostProps) {
 type ActiveViewProps = {
     postIndex: number
     postProp: PostType,
-    getNextView: () => void
+    getNextView: () => void,
+    redirect: (page: Page) => void
 };
 
 function ActiveView({ 
     postIndex,
     postProp, 
-    getNextView }: ActiveViewProps) {
+    getNextView,
+    redirect }: ActiveViewProps) {
 
     const isComment: boolean = postIndex === 1;
 
@@ -110,7 +116,7 @@ function ActiveView({
         setTheNumberOfLike(isLiked ? theNumberOfLike - 1 : theNumberOfLike + 1);
         setIsLiked(!isLiked);
     }
-
+  
     useEffect(() => {
         if (isComment)
             assignComment();
@@ -122,7 +128,7 @@ function ActiveView({
                 height: isDeleted ? '0' : '80vw', 
                 opacity: isDeleted ? 0 : 1,
                 marginBottom: isDeleted ? '0' : '1vh', 
-                backgroundImage: 'url(' + postProp.imagePathList[postIndex] + ')' }}>
+                backgroundImage: 'url(' + postProp.imagePathList[postIndex] + ')'}}>
             {isComment ?
                 <CommentView
                     isMine={postProp.isMine}
@@ -134,6 +140,7 @@ function ActiveView({
                     getNextView={getNextView}
                     toggleLikeState={toggleLikeState}
                     setIsDeleted={setIsDeleted}
+                    redirect={redirect}
                 /> :
                 <div style={{ width: '80vw', height: '80vw', borderRadius: '5px' }}
                     onClick={() => getNextView()} />
@@ -151,8 +158,9 @@ type CommentViewProps = {
     splitComment: string[],
     getNextView: () => void,
     toggleLikeState: () => void,
-    setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>
-}
+    setIsDeleted: React.Dispatch<React.SetStateAction<boolean>>,
+    redirect: (page: Page) => void
+};
 
 function CommentView({
     isMine,
@@ -163,7 +171,8 @@ function CommentView({
     splitComment,
     getNextView,
     toggleLikeState,
-    setIsDeleted }: CommentViewProps) {
+    setIsDeleted,
+    redirect }: CommentViewProps) {
 
     const [viewToggle, setViewToggle] = useState(false);
     const [reportViewToggle, setReportViewToggle] = useState(false);
@@ -237,6 +246,7 @@ function CommentView({
                                 deletePost={deletePost} 
                                 setReportViewToggle={setReportViewToggle}
                                 setEmailViewToggle={setEmailViewToggle}
+                                redirect={redirect}
                             /> : 
                     <FrontView 
                         cakeRating={cakeRating} 
@@ -291,7 +301,8 @@ type BackViewProps = {
     toggleLikeState: () => void,
     deletePost: (e: React.MouseEvent<HTMLSpanElement, MouseEvent>) => void,
     setReportViewToggle: React.Dispatch<React.SetStateAction<boolean>>,
-    setEmailViewToggle: React.Dispatch<React.SetStateAction<boolean>>
+    setEmailViewToggle: React.Dispatch<React.SetStateAction<boolean>>,
+    redirect: (page: Page) => void
 }
 
 function BackView({ 
@@ -302,7 +313,8 @@ function BackView({
     toggleLikeState,
     deletePost,
     setReportViewToggle,
-    setEmailViewToggle}: BackViewProps) {
+    setEmailViewToggle,
+    redirect}: BackViewProps) {
 
     function getUserProfile(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
         e.stopPropagation();
@@ -320,6 +332,7 @@ function BackView({
 
     function getEmailView(e: React.MouseEvent<HTMLSpanElement, MouseEvent>) {
         e.stopPropagation();
+        //redirect(MY_POST_LIST);
         setEmailViewToggle(true);
     }
 

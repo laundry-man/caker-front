@@ -2,6 +2,8 @@ import React from 'react';
 
 import Post from './Post';
 
+import { Page } from '../../const/Constant';
+
 import postList from '../../static/css/tagsearchresult/postList.module.css';
 
 type PostType = {
@@ -14,13 +16,19 @@ type PostType = {
 };
 
 type PostListProps = {
-    postListProp: PostType[]
+    postListProp: PostType[],
+    redirect: (page: Page) => void
 };
 
-function PostList({ postListProp }: PostListProps) {
+function PostList({ postListProp, redirect }: PostListProps) {
     return (
         <div className={postList.container}>
-            {postListProp.map((post, key) => <Post key={key} postProp={post} />)}
+            {postListProp.map((post, key) => 
+                <Post 
+                    key={key} 
+                    postProp={post}
+                    redirect={redirect}
+                />)}
         </div>
     );
 }
