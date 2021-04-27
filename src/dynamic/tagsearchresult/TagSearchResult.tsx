@@ -44,7 +44,7 @@ type TagSearchResultProps = {
     redirect: (page: Page) => void
 };
 
-function TagSearchResult({ tag }: TagSearchResultProps) {
+function TagSearchResult({ tag, redirect }: TagSearchResultProps) {
 
     const posts: PostType[] = [
         {
@@ -117,7 +117,10 @@ function TagSearchResult({ tag }: TagSearchResultProps) {
           pullDownThreshold={67}
           maxPullDownDistance={95}
           className={classNames([index.pullToRefresh, index.fadeInFast])}>
-          <PostList postListProp={postList} />
+          <PostList 
+            postListProp={postList}
+            redirect={redirect}
+          />
         </PullToRefresh>
     );
 }
