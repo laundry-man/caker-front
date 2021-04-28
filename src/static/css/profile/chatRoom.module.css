@@ -1,0 +1,58 @@
+.wrapper {
+    display: flex;
+    flex-direction: row;
+
+    margin-bottom: 1vh;
+}
+
+.prepend {
+    width: 1.5vh;
+    height: 7vh;
+}
+
+.append {
+    height: 7vh;
+}
+
+.name-message-wrapper {
+    width: calc(80vw - 1.5vh);
+    height: 3.5vh;
+    
+    display: flex;
+    align-items: center;
+}
+
+.name {
+    font-family: San Francisco;
+    font-weight: bold;
+    font-size: 0.8rem; 
+    padding-left: 0.2vw;
+}
+
+.message {
+    height: 3vh;
+
+    display: inline-block;
+
+    font-family: San Francisco;
+    font-size: 0.8rem;
+    color: #F2F1ED;
+
+    border-radius: 5px;
+
+    background: #3b3b3b;
+
+    padding-top: 0.4vh;
+    padding-left: 1.5vw;
+    padding-right: 3vw;
+}
+
+.dot {
+    height: 3.5vh;
+
+    display: flex;
+    align-items: center;
+
+    font-size: 0.5rem;
+    color: #333333;
+}

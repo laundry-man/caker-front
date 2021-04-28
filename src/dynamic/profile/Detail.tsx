@@ -11,9 +11,9 @@ type DetailProps = {
 
 function Detail({ isStretch, setIsStretch }: DetailProps) {
     return (
-        <div className={classNames([detail.vibeWrapper, index.fadeInFast])}
+        <div className={classNames([detail.detailWrapper, index.fadeInFast])}
             style={{ height: !isStretch ? '3.5vh' : '14vh' }} onClick={() => setIsStretch(!isStretch)}>
-            <div className={detail.distance}>rainmaker</div>
+            <div className={detail.name}>rainmaker</div>
         </div>
     );
 }
