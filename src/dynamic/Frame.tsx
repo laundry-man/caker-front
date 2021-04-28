@@ -11,7 +11,8 @@ import {
     TAG_SEARCH_RESULT,
     POST_UPLOAD,
     MY_POST_LIST,
-    CONFIG
+    CONFIG,
+    PROFILE
 } from '../const/Constant';
 
 import GeoTagSearch from './geotagsearch/GeoTagSearch';
@@ -19,6 +20,7 @@ import TagSearch from './tagsearch/TagSearch';
 import TagSearchResult from './tagsearchresult/TagSearchResult';
 import PostUpload from './postupload/PostUpload';
 import MyPostList from './mypostlist/MyPostList';
+import Profile from './profile/Profile';
 import Config from './config/Config';
 
 import Glass from '../static/icon/magnifying-glass.svg';
@@ -116,6 +118,9 @@ function Frame() {
                                 setPredecessor={setPredecessor}
                             />
                         </Route>
+                        <Route exact path={"/" + PROFILE}>
+                            <Profile />
+                        </Route>
                         <Route exact path={"/" + CONFIG}>
                             <Config 
                                 pageDidMount={pageDidMount} 
@@ -136,7 +141,7 @@ function Frame() {
                         <Link to={POST_UPLOAD} className={frame.footerButtonWrapper}>
                             <img alt="" src={Notes} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
-                        <Link to={MY_POST_LIST} className={frame.footerButtonWrapper}>
+                        <Link to={PROFILE} className={frame.footerButtonWrapper}>
                             <img alt="" src={Books} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
                         <Link to={CONFIG} className={frame.footerButtonWrapper}>

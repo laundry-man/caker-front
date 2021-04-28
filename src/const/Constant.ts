@@ -32,6 +32,7 @@ const Page = {
     TAG_SEARCH_RESULT: 'tagsearchresult',
     POST_UPLOAD: 'postupload',
     MY_POST_LIST: 'mypostlist',
+    PROFILE: 'profile',
     CONFIG: 'config'
 } as const;
 
@@ -54,5 +55,7 @@ export const TAG_SEARCH_RESULT: Page = 'tagsearchresult';
 export const POST_UPLOAD: Page = 'postupload';
 
 export const MY_POST_LIST: Page = 'mypostlist';
+
+export const PROFILE: Page = 'profile';
 
 export const CONFIG: Page = 'config';
