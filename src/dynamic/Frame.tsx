@@ -119,7 +119,9 @@ function Frame() {
                             />
                         </Route>
                         <Route exact path={"/" + PROFILE}>
-                            <Profile />
+                            <Profile 
+                                pageDidMount={pageDidMount} 
+                            />
                         </Route>
                         <Route exact path={"/" + CONFIG}>
                             <Config 

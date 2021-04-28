@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
+import { Page, PROFILE } from '../../const/Constant';
+
 import PullToRefresh from 'react-simple-pull-to-refresh';
 
 import Detail from './Detail';
@@ -9,7 +11,12 @@ import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
 import profile from '../../static/css/profile/profile.module.css';
 
-function Profile() {
+type ProfileProps = {
+    pageDidMount: (page: Page) => void
+}
+
+function Profile({ pageDidMount }: ProfileProps) {
+
     const [isStretch, setIsStretch] = useState(false);
     const [isSettled, setIsSettled] = useState(false);
 
@@ -28,6 +35,10 @@ function Profile() {
             }, 1000);
         });
     }
+
+    useEffect(() => {
+        pageDidMount(PROFILE);
+    }, []);
 
     return (
         <div className={index.fadeInFast}>
