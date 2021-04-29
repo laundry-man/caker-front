@@ -120,7 +120,10 @@ function Frame() {
                         </Route>
                         <Route exact path={"/" + PROFILE}>
                             <Profile 
-                                pageDidMount={pageDidMount} 
+                                pageDidMount={pageDidMount}
+                                redirect={redirect}
+                                setContent={setContent}
+                                setPredecessor={setPredecessor}
                             />
                         </Route>
                         <Route exact path={"/" + CONFIG}>

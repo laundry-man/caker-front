@@ -4,12 +4,16 @@ import ChatRoom from './ChatRoom';
 
 import chatRoomList from '../../static/css/profile/chatRoomList.module.css';
 
-function ChatRoomList() {
+type ChatRoomListProps = {
+    enterChatRoom: (key: string) => void
+}
+
+function ChatRoomList({ enterChatRoom }: ChatRoomListProps) {
     return (
         <div className={chatRoomList.container}>
-            <ChatRoom />
-            <ChatRoom />
-            <ChatRoom />
+            <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
+            <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
+            <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
         </div>
     );
 }
