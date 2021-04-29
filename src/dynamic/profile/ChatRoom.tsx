@@ -2,9 +2,14 @@ import React from 'react';
 
 import chatRoom from '../../static/css/profile/chatRoom.module.css';
 
-function ChatRoom() {
+type ChatRoomProps = {
+    roomKey: string,
+    enterChatRoom: (key: string) => void
+}
+
+function ChatRoom({ roomKey, enterChatRoom }: ChatRoomProps) {
     return (
-        <div className={chatRoom.wrapper}>
+        <div className={chatRoom.wrapper} onClick={() => enterChatRoom(roomKey)}>
             <div className={chatRoom.prepend}>
                 <div className={chatRoom.dot}>
                     ●
