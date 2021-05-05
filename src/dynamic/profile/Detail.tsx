@@ -30,7 +30,7 @@ function Detail({
     }
 
     return (
-        <div className={classNames([detail.detailWrapper, index.fadeInFast])}
+        <div className={detail.detailWrapper}
             style={{ height: !isStretch ? '3.5vh' : '14vh' }}>
             <div className={detail.detail} onClick={() => setIsStretch(!isStretch)}>
                 <div className={detail.nameWrapper}>

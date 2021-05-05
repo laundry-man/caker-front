@@ -68,7 +68,7 @@ function FrontView({
                     fetchMoreThreshold={0}
                     pullDownThreshold={67}
                     maxPullDownDistance={95}
-                    className={classNames([index.pullToRefresh, index.fadeInFast])}>
+                    className={index.pullToRefresh}>
                     <ChatRoomList enterChatRoom={enterChatRoom} />
                 </PullToRefresh>
             </div>
