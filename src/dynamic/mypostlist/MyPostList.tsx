@@ -4,6 +4,7 @@ import { Page, MY_POST_LIST, TAG_SEARCH_RESULT, ENTER_KEY, EMPTY_STRING } from '
 
 import SockJS from 'sockjs-client';
 import * as Stomp from '@stomp/stompjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import classNames from 'classnames';
 import index from '../../static/css/index.module.css';
@@ -45,42 +46,40 @@ function MyPostList({
     const [roomList, setRoomList] = useState<string[]>([]);
 
     type Room = {
-        roomId: string,
+        topicId: string,
         name: string
     }
 
     type Message = {
         type: string,
-        roomId: string,
+        topicId: string,
         sender: string,
         message: string
     }
 
-    let sock = new SockJS("http://localhost:8080/ws-stomp");
-    let ws = Stomp.Stomp.over(sock);
+    let sock: WebSocket;
+    let ws: Stomp.CompatClient;
+    let session: string = uuidv4();
 
-    let reconnect = 0;
+    const token = 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidWlkIjoic3RyaW5nIiwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiIsIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMjAzOTM1LCJleHAiOjE2MjAyMDc1MzV9.SNf7e59N98Oe6M7J1Jrd9CV7tWXDUkrtQv--gc6gmJXPeGc99LSj4GtGHYKE-g8ZeoldEd0PMQ5Tds7EIFCfjdvY4DGpyDD6OBXb006cpqoMdqA4hUErncv2CbMp9IOmS3bF2TZyP3feWj_966PyIfMtElH5S9HeINgAkj-Oeh3upmRiY4I8FY3kuVoAIUxiH501rQbXPHlpNJgFb4DilNO3hPIhckP1eABYi6aWVcAuEjpwmHJTnEgxWae9gDFYJFHhOHiwlMfYMiaWBPyCYoDsjeAiYjJm1FatKUdxt48dJ89EUL9_B_ndcK26H7gbKl7ISs_ZQcAYehXt5l3Few';
+    const subscriber = 'rnmkr@naver.com';
+    const subscriber2 = 'jelly@naver.com';
 
     function connect() {
-        ws.connect({},
+        sock = new SockJS("http://localhost:8080/ws-stomp", [], { sessionId: () => session });
+        ws = Stomp.Stomp.over(sock);
+    
+        let reconnect = 0;
+    
+        ws.connect({'Authorization': `Bearer ${token}`},
             function (frame: any) {
                 ws.subscribe(
-                    "/sub/chat/room/" + '6cc72931-a2bd-4cad-b28c-e2fcfa4ce663', 
+                    "/sub/chat/topic/" + `${session}`,
                     function (message) {
                         var recv: Message = JSON.parse(message.body);
                         recvMessage(recv);
-                    }
-                );
-                ws.send(
-                    "/pub/chat/message/", 
-                    {}, 
-                    JSON.stringify(
-                        { 
-                            type: 'ENTER', 
-                            roomId: '6cc72931-a2bd-4cad-b28c-e2fcfa4ce663',
-                            sender: 'rainmaker' 
-                        }
-                    )
+                    },
+                    {'Authorization': `Bearer ${token}`, 'Subscriber': `${subscriber}`}
                 );
             },
             function (error: any) {
@@ -96,50 +95,35 @@ function MyPostList({
         );
     }
 
+    function disconnect() {
+        ws.disconnect(
+            function() {
+                console.log('disconnected');
+            }, 
+            {'Authorization': `Bearer ${token}`}
+        );
+    }
+
     function sendMessage(e: React.KeyboardEvent<HTMLInputElement>) {
         if (e.key === ENTER_KEY) {
-            ws.send("/pub/chat/message", {}, JSON.stringify({type:'TALK', roomId:'6cc72931-a2bd-4cad-b28c-e2fcfa4ce663', sender:'rainmaker', message:textRef.current?.value}));
+            ws.send(
+                "/pub/chat/message", 
+                {'Authorization': `Bearer ${token}`}, 
+                JSON.stringify(
+                    { 
+                        type: 'TALK', 
+                        topicId: `${subscriber}`, 
+                        sender: `${subscriber}`, 
+                        message: textRef.current?.value
+                    }
+                )
+            );
         }
     };
 
     function recvMessage(message: Message) {
         setRoomList([...roomList, message.message]);
     }
-
-    async function findAllRoom() {
-        const response = await fetch(
-            `http://localhost:8080/chat/rooms/`,
-            {
-                method: 'GET',
-                mode: 'cors'
-            });
-        if (response.ok) {
-            const text = await response.text();
-            const array: Room[] = JSON.parse(text);
-            const roomList_: string[] = [];
-            for (let i = 0; i < array.length; i++)
-                roomList.push(array[i].name);
-            setRoomList([...roomList, ...roomList_]);
-        }
-    }
-
-    async function createRoom() {
-        const response = await fetch(
-            `http://localhost:8080/chat/room/`,
-            {
-                method: 'POST',
-                mode: 'cors',
-                body: new URLSearchParams({
-                    'name': '다같이1'
-                })
-            });
-        if (response.ok)
-            findAllRoom();
-    }
-
-    useEffect(() => {
-        connect();
-    });
 
     const textRef = useRef<HTMLInputElement>(null);
 
@@ -151,7 +135,8 @@ function MyPostList({
             <div style={{ width: '80vw', height: '3.5vh', background: '#f5f4f0', borderRadius: '5px', marginTop: '1vh' }} />
             <div style={{ marginTop: '1vh', fontSize: '0.5rem', color: '#f5f4f0' }}>●</div>
             <input type="text" ref={textRef}  onKeyUp={(e) => sendMessage(e)} />
-            <div onClick={() => createRoom()}>CREATE A ROOM</div>
+            <div onClick={() => connect()}>CONNECT</div>
+            <div onClick={() => disconnect()}>DISCONNECT</div>
             <div>
                 {roomList.map((room, key) => <div key={key}>{room}</div>)}
             </div>

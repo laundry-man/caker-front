@@ -146,7 +146,7 @@ function Frame() {
                         <Link to={POST_UPLOAD} className={frame.footerButtonWrapper}>
                             <img alt="" src={Notes} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
-                        <Link to={PROFILE} className={frame.footerButtonWrapper}>
+                        <Link to={MY_POST_LIST} className={frame.footerButtonWrapper}>
                             <img alt="" src={Books} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
                         <Link to={CONFIG} className={frame.footerButtonWrapper}>

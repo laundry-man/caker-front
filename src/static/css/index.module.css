@@ -200,13 +200,3 @@ body {
   -webkit-animation: fadeout 1s;
   -o-animation: fadeout 1s;
 }
-
-.test-color {
-  filter: invert(98%) sepia(8%) saturate(496%) hue-rotate(328deg) brightness(91%) contrast(82%);
-  transition: filter 0.9s;
-}
-
-.test-color-2 {
-  filter: linear-gradient(45deg, rgba(191,181,218,1) 21%, rgba(165,185,227,1) 43%, rgba(156,186,230,1) 79%, rgba(148,187,233,1) 100%);
-  
-}
