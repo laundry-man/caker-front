@@ -12,8 +12,13 @@ import {
     POST_UPLOAD,
     MY_POST_LIST,
     CONFIG,
-    PROFILE
+    PROFILE,
+    ENTER_KEY
 } from '../const/Constant';
+
+import SockJS from 'sockjs-client';
+import * as Stomp from '@stomp/stompjs';
+import { v4 as uuidv4 } from 'uuid';
 
 import GeoTagSearch from './geotagsearch/GeoTagSearch';
 import TagSearch from './tagsearch/TagSearch';
@@ -32,6 +37,12 @@ import Books from '../static/icon/reorder-option.svg';
 import classNames from 'classnames';
 import index from '../static/css/index.module.css';
 import frame from '../static/css/frame.module.css';
+
+type Message = {
+    receiver: string,
+    sender: string,
+    message: string
+}
 
 function Frame() {
     const [content, setContent] = useState(EMPTY_STRING);
@@ -60,6 +71,69 @@ function Frame() {
         setIsPostUpload(page === POST_UPLOAD);
     }
 
+    let sock: WebSocket;
+    let ws: Stomp.CompatClient;
+
+    const sessionId: string = uuidv4();
+
+    const token = 'eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiIxIiwidWlkIjoic3RyaW5nIiwicm9sZXMiOlsiUk9MRV9VU0VSIiwiUk9MRV9BRE1JTiIsIlJPTEVfQURNSU4iXSwiaWF0IjoxNjIwMjc2MzM1LCJleHAiOjE2MjAyNzk5MzV9.TxxBqK4dZKWCHj9Z1kNtnjm8RkBucRxyQvI9bV2L3lHbe0d6InXhrQuDelcWUhTole7Oe7TOHhv6xoxrIiBFqegtC9YTnP-Hhs4QE_BZ-klLhAuyo-CKn3M-Mfr3B9rcRvDyfqOMuhj6kI30Tc1fqvZjWqbbBAAktyJbNHsQHUNca7i2rSPALALy_bcTp0YV1AYo7XjXSQfWAYMGyUHeoGZqrndMc_1mHBEqRonFgRnAF1jmmhioJj-6ovEgSxLUU9IR39Bz9ZMMnF6Nno1bfhKQg-ZdHHIqG2a38kdh_gjAbhpYeBLch0OcWjg9zCq7JiH42RgllISxjMdqWBkkng';
+    
+    const [subscriber, setSubscriber] = useState('rnmkr@naver.com');
+    const [receiver, setReceiver] = useState('rnmkr@naver.com');
+
+    function connect() {
+        sock = new SockJS("http://localhost:8080/ws-stomp", [], { sessionId: () => sessionId });
+        ws = Stomp.Stomp.over(sock);
+    
+        let reconnect = 0;
+    
+        ws.connect({'Authorization': `Bearer ${token}`},
+            function (frame: any) {
+                ws.subscribe(
+                    "/sub/chat/topic/" + `${subscriber}`,
+                    function (message) {
+                        const recv: Message = JSON.parse(message.body);
+                        receive(recv);
+                    },
+                    {'Authorization': `Bearer ${token}`, 'Subscriber': `${subscriber}`}
+                );
+            },
+            function (error: any) {
+                if (reconnect++ <= 5) {
+                    setTimeout(function () {
+                        console.log("connection reconnect");
+                        sock = new SockJS("http://localhost:8080/ws-stomp");
+                        ws = Stomp.Stomp.over(sock);
+                        connect();
+                    }, 10 * 1000);
+                }
+            }
+        );
+    }
+
+    function send() {
+        ws.send(
+            "/pub/chat/message", 
+            {'Authorization': `Bearer ${token}`}, 
+            JSON.stringify(
+                { 
+                    receiver: `${receiver}`, 
+                    sender: `${subscriber}`, 
+                    message: 'test drive',
+                    sent: true
+                }
+            )
+        );
+    };
+
+    function receive(message: Message) {
+        console.log(message);
+    }
+
+    useEffect(() => {
+        connect();
+    }, []);
+
     return (
         <div className={classNames([!isPostUpload ? frame.primary : frame.secondary, index.fadeInSlow])}>
             <div className={frame.header}>
@@ -67,7 +141,7 @@ function Frame() {
                 <div className={frame.headerCenter}>
                     <div className={frame.headerWrapper}>
                         <div className={!isPostUpload ? frame.headerTitlePrimary : frame.headerTitleSecondary}>
-                            <div>CAKER</div>
+                            <div onClick={() => send()}>CAKER</div>
                         </div>
                         <div className={!isPostUpload ? frame.headerContentPrimary : frame.headerContentSecondary}>
                             <div onClick={() => clearContent()}>
@@ -146,7 +220,7 @@ function Frame() {
                         <Link to={POST_UPLOAD} className={frame.footerButtonWrapper}>
                             <img alt="" src={Notes} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
-                        <Link to={MY_POST_LIST} className={frame.footerButtonWrapper}>
+                        <Link to={PROFILE} className={frame.footerButtonWrapper}>
                             <img alt="" src={Books} className={classNames([!isPostUpload ? index.primaryColor : index.secondaryColor, frame.footerButton])} />
                         </Link>
                         <Link to={CONFIG} className={frame.footerButtonWrapper}>
