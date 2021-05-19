@@ -76,7 +76,7 @@ function TagSearch({
   }, []);
 
   return (
-    <div className={index.fadeInFast}>
+    <div className={index.fadeInFast} style={{height: '83vh', overflow:'hidden'}}>
       <div className={tagSearch.wrapper}>
         <input className={tagSearch.prepend} value="#" readOnly />
         <input className={tagSearch.input} value={input} placeholder="태그"

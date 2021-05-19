@@ -5,3 +5,15 @@
 
     transition: height 0.3s;
 }
+
+.input-wrapper {
+    width: 80vw;
+    height: 3.5vh;
+
+    display: flex;
+    align-items: center;
+
+    border: 0.3vh solid #E3E2DE;
+
+    border-radius: 5px;
+}

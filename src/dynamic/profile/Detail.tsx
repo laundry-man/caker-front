@@ -12,6 +12,7 @@ import detail from '../../static/css/profile/detail.module.css';
 
 type DetailProps = {
     isStretch: boolean,
+    isSettled: boolean,
     setIsStretch: React.Dispatch<React.SetStateAction<boolean>>,
     redirect: (page: Page) => void,
     setContent: React.Dispatch<React.SetStateAction<string>>,
@@ -19,7 +20,8 @@ type DetailProps = {
 }
 
 function Detail({ 
-    isStretch, 
+    isStretch,
+    isSettled,
     setIsStretch,
     redirect,
     setContent,
@@ -52,9 +54,8 @@ function Detail({
                     </div>
                 </div>
             </div>
-            <div style={{width: '8vh'}}>
-                <div style={{height: '3.5vh'}} />
-                <div style={{width: '8vh', height: '8vh', background: '#333', borderRadius: '5px', backgroundImage: 'url(' + Matin1 + ')', backgroundSize: 'cover'}}/>
+            <div className={detail.imageWrapper}>
+                <img alt="" src={Matin1} className={detail.image} style={{display: isStretch ? !isSettled ? 'block' : 'none' : 'none' }}/>
             </div>
             <div className={detail.append} 
                 onClick={() => setIsStretch(!isStretch)}>

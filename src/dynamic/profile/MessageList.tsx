@@ -35,9 +35,8 @@ function Profile() {
                     </div>
                 </div>
             </div>
-            <div style={{width: '8vh'}}>
-                <div style={{height: '3.5vh'}} />
-                <div style={{width: '8vh', height: '8vh', background: '#333', borderRadius: '5px', backgroundImage: 'url(' + Matin1 + ')', backgroundSize: 'cover'}}/>
+            <div className={messageList.imageWrapper}>
+                <img alt="" src={Matin1} className={messageList.image}/>
             </div>
             <div className={messageList.append}>
                 <div className={messageList.dot}>●</div>
