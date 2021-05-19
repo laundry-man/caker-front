@@ -6,17 +6,31 @@ import message from '../../static/css/profile/message.module.css';
 
 // 발신자가 누구인지에 따라 메세지 구조가 달라야 한다.
 
-function Message() {
+type MessageProps = {
+    isMine: boolean,
+    value: string
+}
+
+function Message({ isMine, value }: MessageProps) {
     return (
-        <>
-        <div style={{width: '26vw', height: '3vh', background: '#333', borderRadius: '5px', color: '#F2F1ED', fontFamily: 'San Francisco', fontSize: '0.9rem', marginBottom: '1vh', display: 'flex', alignItems: 'center'}}>
-            &nbsp;&nbsp;안녕하세요!
+        <div style={{ display: 'flex', flexDirection: 'row' }}>
+            <div style={{ width: isMine ? '30vw' : '50vw' }}>
+                {isMine ? 
+                    <div /> :
+                    <div>
+                        <div className={message.message} style={{ float: 'left' }}>{value}</div>
+                        <div className={message.messageTime} style={{ float: 'left' }}>2021.05.19 18:32</div>
+                    </div>}
+            </div>
+            <div style={{ width: isMine ? '50vw' : '30vw' }}>
+                {isMine ?
+                    <div>
+                        <div className={message.message} style={{ float: 'right' }}>{value}</div>
+                        <div className={message.messageTime} style={{ float: 'right' }}>2021.05.19 18:32</div>
+                    </div> : 
+                    <div />}
+            </div>
         </div>
-        <div style={{width: '22vw', height: '3vh', background: '#333', borderRadius: '5px', color: '#F2F1ED', fontFamily: 'San Francisco', fontSize: '0.9rem', marginBottom: '1vh', display: 'flex', alignItems: 'center'}}>
-            &nbsp;&nbsp;반가워요!
-        </div>
-        <div style={{fontSize: '0.3rem'}}>2021.05.19 14:17</div>
-        </>
     );
 }
 
