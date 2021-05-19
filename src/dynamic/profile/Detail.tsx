@@ -2,6 +2,8 @@ import React from 'react';
 
 import { Page, PROFILE, TAG_SEARCH_RESULT } from '../../const/Constant';
 
+import Matin1 from '../../static/image/matin_1.png';
+
 import Archive from '../../static/icon/archive-black-box.svg';
 
 import classNames from 'classnames';
@@ -46,9 +48,13 @@ function Detail({
                         ranking : <b>1032</b>
                     </div>
                     <div className={detail.content}>
-                        tier : <b>beginner</b>
+                        tier : <b>strawberry</b>
                     </div>
                 </div>
+            </div>
+            <div style={{width: '8vh'}}>
+                <div style={{height: '3.5vh'}} />
+                <div style={{width: '8vh', height: '8vh', background: '#333', borderRadius: '5px', backgroundImage: 'url(' + Matin1 + ')', backgroundSize: 'cover'}}/>
             </div>
             <div className={detail.append} 
                 onClick={() => setIsStretch(!isStretch)}>
