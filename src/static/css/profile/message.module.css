@@ -1,0 +1,23 @@
+.message {
+    max-width: 100%;
+
+    display: table;
+    
+    font-family: San Francisco;
+    font-size: 0.9rem;
+    color: #F2F1ED;
+    word-break: break-all;
+
+    border-radius: 5px;
+    background: #333333;
+
+    padding: 0.3vh 1vh 0.3vh 0.8vh;
+    margin-bottom: 0.5vh;
+}
+
+.message-time {
+    font-family: San Francisco;
+    font-size: 0.5rem;  
+    
+    margin-bottom: 0.5vh;
+}

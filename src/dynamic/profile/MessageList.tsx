@@ -9,7 +9,18 @@ function MessageList() {
     return (
         <div>
             <Profile />
-            <Message />
+            <Message 
+                isMine={false} 
+                value={'이 카페 자주 오시나봐요 :)'}
+            />
+            <Message 
+                isMine={true} 
+                value={'안녕하세요! 맞아요 자주 오는 카페에요 :)'}
+            />
+            <Message 
+                isMine={true} 
+                value={'저희 뵌 적이 있을까요?'}
+            />
         </div>
     );
 }
