@@ -12,8 +12,6 @@ function ChatRoomList({ enterChatRoom }: ChatRoomListProps) {
     return (
         <div className={chatRoomList.container}>
             <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
-            <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
-            <ChatRoom roomKey={'raingurl'} enterChatRoom={enterChatRoom} />
         </div>
     );
 }

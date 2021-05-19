@@ -8,7 +8,9 @@ import message from '../../static/css/profile/message.module.css';
 
 function Message() {
     return (
-        <div style={{width: '80vw', height: '3vh', background: '#333', borderRadius: '5px', marginBottom: '1vh'}} />
+        <div style={{width: '26vw', height: '3vh', background: '#333', borderRadius: '5px', color: '#F2F1ED', fontFamily: 'San Francisco', fontSize: '0.9rem', marginBottom: '1vh', display: 'flex', alignItems: 'center'}}>
+            &nbsp;&nbsp;안녕하세요!
+        </div>
     );
 }
 

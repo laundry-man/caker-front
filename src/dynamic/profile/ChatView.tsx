@@ -52,7 +52,7 @@ function ChatView() {
                     <MessageList />
                 </PullToRefresh>
             </div>
-            <div style={{width: '80vw', height: '3.5vh', background: '#E3E2DE', borderRadius: '5px'}} />
+            <div style={{width: '80vw', height: '3.5vh', border: '0.3vh solid #E3E2DE', borderRadius: '5px'}} />
         </div>
     );
 }
