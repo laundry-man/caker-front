@@ -9,6 +9,8 @@ import chatView from '../../static/css/profile/chatView.module.css';
 import LeftPointer from '../../static/icon/chevron-pointing-to-the-left.svg';
 import MessageList from './MessageList';
 
+import SendIcon from '../../static/icon/arrowhead-pointing-up-inside-a-square-box-outline.svg';
+
 type ChatViewProps = {
 
 };
@@ -52,7 +54,13 @@ function ChatView() {
                     <MessageList />
                 </PullToRefresh>
             </div>
-            <div style={{width: '80vw', height: '3.5vh', border: '0.3vh solid #E3E2DE', borderRadius: '5px'}} />
+            <div className={chatView.inputWrapper}>
+                <div style={{width: '6vw', height: '3.5vh'}} />
+                <input style={{width: '66vw', height: '3vh', background: 'transparent', border: 'none', outline: 'none', boxShadow: 'none', caretColor: '#333', fontSize: '0.8rem'}} />
+                <div style={{width: '8vw', height: '3.5vh', display: 'flex', justifyContent: 'center', alignItems: 'center'}}>
+                    <img alt="" src={SendIcon} style={{width: '1rem', filter: 'invert(88%) sepia(0%) saturate(34%) hue-rotate(244deg) brightness(99%) contrast(105%)'}}/>
+                </div>
+            </div>
         </div>
     );
 }

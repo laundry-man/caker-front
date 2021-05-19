@@ -65,3 +65,17 @@
 
     margin-bottom: 1vh;
 }
+
+.image-wrapper {
+    width: 8vh;
+
+    padding-top: 3.5vh;
+}
+
+.image {
+    width: 8vh;
+    height: 8vh;
+    
+    background: #333333;
+    border-radius: 5px;
+}

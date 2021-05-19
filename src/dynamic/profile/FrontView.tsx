@@ -47,6 +47,7 @@ function FrontView({
         <div className={index.fadeInFast}>
             <Detail 
                 isStretch={isStretch}
+                isSettled={isSettled}
                 setIsStretch={setIsStretch}
                 redirect={redirect}
                 setContent={setContent}
