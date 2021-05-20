@@ -28,7 +28,7 @@ function Detail({
     setContent,
     setPredecessor }: DetailProps) {
 
-    const [iconToggle, setIconToggle] = useState(false);
+    const [uploadToggle, setUploadToggle] = useState(false);
 
     const fileRef = useRef<HTMLInputElement>(null);
 
@@ -45,7 +45,13 @@ function Detail({
             const rawImagePath =
                 (window.URL || window.webkitURL).createObjectURL(e.currentTarget.files?.item(0));
 
-            // 서버 측 리사이징 및 등록
+            setUploadToggle(true);
+
+            // 서버에서의 이미지 크롭 / 리사이징 / 저장
+
+            setTimeout(() => {
+                setUploadToggle(false);
+            }, 3000);
         }
     }
 
@@ -80,7 +86,9 @@ function Detail({
                 <div className={detail.image} 
                     style={{display: isStretch ? !isSettled ? 'flex' : 'none' : 'none' }}
                     onClick={() => fileRef.current?.click()}>
-                    <img alt="" src={Camera} className={index.blurColor} style={{width: '3.5vw'}} />
+                    {uploadToggle ? 
+                        <Spinner /> : 
+                        <img alt="" src={Camera} className={index.blurColor} style={{width: '3.5vw'}} /> }
                 </div>
             </div>
             <div className={detail.append} 
@@ -96,6 +104,14 @@ function Detail({
                          onClick={() => assignKeyword()} />}
             </div>
         </div>
+    );
+}
+
+function Spinner() {
+    return (
+        <svg className={detail.spinner} >
+            <circle className={detail.path} cx="2vh" cy="2vh" r="1vh" fill="none" stroke-width="0.3vh" />
+        </svg>
     );
 }
 
