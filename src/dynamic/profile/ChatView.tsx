@@ -82,7 +82,7 @@ function ChatView() {
                     onFocus={() => setToggle(true)}
                     onBlur={() => setToggle(isWritten)} />
                 <div className={chatView.append}>
-                    <img className={toggle ? chatView.focusColor : chatView.blurColor} alt="" src={SendIcon} style={{ width: '1rem' }} />
+                    <img className={toggle ? index.focusColor : index.blurColor} alt="" src={SendIcon} style={{ width: '1rem' }} />
                 </div>
             </div>
         </div>

@@ -75,7 +75,11 @@
 .image {
     width: 8vh;
     height: 8vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
     
-    background: #333333;
+    border: 0.3vh solid #E3E2DE;
     border-radius: 5px;
 }
