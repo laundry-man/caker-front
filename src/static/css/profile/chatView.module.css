@@ -69,23 +69,3 @@
     justify-content: center;
     align-items: center;
 }
-
-.focus-color {
-    filter: invert(20%) 
-            sepia(7%) 
-            saturate(6%) 
-            hue-rotate(49deg) 
-            brightness(89%) 
-            contrast(94%);
-    transition: filter 0.3s;
-}
-
-.blur-color {
-    filter: invert(88%) 
-            sepia(0%) 
-            saturate(34%) 
-            hue-rotate(244deg) 
-            brightness(99%) 
-            contrast(105%);
-    transition: filter 0.3s;
-}
